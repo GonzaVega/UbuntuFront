@@ -112,7 +112,13 @@ function ExampleForm({ handleAlert }) {
           </FormControl>
         </Box>
 
-        <Button variant='contained' color='primary' type='submit'>
+        <Button
+          variant='contained'
+          color='primary'
+          type='submit'
+          sx={{ borderRadius: '100px' }}
+          fullWidth
+        >
           Enviar
         </Button>
       </form>

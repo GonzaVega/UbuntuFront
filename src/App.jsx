@@ -7,10 +7,12 @@ import LandingPage from '@/components/landing/LandingPage';
 import Dashboard from '@/components/dashboard/Dashboard';
 import Publicaciones from '@/components/publicaciones/Publicaciones';
 import Layout_ex from '@/components/layouts/Layout_ex';
+import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
     <>
+      <CssBaseline />
       <ThemeProvider theme={theme}>
         <Router>
           <Header />
