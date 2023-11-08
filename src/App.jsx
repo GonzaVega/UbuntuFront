@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import theme from '@/theme/theme';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
@@ -7,13 +8,12 @@ import LandingPage from '@/components/landing/LandingPage';
 import Dashboard from '@/components/dashboard/Dashboard';
 import Publicaciones from '@/components/publicaciones/Publicaciones';
 import Layout_ex from '@/components/layouts/Layout_ex';
-import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
     <>
-      <CssBaseline />
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router>
           <Header />
           <Routes>
