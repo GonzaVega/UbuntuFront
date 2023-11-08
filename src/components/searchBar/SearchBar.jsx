@@ -15,7 +15,7 @@ import { useState } from 'react';
 export default function SearchBar({
   sx = {},
   placeholder = 'Buscar Microemprendimientos',
-  state = '',
+  state,
   onStateChange,
 }) {
   const [value, setValue] = useState('');
