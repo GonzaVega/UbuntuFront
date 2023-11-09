@@ -40,35 +40,35 @@ const theme = createTheme({
     h1: {
       fontSize: '1.75rem',
       fontWeight: 500,
-      lineHeight: 2.1875,
+      lineHeight: '2.0625rem',
     },
     h2: {
       fontSize: '1.375rem',
       fontWeight: 600,
-      lineHeight: 1.5625,
+      lineHeight: '1.5625rem',
     },
     h3: {
       fontSize: '1.125rem',
       fontWeight: 600,
-      lineHeight: 1.5625,
+      lineHeight: '1.5625rem',
     },
     body1: {
       fontSize: '1rem',
       fontWeight: 500,
-      lineHeight: 1.25,
+      lineHeight: '1.25rem',
     },
     body2: {
       fontSize: '0.875rem',
-      lineHeight: 1.25,
+      lineHeight: '1.25rem',
     },
     button: {
       fontSize: '1rem',
       fontWeight: 700,
-      lineHeight: 1.875,
+      lineHeight: '1.875rem',
     },
     caption: {
       fontSize: '0.8125rem',
-      lineHeight: 1,
+      lineHeight: '1rem',
     },
   },
   components: {
