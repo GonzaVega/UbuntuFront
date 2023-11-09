@@ -35,6 +35,7 @@ export default function SearchBar({
     <Grid container height='3.5rem' sx={sx}>
       <Grid item xs={12} display='flex'>
         <Box
+          bgcolor={'Background'}
           sx={{
             width: '100%',
             borderRadius: '100px',
