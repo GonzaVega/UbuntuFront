@@ -1,7 +1,10 @@
+// Navbar.jsx
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Logo from '../../assets/images/landing/logoubuntu.png';
+import NavListDrawer from './components/common/NavListDrawer.jsx';
 
 function Navbar() {
   return (
@@ -13,9 +16,11 @@ function Navbar() {
           Nombre del Sitio
         </Typography>
         {/* Agrega tus botones de navegación aquí */}
+        <NavListDrawer />
       </Toolbar>
     </AppBar>
   );
 }
 
 export default Navbar;
+
