@@ -1,18 +1,26 @@
+// Navbar.jsx
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Logo from '../../assets/images/landing/logoubuntu.png';
+import NavListDrawer from './components/navbar/NavListDrawer';
 
 function Navbar() {
   return (
-    <AppBar position='static' color='background'>
+    <AppBar position="static" sx={{ bgcolor: 'white', boxShadow: 'none', borderBottom: '1px solid #ddd' }}>
       <Toolbar>
-        <IconButton edge='start' color='inherit' aria-label='menu'>
-          <MenuIcon />
-        </IconButton>
+        {/* Aquí puedes agregar tu logo si lo tienes */}
+        <img src={Logo} alt='Logo de Ubuntu' style={{ width: '80px', height: 'auto' }} />
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Nombre del Sitio
+        </Typography>
+        {/* Agrega tus botones de navegación aquí */}
+        <NavListDrawer />
       </Toolbar>
     </AppBar>
   );
 }
 
 export default Navbar;
+
