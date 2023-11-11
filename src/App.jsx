@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import theme from '@/theme/theme';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router>
           <Header />
           <Routes>

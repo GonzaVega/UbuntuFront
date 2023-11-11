@@ -2,53 +2,84 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    type: 'light',
     primary: {
-      main: '#171616',
+      main: '#093c59',
     },
     secondary: {
-      main: '#c2c2c2',
+      main: '#226516',
     },
-    verdes: {
-      dark: '#366C00',
-      medium: '#70D20F',
-      light: '#99FF33',
+    background: {
+      paper: '#fdfdfd',
+      default: '#ffffff',
     },
-    naranjas: {
-      dark: '#DD7200',
-      medium: '#F8952C',
-      light: '#FDAD58',
+    text: {
+      primary: '#090909',
+    },
+    error: {
+      main: '#bc1111',
+    },
+    success: {
+      main: '#1d9129',
+    },
+    warning: {
+      main: '#b86b11',
+    },
+    darkGray: {
+      main: '#6f706e',
+    },
+    gray: {
+      main: '#d2d2d2',
+    },
+    lightGray: {
+      main: '#EAEAEA',
     },
   },
   typography: {
-    titulos: {
+    fontFamily: ['Lato', 'Roboto', 'Open Sans', 'sans-serif'].join(','),
+    h1: {
       fontSize: '1.75rem',
-      fontWeight: 700,
-      // ... otros estilos que quieras agregar
-    },
-    subtitulos: {
-      fontSize: '1.25rem',
       fontWeight: 500,
-      // ... otros estilos que quieras agregar
+      lineHeight: '2.0625rem',
     },
-    parrafos: {
-      fontSize: '0.75rem',
-      fontWeight: 300,
-      // ... otros estilos que quieras agregar
+    h2: {
+      fontSize: '1.375rem',
+      fontWeight: 600,
+      lineHeight: '1.5625rem',
     },
-    parrafosColor: {
-      fontSize: '0.75rem',
-      fontWeight: 300,
-      backgroundColor: '#C2C2C2',
-      // ... otros estilos que quieras agregar
+    h3: {
+      fontSize: '1.125rem',
+      fontWeight: 600,
+      lineHeight: '1.5625rem',
+    },
+    body1: {
+      fontSize: '1rem',
+      fontWeight: 500,
+      lineHeight: '1.25rem',
+    },
+    body2: {
+      fontSize: '0.875rem',
+      lineHeight: '1.25rem',
+    },
+    button: {
+      fontSize: '1rem',
+      fontWeight: 700,
+      lineHeight: '1.875rem',
+    },
+    caption: {
+      fontSize: '0.8125rem',
+      lineHeight: '1rem',
     },
   },
-  shape: {
-    borderRadius: 4, // Valor por defecto
-    borderRadiusSmall: 2,
-    borderRadiusMedium: 8,
-    borderRadiusLarge: 16,
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '100px',
+        },
+      },
+    },
   },
-  // Podes agregar más configuraciones del tema aca cuando necesites
 });
 
 export default theme;
