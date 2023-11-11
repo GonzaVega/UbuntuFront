@@ -10,7 +10,6 @@ export default function Goals() {
         borderBottom: '1px solid',
         borderColor: theme.palette.secondary.main, // Usando el color del tema
         paddingTop: '8px',
-        margin: '2rem 1rem',
         gap: '8px',
       }}
     >
