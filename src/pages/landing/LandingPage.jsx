@@ -6,14 +6,15 @@ import { Box, Card, CardContent, CardMedia, Container, Grid, Typography } from '
 function LandingPage() {
   return (
     <>
-      <SearchBarContainer/>
+      <SearchBarContainer />
       <Container>
-        <Goals/>
-        <br /><br /><br /><br />
+        <Goals />
+        <br />
+        <br />
+        <br />
+        <br />
         <p>Acá va la sección de categorías-----</p>
-        <Publicaciones/>
-
-
+        <Publicaciones />
       </Container>
     </>
   );
