@@ -7,6 +7,7 @@ function LandingPage() {
   return (
     <>
       <SearchBarContainer />
+      <SearchBarContainer />
       <Container>
         <Goals />
         <Posts />
