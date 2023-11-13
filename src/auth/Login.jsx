@@ -13,13 +13,14 @@ const Login = () => {
   };
 
   return (
-    <Card>
+    <Card style={{ border: '1px solid #ddd' }}>
       <Typography variant='h5' color='primary' textAlign='center'>
         Ingreso
       </Typography>
       <Typography variant='h5' color='primary' textAlign='center'>
         Administrador
       </Typography>
+
       <GoogleOAuthProvider clientId={googleOAuthCredential}>
         <GoogleLogin
           buttonText='Continuá con Google'
@@ -28,8 +29,12 @@ const Login = () => {
             console.log('fallo');
           }}
           cookiePolicy={'single_host_origin'}
-          style={{ backgroundColor: '#093C59', color: 'white', borderRadius: '100px' }}
+          type='icon'
+          size='medium'
+          theme='outline'
+          shape='circle'
           useOneTap
+          cancel_on_tap_outside
         />
       </GoogleOAuthProvider>
     </Card>

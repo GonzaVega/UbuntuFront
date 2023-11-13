@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error('Error de autenticación: ', error);
+      console.error('Error de autenticación: ', error.message);
     }
   };
 
