@@ -19,11 +19,9 @@ function App() {
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/publicaciones' element={<Publicaciones />} />
             <Route path='/layout' element={<Layout_ex />} />
             {/* Agregar rutas necesarias */}
           </Routes>
-          <Footer />
         </Router>
       </ThemeProvider>
     </>

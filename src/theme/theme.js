@@ -80,6 +80,22 @@ const theme = createTheme({
       },
     },
   },
+  mixins: {
+    cardExpanded: {
+      fontWeight: 400,
+      mb: '1rem',
+      transition: 'margin 300ms ease',
+    },
+    cardCollapsed: {
+      fontWeight: 400,
+      WebkitLineClamp: '6',
+      WebkitBoxOrient: 'vertical',
+      display: '-webkit-box',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      transition: 'margin 300ms ease',
+    },
+  },
 });
 
 export default theme;
