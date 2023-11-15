@@ -4,7 +4,7 @@ import { Box, Drawer, styled, useTheme, List, ListItem } from '@mui/material';
 import { useState } from 'react';
 import BurgerBtn from '@/components/common/BurgerBtn';
 import { Link } from 'react-router-dom';
-import images from '@/assets/images/landing/logoubuntu.png'
+import images from '@/assets/images/logoubuntu.png';
 
 const StyledDrawer = styled(Drawer)(() => ({
   top: '55px',
@@ -25,7 +25,10 @@ function Navbar() {
     <AppBar position='static' color='background'>
       <Toolbar>
         <BurgerBtn isActive={drawerIsOpen} handleShowMenu={handleToggle} />
-         <Box><img src={images} alt='Logo de Ubuntu' style={{ width: '80px', height: 'auto' }} /> </Box>
+              <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                  <img src={images} alt='Logo de Ubuntu'
+                      style={{ width: '120px', height: '56px', alignItems: 'center', justifyContent: 'center', }} />
+              </Box>
         <StyledDrawer anchor={'left'} open={drawerIsOpen} onClose={handleToggle}>
           <Box sx={{ width: '15rem', background: `${palette.primary.main}`, height: '100%' }}>
             <List sx={{ py: '1rem' }}>
