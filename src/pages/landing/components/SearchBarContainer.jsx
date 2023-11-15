@@ -1,4 +1,4 @@
-import SearchBar from '@/components/searchBar/SearchBar';
+import SearchBar from '@/pages/landing/components/SearchBar';
 import { Box, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 
