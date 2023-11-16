@@ -1,3 +1,4 @@
+import { useAuth } from '@/contexts/AuthContext';
 import { styled } from '@mui/material';
 
 const StyledAvatar = styled('div')({
@@ -16,7 +17,11 @@ const StyledAvatar = styled('div')({
 });
 
 const AdminAvatar = () => {
-  return <StyledAvatar>AD</StyledAvatar>;
+  const { user } = useAuth();
+
+  const userAvatar = user ? `${user.firstName[0]}${user.lastName[0]}` : 'AD';
+
+  return <StyledAvatar>{userAvatar}</StyledAvatar>;
 };
 
 export default AdminAvatar;

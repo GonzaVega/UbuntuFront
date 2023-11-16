@@ -1,5 +1,5 @@
+import PostCard from '@/pages/landing/components/PostCard';
 import { Box, Button, Grid, Typography } from '@mui/material';
-import PostCard from '@/components/posts/PostCard';
 
 const posts = [
   {

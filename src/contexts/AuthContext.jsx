@@ -13,32 +13,48 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  //Inicia una sesion en Google y luego en el backend. todo: incorporar el inicio de sesion con google de Login en este contexto.
+  //solo para demo.
+  const dummyUser = {
+    token: 'your_generated_token_here',
+    email: 'gonzaarg03@gmail.com',
+    firstName: 'Gonzalo',
+    lastName: 'Vega',
+    photoUrl: 'https//lafotodetuperfildegoogle.jpg',
+    role: 'ADMIN',
+  };
+
+  //Inicia una sesion en Google y luego en el backend. todo: incorporar el inicio de sesion con google de Login en este contexto. revisar comentarios: se han efectuado para realizar demostracion
   const login = async (googleUserData) => {
     try {
       if (googleUserData.access_token) {
-        console.log(googleUserData);
-        const backendAuth = await axios.post('/auth/google', {
-          token: googleUserData.access_token,
-        });
-
-        if (backendAuth.role === 'ADMIN') {
-          // localStorage.setItem('email', backendAuth.email);
-          localStorage.setItem('token', backendAuth.token);
-          setUser(backendAuth);
-          setIsAuthenticated(true);
-          setRedirectToHome(true);
-        }
+        setUser(dummyUser);
+        setIsAuthenticated(true);
+        // localStorage.setItem('email', user.email);
+        localStorage.setItem('token', user.token);
       }
     } catch (error) {
       console.error('Error de autenticación: ', error.message);
     }
+    //Logica para inicio de sesion cuando haya backend.
+    //     const backendAuth = await axios.post('/auth/google', {
+    //       token: googleUserData.access_token,
+    //     });
+
+    //     if (backendAuth.role === 'ADMIN') {
+    //       // localStorage.setItem('email', backendAuth.email);
+    //       localStorage.setItem('token', backendAuth.token);
+    //       setUser(backendAuth);
+    //       setIsAuthenticated(true);
+    //
+    //     }
+    //   }
   };
 
-  // Cierra la sesión y elimina la información del usuario del estado
+  // Cierra la sesión y elimina la información del usuario del estado. revisar comentarios: se han efectuado para realizar demostracion
   const logout = async () => {
     if (user) {
-      await axios.post('/auth/google/logout', { token: user.token });
+      // Logica de cierre de sesión cuando haya backend.
+      // await axios.post('/auth/google/logout', { token: user.token });
       googleLogout();
       localStorage.clear();
       setUser(null);

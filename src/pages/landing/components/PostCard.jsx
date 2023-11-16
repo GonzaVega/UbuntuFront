@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
-import { FormatParagraphs } from '@/utils/FormatParagraphs';
+import { FormatParagraphs } from '@/helpers/FormatParagraphs';
 import CardContainer from '@/components/card/CardContainer';
 import CardContent from '@/components/card/CardContent';
 import CardImageSlider from '@/components/card/CardImageSlider';
