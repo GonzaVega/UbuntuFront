@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { googleLogout } from '@react-oauth/google';
 
-import axios from 'axios';
-
 const AuthContext = createContext();
 
 export const useAuth = () => {

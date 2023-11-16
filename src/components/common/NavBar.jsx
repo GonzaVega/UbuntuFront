@@ -26,12 +26,6 @@ const StyledDrawer = styled(Drawer)(() => ({
   },
 }));
 
-const LogoutButton = styled(Button)({
-  display: 'block',
-  margin: '8px auto',
-  padding: '4px 16px',
-});
-
 const StyledCollapse = styled(Collapse)({
   position: 'absolute',
   width: '104px',
@@ -49,8 +43,6 @@ function Navbar() {
 
   function handleToggle() {
     setDrawerIsOpen(!drawerIsOpen);
-    //cambio
-    // setShowLogout(false);
   }
 
   const handleLogoutClick = () => {
