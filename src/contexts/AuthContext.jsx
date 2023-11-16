@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
-import instance from '@/helpers/axiosConfig';
+import { googleLogout } from '@react-oauth/google';
+
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -12,17 +13,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  //Inicia una sesion en Google y luego en el backend.
+  //Inicia una sesion en Google y luego en el backend. todo: incorporar el inicio de sesion con google de Login en este contexto.
   const login = async (googleUserData) => {
     try {
-      if (googleUserData.credential) {
-        const backendAuth = await axios.post('/auth/google', { token: googleUserData.credential });
+      if (googleUserData.access_token) {
+        console.log(googleUserData);
+        const backendAuth = await axios.post('/auth/google', {
+          token: googleUserData.access_token,
+        });
 
         if (backendAuth.role === 'ADMIN') {
-          localStorage.setItem('email', backendAuth.email);
+          // localStorage.setItem('email', backendAuth.email);
           localStorage.setItem('token', backendAuth.token);
           setUser(backendAuth);
           setIsAuthenticated(true);
+          setRedirectToHome(true);
         }
       }
     } catch (error) {
@@ -34,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     if (user) {
       await axios.post('/auth/google/logout', { token: user.token });
+      googleLogout();
       localStorage.clear();
       setUser(null);
       setIsAuthenticated(false);

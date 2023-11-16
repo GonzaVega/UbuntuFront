@@ -8,8 +8,12 @@ import LandingPage from '@/pages/landing/LandingPage';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import Publicaciones from '@/pages/landing/components/Publicaciones';
 import Layout_ex from '@/components/layouts/Layout_ex';
+import Login from '@/auth/Login';
+import { useAuth } from '@/contexts/AuthContext';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -20,6 +24,8 @@ function App() {
             <Route path='/' element={<LandingPage />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/layout' element={<Layout_ex />} />
+            {!isAuthenticated && <Route path='/login' element={<Login />} />}
+
             {/* Agregar rutas necesarias */}
           </Routes>
         </Router>
