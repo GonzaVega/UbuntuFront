@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.clear();
       setUser(null);
       setIsAuthenticated(false);
+      window.location.href = '/';
     }
   };
 
