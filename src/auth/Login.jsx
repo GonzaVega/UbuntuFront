@@ -1,44 +1,110 @@
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { Card, Typography } from '@mui/material';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Card, Typography, Box, CardMedia, Button, Modal, Fade } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from '@/contexts/AuthContext';
 import { googleOAuthCredential } from '@/helpers/googleCredentials';
+import { useState } from 'react';
 
 const Login = () => {
-  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [open, setOpen] = useState(true);
 
-  const responseGoogle = (response) => {
-    if (!isAuthenticated) {
-      login(response);
-    }
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  //Arreglar el CORS. para refactorizar: esta funcionalidad pasarla al contexto de autenticacion.
+  const googleLoginHandler = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      await login(codeResponse);
+      handleClose();
+      navigate('/');
+    },
+    onError: () => {
+      console.log('Login Failed');
+    },
+    clientId: googleOAuthCredential,
+    flow: 'implicit',
+  });
 
   return (
-    <Card style={{ border: '1px solid #ddd' }}>
-      <Typography variant='h5' color='primary' textAlign='center'>
-        Ingreso
-      </Typography>
-      <Typography variant='h5' color='primary' textAlign='center'>
-        Administrador
-      </Typography>
-
-      <GoogleOAuthProvider clientId={googleOAuthCredential}>
-        <GoogleLogin
-          buttonText='Continuá con Google'
-          onSuccess={responseGoogle}
-          onFailure={() => {
-            console.log('fallo');
+    <Modal
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Fade in={open}>
+        <Box
+          sx={{
+            outline: 'none',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-          cookiePolicy={'single_host_origin'}
-          type='icon'
-          size='medium'
-          theme='outline'
-          shape='circle'
-          useOneTap
-          cancel_on_tap_outside
-        />
-      </GoogleOAuthProvider>
-    </Card>
+        >
+          <Card sx={{ width: '360px', borderRadius: '8px' }}>
+            <Box display='flex' flexDirection='column' alignItems='center' padding='20px'>
+              <Typography variant='h1' align='center' paddingBottom='5px' sx={{ fontWeight: 800 }}>
+                Ingreso
+              </Typography>
+              <Typography variant='h1' align='center' paddingBottom='20px' sx={{ fontWeight: 800 }}>
+                Administrador
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <CardMedia
+                  sx={{
+                    height: '20%',
+                    width: '20%',
+                    margin: '30px',
+                    padding: '5px',
+                    alignSelf: 'center',
+                  }}
+                  component='img'
+                  image={'/src/assets/images/logo_card_ingreso_registro.png'}
+                  alt={'Logo Ubuntu en tarjeta de inicio de sesion'}
+                />
+              </Box>
+              <Box display='flex' justifyContent='center' mt={2}>
+                <Button
+                  onClick={googleLoginHandler}
+                  variant='contained'
+                  sx={{
+                    lineHeight: '1.25rem',
+                    padding: '0.625rem 1.89rem',
+                    marginTop: '10px',
+                    textTransform: 'none',
+                  }}
+                  startIcon={
+                    <img
+                      src='src/assets/images/1657955079google-icon-png.png'
+                      alt='Google Logo'
+                      style={{ width: '36px', marginRight: '10px' }}
+                    />
+                  }
+                  disableElevation
+                >
+                  <Typography variant='h7' align='center'>
+                    Continuá con Google
+                  </Typography>
+                </Button>
+              </Box>
+            </Box>
+          </Card>
+        </Box>
+      </Fade>
+    </Modal>
   );
 };
-
 export default Login;
