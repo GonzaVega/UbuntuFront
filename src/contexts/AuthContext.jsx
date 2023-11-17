@@ -17,13 +17,14 @@ export const AuthProvider = ({ children }) => {
     try {
       if (googleUserData.credential) {
         const backendAuth = await axios.post('/auth/google', { token: googleUserData.credential });
+        console.log(backendAuth)
 
-        if (backendAuth.role === 'ADMIN') {
-          localStorage.setItem('email', backendAuth.email);
-          localStorage.setItem('token', backendAuth.token);
-          setUser(backendAuth);
-          setIsAuthenticated(true);
-        }
+        // if (backendAuth.role === 'ADMIN') {
+        //   localStorage.setItem('email', backendAuth.email);
+        //   localStorage.setItem('token', backendAuth.token);
+        //   setUser(backendAuth);
+        //   setIsAuthenticated(true);
+        // }
       }
     } catch (error) {
       console.error('Error de autenticación: ', error.message);

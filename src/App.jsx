@@ -8,6 +8,7 @@ import LandingPage from '@/pages/landing/LandingPage';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import Publicaciones from '@/pages/landing/components/Publicaciones';
 import Layout_ex from '@/components/layouts/Layout_ex';
+import Login from '@/auth/Login';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <CssBaseline />
         <Router>
           <Header />
+          <Login/>
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/dashboard' element={<Dashboard />} />
