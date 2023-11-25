@@ -7,6 +7,7 @@ import LandingPage from '@/pages/landing/LandingPage';
 import Dashboard from '@/pages/dashboard/Dashboard';
 import Publicaciones from '@/pages/landing/components/Publicaciones';
 import Proveedores from '@/pages/proveedores/Proveedores';
+import Microemprendimientos from '@/pages/microemprendimientos/Microemprendimientos';
 import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
 import { useAuth } from '@/contexts/AuthContext';
@@ -27,6 +28,7 @@ function App() {
             <Route path='/layout' element={<Layout_ex />} />
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
+            <Route path='/microemprendimientos' element={<Microemprendimientos />} />
             <Route path='/search' element={<SearchPage />} />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
             {/* Agregar rutas necesarias */}
