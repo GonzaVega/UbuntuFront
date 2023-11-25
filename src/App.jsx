@@ -10,6 +10,7 @@ import Proveedores from '@/pages/proveedores/Proveedores';
 import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
 import { useAuth } from '@/contexts/AuthContext';
+import SearchPage from '@/pages/search/SearchPage';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -26,6 +27,7 @@ function App() {
             <Route path='/layout' element={<Layout_ex />} />
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
+            <Route path='/search' element={<SearchPage />} />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
             {/* Agregar rutas necesarias */}
           </Routes>
