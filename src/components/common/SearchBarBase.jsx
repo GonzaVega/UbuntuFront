@@ -9,14 +9,16 @@ import { useState } from 'react';
  * @param {string} [props.placeholder] - Placeholder of input
  * @param {string} [props.state] - State of input
  * @param {Function} [props.onStateChange] - Function to call when state changes
+ * @param {Function} props.onSubmit - Function to call when form is submitted
  * @returns {React.ReactElement} SearchBar component
  **/
 
-export default function SearchBar({
+export default function SearchBarBase({
   sx = {},
   placeholder = 'Buscar Microemprendimientos',
   state,
   onStateChange,
+  onSubmit,
 }) {
   const [value, setValue] = useState('');
   const isControlled = state !== undefined && onStateChange !== undefined;
@@ -29,13 +31,23 @@ export default function SearchBar({
     setValue(e.target.value);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (isControlled) {
+      onSubmit(state);
+      return;
+    }
+    onSubmit(value);
+  }
+
   const finalValue = isControlled ? value : state;
 
   return (
     <Grid container height='3.5rem' sx={sx}>
       <Grid item xs={12} display='flex'>
         <Box
-          bgcolor={'Background'}
+          bgcolor={'lightGray.main'}
           sx={{
             width: '100%',
             borderRadius: '100px',
@@ -46,6 +58,7 @@ export default function SearchBar({
             gap: '1rem',
           }}
           component='form'
+          onSubmit={handleSubmit}
         >
           <SearchIcon />
           <InputBase
