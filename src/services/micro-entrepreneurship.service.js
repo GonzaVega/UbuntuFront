@@ -3,10 +3,10 @@ import { repository } from '@/services/shared/repository';
 export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
-  async find({ path = '', searchParams = {} }) {
+  async find({ path = '', searchParams = {}, abortController }) {
     path = this.collection + path;
 
-    return await repository.find({ path, searchParams });
+    return await repository.find({ path, searchParams, abortController });
   }
 
   async findOne({ id }) {

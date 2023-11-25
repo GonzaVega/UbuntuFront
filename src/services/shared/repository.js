@@ -3,8 +3,8 @@ import { HttpAdapter } from '@/services/shared/http-adapter';
 class Repository {
   #http = new HttpAdapter();
 
-  async find({ path = '', searchParams = {} }) {
-    return await this.#http.get({ path, searchParams });
+  async find({ path = '', searchParams = {}, abortController }) {
+    return await this.#http.get({ path, searchParams, abortController });
   }
 
   async findOne({ id }) {

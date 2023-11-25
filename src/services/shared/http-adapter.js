@@ -27,10 +27,12 @@ const DATA = {
 // }
 
 export class HttpAdapter {
-  async get({ path, searchParams }) {
+  async get({ path, searchParams, abortController }) {
+    const { signal } = abortController || new AbortController();
+    const { query } = searchParams;
+
     return new Promise((resolve, reject) => {
       let [, response] = Object.entries(DATA).find((item) => path.includes(item[0]));
-      const { query } = searchParams;
 
       if (query) {
         const regex = new RegExp(query, 'i');
@@ -42,13 +44,17 @@ export class HttpAdapter {
       if (id) {
         response = response.find((item) => item.id === +id);
       }
-      setTimeout(() => {
-        if (response.length > 0) {
-          resolve(response);
-        } else {
-          reject(new Error('No se encotraron resultados'));
-        }
+
+      const timeout = setTimeout(() => {
+        if (response.length > 0) resolve(response);
+        else reject(new Error('No se encotraron resultados'));
       }, [500]);
+
+      signal.addEventListener('abort', () => {
+        clearTimeout(timeout);
+      });
+
+      if (signal.aborted) reject(new Error('Operación cancelada'));
     });
   }
 }

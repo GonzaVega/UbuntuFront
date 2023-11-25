@@ -12,7 +12,8 @@ export default function ResultsContainer({ query }) {
     loading,
     error,
   } = useFetch({
-    queryFn: () => microEntrepreneurshipService.find({ searchParams: { query } }),
+    queryFn: ({ abortController }) =>
+      microEntrepreneurshipService.find({ searchParams: { query }, abortController }),
     dependencies: [query],
   });
 

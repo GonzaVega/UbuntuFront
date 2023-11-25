@@ -10,10 +10,15 @@ export default function useFetch({ queryFn, dependencies = [] }) {
     setLoading(true);
     setError();
     setData();
-    queryFn()
+
+    const abortController = new AbortController();
+
+    queryFn({ abortController })
       .then((data) => setData(data))
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
+
+    return () => abortController.abort();
   }, dependencies);
 
   return { data, loading, error };
