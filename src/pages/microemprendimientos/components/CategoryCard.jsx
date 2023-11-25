@@ -1,4 +1,4 @@
-import { Card, Icon, Typography, Box, useTheme } from '@mui/material';
+import { Card, Typography, Box, useTheme } from '@mui/material';
 
 const CategoryCard = ({ icon, category }) => {
   const { palette } = useTheme();
@@ -10,24 +10,28 @@ const CategoryCard = ({ icon, category }) => {
           display: 'flex',
           alignItems: 'center',
           padding: '12px',
-          marginBottom: '12px', // Añadir separación entre tarjetas
-          borderRadius: '10px', // Bordes redondeados
+          marginBottom: '12px',
+          borderRadius: '16px',
+          height: '72px',
+          paddingLeft: '20px',
+          gap: '6px',
+          flexShrink: '0',
         }}
       >
         <Box
           sx={{
             marginRight: '12px',
             flex: '0 0 auto',
-            borderRadius: '50%', // Bordes redondeados para el contenedor del icono
-            overflow: 'hidden', // Evitar que la imagen se salga del contenedor
+            borderRadius: '50%',
+            overflow: 'hidden',
             width: '40px',
             height: '40px',
-            border: `2px solid ${palette.success.main}`, // Borde verde
+            border: `2px solid ${palette.success.main}`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            boxSizing: 'border-box', // Considerar el borde en las dimensiones
-            padding: '2px', // Espacio entre el borde verde y la imagen
+            boxSizing: 'border-box',
+            padding: '2px',
           }}
         >
           <img
@@ -36,8 +40,8 @@ const CategoryCard = ({ icon, category }) => {
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover', // Ajusta la imagen para que se ajuste dentro del círculo
-              borderRadius: '50%', // Añade bordes redondeados a la imagen
+              objectFit: 'cover',
+              borderRadius: '50%',
             }}
           />
         </Box>
