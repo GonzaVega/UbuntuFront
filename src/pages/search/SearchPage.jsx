@@ -7,12 +7,17 @@ import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.
 import NoResults from '@/pages/search/components/NoResults';
 import SearchBar from '@/components/searchbar/SearchBar';
 import useFetch from '@/hooks/useFetch';
+import SkeletonCard from '@/pages/search/components/SkeletonCard';
 
 export default function SearchPage() {
   const microEntrepreneurshipService = new MicroEntrepreneurshipService();
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState();
-  const { data: results, error } = useFetch({
+  const {
+    data: results,
+    loading,
+    error,
+  } = useFetch({
     queryFn: () => microEntrepreneurshipService.find({ searchParams: { query } }),
     dependencies: [query],
   });
@@ -22,7 +27,7 @@ export default function SearchPage() {
   }, [searchParams]);
 
   return (
-    <Container component='main'>
+    <Container component='main' sx={{ py: '2.5rem' }}>
       <Grid container component='section' mt='1.5rem'>
         <Grid item xs={12}>
           <SearchBar />
@@ -44,7 +49,9 @@ export default function SearchPage() {
           </Box>
           <Box mt='2rem'>
             <Grid container spacing={'1rem'}>
-              {error ? (
+              {loading ? (
+                Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
+              ) : error ? (
                 <NoResults />
               ) : (
                 results?.map((result, index) => <Card key={index} {...result} />)

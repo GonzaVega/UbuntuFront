@@ -42,7 +42,7 @@ export default function Posts() {
         </Box>
       </Grid>
       <Grid item xs={12} mt='2rem'>
-        <Grid container rowSpacing={2}>
+        <Grid container spacing={'1rem'}>
           {posts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))}
