@@ -7,20 +7,20 @@ class Repository {
     return await this.#http.get({ path, searchParams, abortController });
   }
 
-  async findOne({ id }) {
-    return await this.#http.get({ path: id });
+  async findOne({ id, abortController }) {
+    return await this.#http.get({ path: id, abortController });
   }
 
-  async save({ payload }) {
-    return payload;
+  async save({ path, payload, abortController }) {
+    return await this.#http.post({ path, payload, abortController });
   }
 
   async update({ id, payload }) {
-    return { id, payload };
+    return await this.#http.patch({ path: id, payload });
   }
 
-  async delete({ id }) {
-    return id;
+  async delete({ id, abortController }) {
+    return await this.#http.delete({ path: id, abortController });
   }
 }
 

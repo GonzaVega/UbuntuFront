@@ -57,4 +57,16 @@ export class HttpAdapter {
       if (signal.aborted) reject(new Error('Operación cancelada'));
     });
   }
+
+  async post({ payload, abortController }) {
+    return { payload, abortController };
+  }
+
+  async patch({ id, payload, abortController }) {
+    return { id, payload, abortController };
+  }
+
+  async delete({ id, abortController }) {
+    return { id, abortController };
+  }
 }

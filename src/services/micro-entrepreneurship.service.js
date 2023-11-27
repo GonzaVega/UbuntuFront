@@ -3,27 +3,33 @@ import { repository } from '@/services/shared/repository';
 export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
-  async find({ path = '', searchParams = {}, abortController }) {
-    path = this.collection + path;
+  async find({ searchParams = {}, abortController }) {
+    const path = this.collection;
 
     return await repository.find({ path, searchParams, abortController });
   }
 
-  async findOne({ id }) {
+  async findOne({ id, abortController }) {
     id = this.collection + '/' + id;
 
-    return await repository.findOne({ id });
+    return await repository.findOne({ id, abortController });
   }
 
-  async create({ payload }) {
-    return repository.save({ payload });
+  async create({ payload, abortController }) {
+    const path = this.collection;
+
+    return repository.save({ path, payload, abortController });
   }
 
-  async update({ id, payload }) {
-    return repository.update({ id, payload });
+  async update({ id, payload, abortController }) {
+    id = this.collection + '/' + id;
+
+    return repository.update({ id, payload, abortController });
   }
 
-  async delete({ id }) {
-    return repository.delete({ id });
+  async delete({ id, abortController }) {
+    id = this.collection + '/' + id;
+
+    return repository.delete({ id, abortController });
   }
 }
