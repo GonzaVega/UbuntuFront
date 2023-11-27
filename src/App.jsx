@@ -11,6 +11,7 @@ import Microemprendimientos from '@/pages/microemprendimientos/Microemprendimien
 import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
 import { useAuth } from '@/contexts/AuthContext';
+import SearchPage from '@/pages/search/SearchPage';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -28,6 +29,7 @@ function App() {
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
             <Route path='/microemprendimientos' element={<Microemprendimientos />} />
+            <Route path='/search' element={<SearchPage />} />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
             {/* Agregar rutas necesarias */}
           </Routes>
