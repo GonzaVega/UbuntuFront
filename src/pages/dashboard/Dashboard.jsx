@@ -3,12 +3,16 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import PeopleIcon from '@mui/icons-material/People';
 
+
 function Dashboard() {
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='lg' style={{ textAlign: 'center' }}>
       <Box sx={{ my: 4 }}>
-        <Typography variant='h4' gutterBottom>
-          Mi Dashboard
+        <Typography variant='h4' gutterBottom style={{ marginBottom: '30px' }}>
+          Dashboard Administrador
+        </Typography>
+        <Typography variant='h2' gutterBottom>
+          Estadísticas mensuales
         </Typography>
         <Grid container spacing={3}>
           {/* Item de Estadísticas */}
@@ -48,3 +52,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
