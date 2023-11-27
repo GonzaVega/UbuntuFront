@@ -1,11 +1,15 @@
-import Grid from '@material-ui/core/Grid';
+import { Grid, Box, Typography, useTheme } from '@mui/material';
 
-const MyGridComponent = ({ children }) => (
-  <div style={{ backgroundColor: '#093C59', padding: 2 }}>
-    <Grid container spacing={3}>
-      {children}
-    </Grid>
-  </div>
-);
+const MyGridComponent = () => {
+  const { palette } = useTheme();
+  return (
+    <Box sx={{ backgroundColor: palette.primary.main }}>
+      <Grid container spacing={3}>
+        <Typography>Nuevos Microemprendimientos</Typography>
+        <Typography>100</Typography>
+      </Grid>
+    </Box>
+  );
+};
 
 export default MyGridComponent;

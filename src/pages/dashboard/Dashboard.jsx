@@ -2,54 +2,18 @@ import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import PeopleIcon from '@mui/icons-material/People';
-
+import MyGridComponent from '@/pages/dashboard/MyGridComponent';
 
 function Dashboard() {
   return (
-    <Container maxWidth='lg' style={{ textAlign: 'center' }}>
-      <Box sx={{ my: 4 }}>
-        <Typography variant='h4' gutterBottom style={{ marginBottom: '30px' }}>
-          Dashboard Administrador
-        </Typography>
-        <Typography variant='h2' gutterBottom>
-          Estadísticas mensuales
-        </Typography>
-        <Grid container spacing={3}>
-          {/* Item de Estadísticas */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <BarChartIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Estadísticas</Typography>
-            </Paper>
-          </Grid>
-          {/* Item de Listas */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <ListAltIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Listas</Typography>
-            </Paper>
-          </Grid>
-          {/* Item de Usuarios */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <PeopleIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Usuarios</Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
+    <Container py={'5rem'}>
+      <MyGridComponent />
+      <MyGridComponent />
+      <MyGridComponent />
+      <MyGridComponent />
+      <MyGridComponent />
     </Container>
   );
 }
 
 export default Dashboard;
-
