@@ -193,6 +193,7 @@ function Navbar() {
 
               <ListItem sx={{ py: '1rem' }}>
                 <Link
+                  to='/microemprendimientos'
                   style={{
                     textDecoration: 'none',
                     color: `${palette.background.paper}`,

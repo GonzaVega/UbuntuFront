@@ -5,9 +5,9 @@ import theme from '@/theme/theme';
 import NavBar from '@/components/common/NavBar';
 import LandingPage from '@/pages/landing/LandingPage';
 import Dashboard from '@/pages/dashboard/Dashboard';
-import Publicaciones from '@/pages/landing/components/Publicaciones';
+import PublicationsRouter from '@/pages/publications/PublicationsRouter';
 import Proveedores from '@/pages/proveedores/Proveedores';
-import Microemprendimientos from '@/pages/microemprendimientos/Microemprendimientos';
+import MicroemprendimientosRouter from '@/pages/microemprendimientos/MicroemprendimientosRouter';
 import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
 import { useAuth } from '@/contexts/AuthContext';
@@ -28,9 +28,9 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/layout' element={<Layout_ex />} />
             <Route path='/proveedores' element={<Proveedores />} />
-            <Route path='/publicaciones' element={<Publicaciones />} />
-            <Route path='/microemprendimientos' element={<Microemprendimientos />} />
+            <Route path='/publicaciones/*' element={<PublicationsRouter />} />
             <Route path='/search' element={<SearchPage />} />
+            <Route path='/microemprendimientos/*' element={<MicroemprendimientosRouter />} />
             <Route
               path='/admin/microentrepreneurship/*'
               element={<MicroentrepreneurshipRouter />}

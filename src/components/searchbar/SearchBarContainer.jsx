@@ -9,8 +9,8 @@ export default function SearchBarContainer({ imageRoute, title, subtitle, text }
     <Box
       sx={{
         position: 'relative',
-        height: '488px',
-        minHeight: '488px',
+        height: '600px',
+        minHeight: '600px',
         backgroundImage: imageRoute,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
