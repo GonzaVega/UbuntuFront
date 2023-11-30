@@ -4,10 +4,6 @@ import CategoryDetails from '@/pages/microemprendimientos/components/CategoryDet
 const CategoryCard = ({ icon, category, isSelected }) => {
   const { palette } = useTheme();
 
-  // const selectionHandler = () => {
-  //   // onClick(category);
-  // };
-
   //variable de prueba.
   const categoryDescription =
     'Conectate con Microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos.';

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, useTheme, styled, Container, Grid } from '@mui/material';
-import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
+import { Box, Typography, styled, Container, Grid } from '@mui/material';
 
+import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import EmprendimientoCard from '@/pages/microemprendimientos/components/EmprendimientoCard';
 
 const StyledContainerCategories = styled(Container)(({ theme }) => ({
@@ -22,8 +22,8 @@ const Background = styled(Box)(({ theme }) => ({
 
 const CircleCut = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  top: '-220%',
-  right: '-245%',
+  top: '-4500px',
+  right: '-2350px',
   width: '300%',
   height: '300%',
   borderRadius: '50%',

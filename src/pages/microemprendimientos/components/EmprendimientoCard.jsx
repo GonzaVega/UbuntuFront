@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Card, Typography, Button, IconButton, Divider, Box, styled } from '@mui/material';
+import { Typography, Button, IconButton, Divider, Box, styled } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ExpandLess } from '@mui/icons-material';
-import CardImageSlider from '@/components/card/CardImageSlider';
 import { useTheme } from '@emotion/react';
-import CardContainer from '@/components/card/CardContainer';
+
+import CardImageSlider from '@/components/card/CardImageSlider';
 
 const MainContainer = styled('div')(({ theme }) => ({
   p: '16px 0.75rem 0.5rem',
@@ -14,12 +14,11 @@ const MainContainer = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   backgroundColor: '#EAEAEA',
   borderRadius: '16px',
-  // width: 'calc(100% - 32px)',
   transition: 'max-height 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
   overflow: 'hidden',
   maxHeight: '400px',
   '&:hover': {
-    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.2)', // Efecto de sombra al hacer hover
+    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.2)',
   },
 }));
 

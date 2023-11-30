@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Container, Typography, Box, styled, useTheme } from '@mui/material';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/CategoryCard';
-import EmprendimientoCard from '@/pages/microemprendimientos/components/EmprendimientoCard';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
 import agroecologyIcon from '@/assets/images/agroecology.png';
 import conservationIcon from '@/assets/images/conservation.png';
 import circularEconomyIcon from '@/assets/images/circular-economy.png';
-import { useNavigate, useParams, Link, Outlet } from 'react-router-dom';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -41,10 +41,8 @@ const Microemprendimientos = () => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const { categoryName } = useParams();
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [projects, setProjects] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState({});
-  const [showCategories, setShowCategories] = useState(true);
+
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
@@ -74,39 +72,6 @@ const Microemprendimientos = () => {
       image: circularEconomyIcon,
     },
   ];
-
-  // const loadCategoryPostHandler = (category) => {
-  //   setSelectedCategory(category);
-  //   loadMicroemprendimientosHandler(category);
-  //   setSelectedCategories((prevSelectedCategories) => ({
-  //     ...prevSelectedCategories,
-  //     [category]: true,
-  //   }));
-  //   setShowCategories(false);
-  //   navigate(`/${encodeURIComponent(category)}`);
-  // };
-
-  // const loadMicroemprendimientosHandler = (category) => {
-  //   // Simulando carga de datos de microemprendimientos basados en la categoría seleccionada
-  //   // Aquí deberías obtener los microemprendimientos reales de esa categoría desde tu API o fuente de datos
-  //   // const dummyData = [
-  //   //   // Datos simulados de microemprendimientos
-  //   //   // {
-  //   //   //   title: 'EcoSenda',
-  //   //   //   establishmentType: 'Finca agrícola',
-  //   //   //   category: category,
-  //   //   //   location: 'Tunuyán, Mendoza, Argentina',
-  //   //   //   description:
-  //   //   //     'Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultiva frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.',
-  //   //   //   additionalInfo:
-  //   //   //     'Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina.',
-  //   //   // },
-  //   //   // Agrega más microemprendimientos según sea necesario
-  //   // ];
-
-  //   // setProjects(dummyData);
-  //   setSelectedCategory(category);
-  // };
 
   return (
     <>
@@ -150,7 +115,6 @@ const Microemprendimientos = () => {
             <CategoryCard
               icon={category.image}
               category={category.title}
-              // onClick={() => loadCategoryPostHandler(category.title)}
               isSelected={selectedCategories[category.title]}
             />
           </Link>
