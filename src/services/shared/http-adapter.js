@@ -27,7 +27,7 @@ const DATA = {
 // }
 
 export class HttpAdapter {
-  async get({ path, searchParams, abortController }) {
+  async get({ path, searchParams = {}, abortController }) {
     const { signal } = abortController || new AbortController();
     const { query } = searchParams;
 
@@ -42,11 +42,13 @@ export class HttpAdapter {
       const id = path.split('/')[2];
 
       if (id) {
-        response = response.find((item) => item.id === +id);
+        response = response.find((item) => {
+          return item.nombre === id;
+        });
       }
 
       const timeout = setTimeout(() => {
-        if (response.length > 0) resolve(response);
+        if (response.length > 0 || response.nombre) resolve(response);
         else reject(new Error('No se encotraron resultados'));
       }, [500]);
 

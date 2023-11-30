@@ -13,7 +13,7 @@ export default function SearchPage() {
   }, [searchParams]);
 
   return (
-    <Container component='main' sx={{ py: '2.5rem' }}>
+    <Container component='main' sx={{ pb: '2.5rem' }}>
       <Grid container component='section' mt='1.5rem'>
         <Grid item xs={12}>
           <SearchBar />

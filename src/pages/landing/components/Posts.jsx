@@ -4,6 +4,7 @@ import PostCard from '@/pages/landing/components/PostCard';
 import POST_IMAGE_01 from '@/assets/images/post_image_01.png';
 import POST_IMAGE_02 from '@/assets/images/post_image_02.png';
 import POST_IMAGE_03 from '@/assets/images/post_image_03.png';
+import { USER_ROUTES } from '@/constants/routes';
 
 const posts = [
   {
@@ -51,7 +52,7 @@ export default function Posts() {
       </Grid>
       <Grid item xs={12} mt='1.5rem'>
         <Box display='flex' justifyContent='center'>
-          <Link to='/publicaciones'>
+          <Link to={USER_ROUTES.POSTS}>
             <Button
               variant='contained'
               sx={{
