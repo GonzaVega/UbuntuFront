@@ -1,6 +1,7 @@
 import ButtonWithMenu from '@/components/common/ButtonWithMenu';
 import NoticeCard from '@/components/common/NoticeCard';
 import { ArrowRightIcon } from '@/components/icons';
+import { ADMIN_ROUTES } from '@/constants/routes';
 import { useBoolean } from '@/hooks/useBoolean';
 import { Box, ButtonBase, Divider, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -38,7 +39,10 @@ export default function Card({ title, category }) {
           <Typography variant='h3' color='primary.main' fontWeight={700}>
             {title}
           </Typography>
-          <ButtonWithMenu onHidden={handleHidden} />
+          <ButtonWithMenu
+            onHidden={handleHidden}
+            editRoute={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.EDIT + '/' + title}
+          />
         </Box>
         <Divider sx={{ width: '70%', bgcolor: 'secondary.main', height: '1px' }} />
         <Box display='flex' justifyContent='space-between' mt='1rem'>

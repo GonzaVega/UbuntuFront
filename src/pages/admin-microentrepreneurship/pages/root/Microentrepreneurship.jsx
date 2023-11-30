@@ -1,3 +1,4 @@
+import { ADMIN_ROUTES } from '@/constants/routes';
 import CardContainer from '@/pages/admin-microentrepreneurship/pages/root/components/CardContainer';
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,7 @@ export default function Microentrepreneurship() {
             Microemprendimientos
           </Typography>
           <Box display='flex' justifyContent='center' mt='1.5rem'>
-            <Link to='load' style={{ width: '100%' }}>
+            <Link to={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.LOAD} style={{ width: '100%' }}>
               <Button
                 variant='contained'
                 fullWidth

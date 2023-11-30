@@ -1,4 +1,5 @@
 import SearchBarBase from '@/components/common/SearchBarBase';
+import { USER_ROUTES } from '@/constants/routes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function SearchBar() {
@@ -15,7 +16,7 @@ export default function SearchBar() {
       searchParams.set('query', query);
 
       navigate({
-        pathname: '/search',
+        pathname: USER_ROUTES.SEARCH,
         search: searchParams.toString(),
       });
     }

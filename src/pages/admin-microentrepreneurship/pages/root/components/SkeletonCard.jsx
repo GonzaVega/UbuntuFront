@@ -15,8 +15,8 @@ export default function SkeletonCard() {
           </Box>
         </Box>
         <Skeleton height={3} width={'70%'} sx={{ mt: '0.9rem' }} />
-        <Box display='flex' flexDirection='row' alignItems='center'>
-          <Box display='flex' flexDirection='column' justifyContent='space-between' mt='1rem'>
+        <Box display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
+          <Box display='flex' flexDirection='column' mt='1rem'>
             <Skeleton
               variant='text'
               width={250}
@@ -28,7 +28,7 @@ export default function SkeletonCard() {
               sx={{ fontSize: '1.125rem', lineHeight: '1.5rem' }}
             />
           </Box>
-          <Box p='0 1.8rem'>
+          <Box p='0 1rem'>
             <Skeleton variant='rounded' width={'0.5rem'} height={'1.3rem'} />
           </Box>
         </Box>

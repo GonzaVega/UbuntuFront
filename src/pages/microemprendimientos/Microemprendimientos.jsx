@@ -108,7 +108,7 @@ const Microemprendimientos = () => {
         </Box>
         {categories.map((category) => (
           <Link
-            to={`/microemprendimientos/${encodeURIComponent(category.title)}`}
+            to={encodeURIComponent(category.title)}
             key={category.title}
             style={{ textDecoration: 'none', cursor: 'pointer' }}
           >
