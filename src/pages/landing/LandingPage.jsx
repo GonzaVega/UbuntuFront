@@ -1,20 +1,19 @@
+import { Container } from '@mui/material';
 import Goals from '@/pages/landing/components/Goals';
-import Publicaciones from '@/pages/landing/components/Publicaciones';
+import Posts from '@/pages/landing/components/Posts';
 import SearchBarContainer from '@/pages/landing/components/SearchBarContainer';
-import { Box, Card, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
+import Categories from '@/pages/landing/components/Categories';
+import Login from '@/auth/Loginn';
 
 function LandingPage() {
   return (
     <>
       <SearchBarContainer />
-      <Container>
+      <Container sx={{ py: '2.5rem' }}>
+        <Login/>
         <Goals />
-        <br />
-        <br />
-        <br />
-        <br />
-        <p>Acá va la sección de categorías-----</p>
-        <Publicaciones />
+        <Categories />
+        <Posts />
       </Container>
     </>
   );
