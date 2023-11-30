@@ -1,16 +1,17 @@
-import { useState } from 'react';
 import { Typography, Card, Modal, Box, Button, Fade } from '@mui/material';
 import { CheckCircleOutline, CancelOutlined } from '@mui/icons-material';
 
-const NoticeCard = ({ success, mainMessage, secondaryMessage, cancelFunction }) => {
-  const [open, setOpen] = useState(true);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+const NoticeCard = ({
+  isOpen,
+  handleClose,
+  success,
+  mainMessage,
+  secondaryMessage,
+  cancelFunction,
+}) => {
   return (
     <Modal
-      open={open}
+      open={isOpen}
       onClose={handleClose}
       closeAfterTransition
       style={{
@@ -19,13 +20,13 @@ const NoticeCard = ({ success, mainMessage, secondaryMessage, cancelFunction }) 
         justifyContent: 'center',
       }}
     >
-      <Fade in={open}>
+      <Fade in={isOpen}>
         <Card
           sx={{
             width: '360px',
             borderRadius: '25px',
             textAlign: 'center',
-            padding: '10px',
+            padding: '1rem 1.25rem 0.25rem',
             paddingBottom: '1px',
           }}
         >
@@ -38,15 +39,19 @@ const NoticeCard = ({ success, mainMessage, secondaryMessage, cancelFunction }) 
               <CancelOutlined fontSize='inherit' />
             </Box>
           )}
-          <Box sx={{ padding: '10px' }}>
-            <Typography variant='h6'>{mainMessage}</Typography>
-          </Box>
-          <Box sx={{ padding: '10px' }}>
-            <Typography variant='body1' textAlign='left'>
-              {secondaryMessage}
+          <Box mt='1rem'>
+            <Typography variant='h3' sx={{ fontWeight: 400, lineHeight: '2rem' }}>
+              {mainMessage}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+          {secondaryMessage && (
+            <Box mt='1rem'>
+              <Typography variant='body1' textAlign='left'>
+                {secondaryMessage}
+              </Typography>
+            </Box>
+          )}
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', py: '0.25rem' }}>
             {!success ? (
               <>
                 <Button sx={{ textTransform: 'none' }} onClick={handleClose}>
