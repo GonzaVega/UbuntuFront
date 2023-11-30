@@ -13,7 +13,7 @@ const Login = () => {
   const { login } = useAuth();
   const [open, setOpen] = useState(true);
 
-  //const handleOpen = () => setOpen(true);
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const googleLoginHandler = useGoogleLogin({
@@ -35,16 +35,9 @@ const Login = () => {
 
     // Verificar si existe la propiedad "credential"
     if (credentialResponse && credentialResponse.credential) {
-      axios
-        .post(`http://localhost:8081/auth/google?tokenId=${credentialResponse.credential}`)
-        .then((res) => {
-          // Guarda el token JWT u otra respuesta del backend
-          console.log("RES", res);
-          localStorage.setItem("authToken", res.data.token);
-        })
-        .catch((error) => {
-          console.error("Error al autenticar con Google en el backend:", error);
-        });
+      login(credentialResponse);
+      handleClose();
+      navigate('/');
     } else {
       console.error("Fallo en la autenticación de Google:", credentialResponse);
     }
@@ -107,10 +100,12 @@ const Login = () => {
                       console.log('Login Failed');
                     }}
                     cookiePolicy={"single_host_origin"}
+                    size="large"
+                    theme="filled_blue"
+                    shape='pill'
                   />
                 </GoogleOAuthProvider>
-                
-                  
+                            
               </Box>
             </Box>
           </Card>

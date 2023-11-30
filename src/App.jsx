@@ -9,7 +9,6 @@ import Publicaciones from '@/pages/landing/components/Publicaciones';
 import Proveedores from '@/pages/proveedores/Proveedores';
 import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
-import Loginn from '@/auth/Loginn';
 import { useAuth } from '@/contexts/AuthContext';
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
-            <Route path='/loginn' element={<Loginn />} />
             {/* Agregar rutas necesarias */}
           </Routes>
         </Router>

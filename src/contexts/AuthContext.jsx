@@ -7,67 +7,87 @@ const AuthContext = createContext();
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-//SE REALIZARON MODIFICACIONES SOLO PARA PRUEBAS.
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 
-  const login = async (googleUserData) => {
+  const API_BASE_URL = 'http://localhost:8081';
+
+  const login = async (credentialResponse) => {
     try {
+      if (credentialResponse.credential) {
+        const tokenId = credentialResponse.credential;
+        console.log('Token ID:', tokenId);
 
-      const backendAuth = await axios.post(`http://localhost:8081/auth/google?tokenId=${googleUserData}`);
-      
-      if (googleUserData.access_token) {
-        console.log(googleUserData.credentials);
+        const authResponse = await authenticateWithGoogle(tokenId);
 
-        // Obtener información del perfil del usuario desde la API de Google
-      const profileInfo = await axios.get('https://www.googleapis.com/userinfo/v2/me', {
-        headers: {
-          Authorization: `Bearer ${googleUserData.access_token}`,
-        },
-      });
+        console.log('Backend Auth Response:', JSON.stringify(authResponse, null, 2));
 
-      console.log(profileInfo)
-
-      //const backendAuth = await axios.post(`http://localhost:8081/auth/google?tokenId=${profileInfo.data}`);
-
-      // Enviar tokenId y datos del perfil al backend como parámetros de consulta
-      /* const backendAuth = await axios.post('http://localhost:8081/auth/google', null, {
-        params: {
-          tokenId:{
-            email: profileInfo.data.email,
-            name: profileInfo.data.given_name,
-            lastName: profileInfo.data.family_name,
-            picture: profileInfo.data.picture,
-          }
-        },
-      }); */
-
-      /* const backendAuth = await axios.post('http://localhost:8081/auth/google', {
-        tokenId: googleUserData.access_token,
-        email: profileInfo.data.email,
-        name: profileInfo.data.given_name,
-        lastName: profileInfo.data.family_name,
-        picture: profileInfo.data.picture,
-        // Agrega otros campos según sea necesario
-      }); */
-
-        //const backendAuth = await axios.post(`http://localhost:8081/auth/google?tokenId=${googleUserData.access_token}`);
-
-        if (backendAuth.role === 'ADMIN') {
-          localStorage.setItem('token', backendAuth.token);
-          setUser(backendAuth);
-          setIsAuthenticated(true);
-        }
-        
-        setIsAuthenticated(true);
-        localStorage.setItem('token', backendAuth.token);
+        handleAuthResponse(authResponse);
+        console.log('User----'+user);
       }
     } catch (error) {
-      console.error('Error de autenticación: ', error.message);
+      console.error('Authentication Error:', error.message);
     }
   };
+
+  const authenticateWithGoogle = async (tokenId) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/google?tokenId=${tokenId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Authentication API Error:', error.message);
+      return { error: 'No está autorizado a ingresar.' };
+    }
+  };
+
+  const handleAuthResponse = (authResponse) => {
+    if (authResponse != null) {
+      console.log(authResponse.firstName)
+      console.log("tiene datos data------------")
+      if(authResponse.role === 'ADMIN'){
+        console.log("es admin------------")
+        const { token } = authResponse;
+        console.log("token---"+token)
+        localStorage.setItem('token', token);
+        setUser(authResponse);
+        setIsAuthenticated(true);
+
+        console.log('User:', user);
+      }
+    }
+  };
+
+  // const login = async (credentialResponse) => {
+  //   try {
+
+  //     if (credentialResponse.credential) {
+  //       console.log(credentialResponse.credential);
+  //       const authResponse = await axios
+  //                           .post(`http://localhost:8081/auth/google?tokenId=${credentialResponse.credential}`);
+        
+
+  //       console.log("backendAuth---" + JSON.stringify(authResponse, null, 2))
+
+  //       if (authResponse.error) {
+  //         console.log(authResponse.error)
+  //       } else if (authResponse.data !== null && authResponse.role === 'ADMIN') {
+  //         localStorage.setItem('token', authResponse.data.token);
+  //         setUser(authResponse.data);
+  //         setIsAuthenticated(true);
+
+  //         localStorage.setItem('token', authResponse.data.token);
+
+  //         console.log("user----" + user)
+  //       }
+
+  //     }
+  //   } catch (error) {
+  //     console.error('Error de autenticación: ', error.message);
+  //   }
+  // };
 
   // Cierra la sesión y elimina la información del usuario del estado. revisar comentarios: se han efectuado para realizar demostracion
   const logout = async () => {
