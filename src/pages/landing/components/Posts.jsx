@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import PostCard from '@/pages/landing/components/PostCard';
 import POST_IMAGE_01 from '@/assets/images/post_image_01.png';
 import POST_IMAGE_02 from '@/assets/images/post_image_02.png';
@@ -50,17 +51,19 @@ export default function Posts() {
       </Grid>
       <Grid item xs={12} mt='1.5rem'>
         <Box display='flex' justifyContent='center'>
-          <Button
-            variant='contained'
-            sx={{
-              lineHeight: '1.25rem',
-              padding: '0.625rem 1.89rem',
-              textTransform: 'none',
-            }}
-            disableElevation
-          >
-            Ir a Publicaciones
-          </Button>
+          <Link to='/publicaciones'>
+            <Button
+              variant='contained'
+              sx={{
+                lineHeight: '1.25rem',
+                padding: '0.625rem 1.89rem',
+                textTransform: 'none',
+              }}
+              disableElevation
+            >
+              Ir a Publicaciones
+            </Button>
+          </Link>
         </Box>
       </Grid>
     </Grid>
