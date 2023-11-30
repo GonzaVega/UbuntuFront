@@ -12,6 +12,7 @@ import Layout_ex from '@/components/layouts/Layout_ex';
 import Login from '@/auth/Login';
 import { useAuth } from '@/contexts/AuthContext';
 import SearchPage from '@/pages/search/SearchPage';
+import MicroentrepreneurshipRouter from '@/pages/admin-microentrepreneurship/MicroentrepreneurshipRouter';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -30,6 +31,10 @@ function App() {
             <Route path='/publicaciones' element={<Publicaciones />} />
             <Route path='/microemprendimientos' element={<Microemprendimientos />} />
             <Route path='/search' element={<SearchPage />} />
+            <Route
+              path='/admin/microentrepreneurship/*'
+              element={<MicroentrepreneurshipRouter />}
+            />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
             {/* Agregar rutas necesarias */}
           </Routes>
