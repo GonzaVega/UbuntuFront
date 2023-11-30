@@ -4,3 +4,4 @@ export { default as ArrowDownIcon } from './ArrowDown.icon';
 export { default as ArrowLeftIcon } from './ArrowLeft.icon';
 export { default as ArrowRightIcon } from './ArrowRight.icon';
 export { default as NoResultsIcon } from './NoResults.icon';
+export { default as EyeIcon } from './Eye.icon';
