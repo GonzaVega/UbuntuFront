@@ -28,7 +28,6 @@ function App() {
             <Route path='/layout' element={<Layout_ex />} />
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
-
             <Route path='/search' element={<SearchPage />} />
             <Route path='/microemprendimientos/*' element={<MicroemprendimientosRouter />} />
             {!isAuthenticated && <Route path='/login' element={<Login />} />}
