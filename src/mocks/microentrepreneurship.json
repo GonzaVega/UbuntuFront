@@ -12,7 +12,8 @@
     "subCategoria": "Finca agroecológica",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultivan frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.",
@@ -31,7 +32,8 @@
     "subCategoria": "Desarrollo local sostenible",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "VerdeVivo se dedica al desarrollo local sostenible, fomentando la inclusión financiera y promoviendo la economía social en la comunidad cordobesa.",
@@ -50,7 +52,8 @@
     "subCategoria": "Reciclaje y conservación",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "ReciclaAR se dedica a la conservación del medio ambiente mediante el reciclaje de materiales y la promoción de prácticas sostenibles en la comunidad de Rosario.",
@@ -69,7 +72,8 @@
     "subCategoria": "Cultivo de huertas orgánicas",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "HuertaFeliz se especializa en el cultivo de huertas orgánicas, proporcionando alimentos saludables y fomentando prácticas agrícolas sostenibles en Mendoza.",
@@ -88,7 +92,8 @@
     "subCategoria": "Movilidad sostenible",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "EcoBici ofrece soluciones de movilidad sostenible a través del alquiler de bicicletas eléctricas, promoviendo la economía circular en la Ciudad de Buenos Aires.",
@@ -107,7 +112,8 @@
     "subCategoria": "Reforestación",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "ReforestAR se dedica a la reforestación de áreas degradadas, contribuyendo a la conservación de los ecosistemas en la provincia de Neuquén.",
@@ -126,7 +132,8 @@
     "subCategoria": "Arte sostenible",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "EcoArte promueve el arte sostenible y la inclusión financiera en la ciudad de Salta, generando oportunidades para artistas locales comprometidos con la ecología.",
@@ -145,7 +152,8 @@
     "subCategoria": "Tecnología sostenible",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "EcoTech desarrolla soluciones tecnológicas sostenibles para abordar desafíos ambientales en la región de Tierra del Fuego, fomentando la economía circular.",
@@ -164,7 +172,8 @@
     "subCategoria": "Textiles orgánicos",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "BioTextil produce textiles orgánicos en armonía con la agroecología, promoviendo la moda sostenible en la provincia de San Juan.",
@@ -183,7 +192,8 @@
     "subCategoria": "Gestión sostenible del agua",
     "imagenes": [
       "/src/assets/images/microentrepreneurship_image_01.png",
-      "/src/assets/images/microentrepreneurship_image_02.png"
+      "/src/assets/images/microentrepreneurship_image_02.png",
+      "/src/assets/images/microentrepreneurship_image_03.png"
     ],
     "activo": true,
     "descripcion": "AguaPura se enfoca en la gestión sostenible del agua en la región de Chubut, implementando prácticas para preservar este recurso vital.",
