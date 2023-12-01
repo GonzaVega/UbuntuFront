@@ -26,7 +26,7 @@ function App() {
             <Route path='/layout' element={<Layout_ex />} />
             <Route path='/proveedores' element={<Proveedores />} />
             <Route path='/publicaciones' element={<Publicaciones />} />
-            {!isAuthenticated && <Route path='/login' element={<Login />} />}
+            {!isAuthenticated && <Route path='/ingresar' element={<Login />} />}
             {/* Agregar rutas necesarias */}
           </Routes>
         </Router>
