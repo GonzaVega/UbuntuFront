@@ -1,7 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 import { googleLogout } from '@react-oauth/google';
+import axios from 'axios';
 import NoticeCard from '@/components/common/NoticeCard';
-import { render } from 'react-dom';
+import { USER_ROUTES } from '@/constants/routes';
+//import { render } from 'react-dom';
 
 const AuthContext = createContext();
 
@@ -10,85 +12,75 @@ export const useAuth = () => {
 };
 //SE REALIZARON MODIFICACIONES SOLO PARA PRUEBAS.
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
+  const [authError, setAuthError] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  //solo para demo.
-  const dummyUser = {
-    token: 'your_generated_token_here',
-    email: 'gonzaarg03@gmail.com',
-    firstName: 'Gonzalo',
-    lastName: 'Vega',
-    photoUrl: 'https//lafotodetuperfildegoogle.jpg',
-    role: 'ADMIN',
-  };
 
-  //Inicia una sesion en Google y luego en el backend. todo: incorporar el inicio de sesion con google de Login en este contexto. revisar comentarios: se han efectuado para realizar demostracion
-  const login = async (googleUserData) => {
+  const API_BASE_URL = 'http://localhost:8081';
+
+  const login = async (credentialResponse) => {
     try {
-      if (googleUserData.access_token) {
-        console.log(googleUserData);
-        // localStorage.setItem('token', user.token);
-        setUser(dummyUser);
-        setIsAuthenticated(true);
-        // localStorage.setItem('email', user.email);
+      if (credentialResponse.credential) {
+        const tokenId = credentialResponse.credential;
+        console.log('Token ID:', tokenId);
+
+        const authResponse = await authenticateWithGoogle(tokenId);
+
+        console.log('Backend Auth Response:', JSON.stringify(authResponse, null, 2));
+
+        saveUserInfo(authResponse);
+        console.log('User----'+user);
+
+        return true
       }
     } catch (error) {
-      console.error('Error de autenticación: ', error.message);
+      setAuthError("No puede acceder a este sitio")
     }
-    //   //Logica para inicio de sesion cuando haya backend.
-    //   //     const backendAuth = await axios.post('/auth/google', {
-    //   //       token: googleUserData.access_token,
-    //   //     });
-
-    //   //     if (backendAuth.role === 'ADMIN') {
-    //   //       // localStorage.setItem('email', backendAuth.email);
-    //   //       localStorage.setItem('token', backendAuth.token);
-    //   //       setUser(backendAuth);
-    //   //       setIsAuthenticated(true);
-    //   //
-    //   //     }
-    //   //   }
   };
 
-  //ESTA FUNCION DEBERIA IR EN LA VERSION FINAL.
-  // const login = async (googleUserData) => {
-  //   try {
-  //     if (googleUserData.access_token) {
-  //       const backendAuth = await axios.post('/auth/google', {
-  //         token: googleUserData.access_token,
-  //       });
+  const authenticateWithGoogle = async (tokenId) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/google?tokenId=${tokenId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Authentication API Error:', error.message);
+      throw new Error(error.message);
+    }
+  };
 
-  //       if (backendAuth.role === 'ADMIN') {
-  //         localStorage.setItem('token', backendAuth.token);
-  //         setUser(backendAuth);
-  //         setIsAuthenticated(true);
-  //       }
-  //       console.log(googleUserData);
-  //       setUser(dummyUser);
-  //       setIsAuthenticated(true);
-  //       localStorage.setItem('token', user.token);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error de autenticación: ', error.message);
-  //   }
-  // };
+  const saveUserInfo = (authResponse) => {
+    if (authResponse != null) {
+      console.log(authResponse.firstName)
+      console.log("tiene datos data------------")
+      if(authResponse.role === 'ADMIN'){
+        console.log("es admin------------")
+        const { token } = authResponse;
+        console.log("token---"+token)
+        localStorage.setItem('token', token);
+        setUser(authResponse);
+        setIsAuthenticated(true);
+
+        console.log('User:', user);
+      }
+    }
+  };
 
   // Cierra la sesión y elimina la información del usuario del estado. revisar comentarios: se han efectuado para realizar demostracion
   const logout = async () => {
     if (user) {
       // Logica de cierre de sesión cuando haya backend.
-      // await axios.post('/auth/google/logout', { token: user.token });
+      await axios.post('/auth/google/logout', { token: user.token });
       googleLogout();
       localStorage.clear();
       setUser(null);
       setIsAuthenticated(false);
-      window.location.href = '/';
+      window.location.href = USER_ROUTES.HOME;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, authError, logout  }}>
       {children}
     </AuthContext.Provider>
   );

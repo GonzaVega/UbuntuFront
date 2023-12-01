@@ -5,31 +5,50 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { googleOAuthCredential } from '@/helpers/googleCredentials';
 import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import NoticeCard from '@/components/common/NoticeCard';
+import { ADMIN_ROUTES } from '@/constants/routes';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, authError} = useAuth();
   const [open, setOpen] = useState(true);
+  const [openError, setOpenError] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
 
-  //Arreglar el CORS. para refactorizar: esta funcionalidad pasarla al contexto de autenticacion.
-  const googleLoginHandler = useGoogleLogin({
-    onSuccess: async (codeResponse) => {
-      await login(codeResponse);
-      handleClose();
-      navigate('/');
-    },
-    onError: () => {
-      console.log('Login Failed');
-    },
-    clientId: googleOAuthCredential,
-    flow: 'implicit',
-  });
+
+  const handleGoogleSuccess = async(credentialResponse) => {
+    console.log(credentialResponse);
+
+    if (credentialResponse && credentialResponse.credential) {
+      const successResponse = await login(credentialResponse);
+      if(successResponse){
+        navigate(ADMIN_ROUTES.DASHBOARD);
+      }
+      handleClose(); 
+      setOpenError(true)
+    } else {
+
+      console.error("Fallo en la autenticación de Google:", credentialResponse);
+    }
+  };
 
   return (
     <>
+      <NoticeCard
+        isOpen = {openError}
+        success={false}
+        mainMessage={authError}
+        handleClose={()=> setOpenError(false)}
+        cancelFunction={()=>{
+          setOpenError(false)
+          setOpen(true)
+        }}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -57,20 +76,10 @@ const Login = () => {
           >
             <Card sx={{ width: '360px', borderRadius: '8px' }}>
               <Box display='flex' flexDirection='column' alignItems='center' padding='20px'>
-                <Typography
-                  variant='h1'
-                  align='center'
-                  paddingBottom='5px'
-                  sx={{ fontWeight: 800 }}
-                >
+                <Typography variant='h1' align='center' paddingBottom='5px' sx={{ fontWeight: 800 }}>
                   Ingreso
                 </Typography>
-                <Typography
-                  variant='h1'
-                  align='center'
-                  paddingBottom='20px'
-                  sx={{ fontWeight: 800 }}
-                >
+                <Typography variant='h1' align='center' paddingBottom='20px' sx={{ fontWeight: 800 }}>
                   Administrador
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -88,28 +97,20 @@ const Login = () => {
                   />
                 </Box>
                 <Box display='flex' justifyContent='center' mt={2}>
-                  <Button
-                    onClick={googleLoginHandler}
-                    variant='contained'
-                    sx={{
-                      lineHeight: '1.25rem',
-                      padding: '0.625rem 1.89rem',
-                      marginTop: '10px',
-                      textTransform: 'none',
-                    }}
-                    startIcon={
-                      <img
-                        src='src/assets/images/1657955079google-icon-png.png'
-                        alt='Google Logo'
-                        style={{ width: '36px', marginRight: '10px' }}
-                      />
-                    }
-                    disableElevation
-                  >
-                    <Typography variant='h7' align='center'>
-                      Continuá con Google
-                    </Typography>
-                  </Button>
+                
+                  <GoogleOAuthProvider clientId="812742210015-teti3ojikbl41vlpmjc2osgmc1clj2hv.apps.googleusercontent.com">
+                    <GoogleLogin
+                      onSuccess={handleGoogleSuccess}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                      cookiePolicy={"single_host_origin"}
+                      size="large"
+                      theme="filled_blue"
+                      shape='pill'
+                    />
+                  </GoogleOAuthProvider>
+                              
                 </Box>
               </Box>
             </Card>
