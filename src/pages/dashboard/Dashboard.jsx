@@ -1,47 +1,82 @@
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import PeopleIcon from '@mui/icons-material/People';
+import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
+import NewMicroentrepreneporships from '@/pages/dashboard/components/NewMicroentrepreneporships';
+import EstatisticsCard from '@/pages/dashboard/components/EstatisticsCard';
+import CategoryWrapper from '@/pages/dashboard/components/CategoryWrapper';
+import CategoriesCard from '@/pages/dashboard/components/CategoriesCard';
+import ViewCard from '@/pages/dashboard/components/ViewCard';
 
 function Dashboard() {
+  const { palette } = useTheme();
   return (
-    <Container maxWidth='lg'>
-      <Box sx={{ my: 4 }}>
-        <Typography variant='h4' gutterBottom>
-          Mi Dashboard
+    <Container>
+      <Box mt={'2.5rem'}>
+        <Typography variant='h1' textAlign='center'>
+          Dashboard Administrador
         </Typography>
-        <Grid container spacing={3}>
-          {/* Item de Estadísticas */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <BarChartIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Estadísticas</Typography>
-            </Paper>
-          </Grid>
-          {/* Item de Listas */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <ListAltIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Listas</Typography>
-            </Paper>
-          </Grid>
-          {/* Item de Usuarios */}
-          <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
-              sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <PeopleIcon sx={{ fontSize: 40, mb: 2 }} />
-              <Typography variant='h6'>Usuarios</Typography>
-            </Paper>
-          </Grid>
+        <Typography variant='h2' textAlign='center' mt='1.5rem' mb='2rem'>
+          Estadisticas Mensuales
+        </Typography>
+      </Box>
+      <NewMicroentrepreneporships />
+      <Grid container mt={'1rem'} spacing={'1.5rem'}>
+        <Grid item xs={6}>
+          <EstatisticsCard borderColor={palette.success.main} text={'Gestionados'} value={'80'} />
         </Grid>
+        <Grid item xs={6}>
+          <EstatisticsCard
+            borderColor={palette.warning.main}
+            text={'No gestionados'}
+            value={'20'}
+          />
+        </Grid>
+      </Grid>
+      <CategoryWrapper>
+        <CategoriesCard
+          text={'Economía social/Desarrollo local/Inclusión financiera'}
+          value={'40'}
+        />
+        <CategoriesCard
+          text={'Economía social/Desarrollo local/Inclusión financiera'}
+          value={'40'}
+        />
+        <CategoriesCard
+          text={'Economía social/Desarrollo local/Inclusión financiera'}
+          value={'40'}
+        />
+        <CategoriesCard
+          text={'Economía social/Desarrollo local/Inclusión financiera'}
+          value={'40'}
+        />
+      </CategoryWrapper>
+      <Box my={'3rem'}>
+        <Typography
+          sx={{ fontSize: '1.25rem', fontWeight: '600', lineHeight: '1.875rem' }}
+          textAlign={'center'}
+        >
+          Visualizaciones por Publicación
+        </Typography>
+        <Box mt={'2rem'} display={'flex'} flexDirection={'column'} gap={'1rem'}>
+          <ViewCard
+            text={'Inversiones Éticas: Más que ganacias'}
+            value={'50'}
+            date={'17/04/2023'}
+          />
+          <ViewCard
+            text={'Inversiones Éticas: Más que ganacias'}
+            value={'50'}
+            date={'17/04/2023'}
+          />
+          <ViewCard
+            text={'Inversiones Éticas: Más que ganacias'}
+            value={'50'}
+            date={'17/04/2023'}
+          />
+          <ViewCard
+            text={'Inversiones Éticas: Más que ganacias'}
+            value={'50'}
+            date={'17/04/2023'}
+          />
+        </Box>
       </Box>
     </Container>
   );

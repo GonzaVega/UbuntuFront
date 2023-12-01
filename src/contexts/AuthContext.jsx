@@ -1,13 +1,16 @@
 import { createContext, useContext, useState } from 'react';
 import { googleLogout } from '@react-oauth/google';
 import axios from 'axios';
+import NoticeCard from '@/components/common/NoticeCard';
+import { USER_ROUTES } from '@/constants/routes';
+//import { render } from 'react-dom';
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-
+//SE REALIZARON MODIFICACIONES SOLO PARA PRUEBAS.
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState({});
@@ -26,11 +29,13 @@ export const AuthProvider = ({ children }) => {
 
         console.log('Backend Auth Response:', JSON.stringify(authResponse, null, 2));
 
-        handleAuthResponse(authResponse);
+        saveUserInfo(authResponse);
         console.log('User----'+user);
+
+        return true
       }
     } catch (error) {
-      console.error('Authentication Error:', error.message);
+      setAuthError("No puede acceder a este sitio")
     }
   };
 
@@ -40,11 +45,11 @@ export const AuthProvider = ({ children }) => {
       return response.data;
     } catch (error) {
       console.error('Authentication API Error:', error.message);
-      return { error: 'No está autorizado a ingresar.' };
+      throw new Error(error.message);
     }
   };
 
-  const handleAuthResponse = (authResponse) => {
+  const saveUserInfo = (authResponse) => {
     if (authResponse != null) {
       console.log(authResponse.firstName)
       console.log("tiene datos data------------")
@@ -61,35 +66,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const login = async (credentialResponse) => {
-  //   try {
-
-  //     if (credentialResponse.credential) {
-  //       console.log(credentialResponse.credential);
-  //       const authResponse = await axios
-  //                           .post(`http://localhost:8081/auth/google?tokenId=${credentialResponse.credential}`);
-        
-
-  //       console.log("backendAuth---" + JSON.stringify(authResponse, null, 2))
-
-  //       if (authResponse.error) {
-  //         console.log(authResponse.error)
-  //       } else if (authResponse.data !== null && authResponse.role === 'ADMIN') {
-  //         localStorage.setItem('token', authResponse.data.token);
-  //         setUser(authResponse.data);
-  //         setIsAuthenticated(true);
-
-  //         localStorage.setItem('token', authResponse.data.token);
-
-  //         console.log("user----" + user)
-  //       }
-
-  //     }
-  //   } catch (error) {
-  //     console.error('Error de autenticación: ', error.message);
-  //   }
-  // };
-
   // Cierra la sesión y elimina la información del usuario del estado. revisar comentarios: se han efectuado para realizar demostracion
   const logout = async () => {
     if (user) {
@@ -99,12 +75,12 @@ export const AuthProvider = ({ children }) => {
       localStorage.clear();
       setUser(null);
       setIsAuthenticated(false);
-      window.location.href = '/';
+      window.location.href = USER_ROUTES.HOME;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, authError, logout  }}>
       {children}
     </AuthContext.Provider>
   );

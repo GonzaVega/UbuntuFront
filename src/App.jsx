@@ -1,15 +1,17 @@
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
+import { useAuth } from '@/contexts/AuthContext';
+import { ADMIN_ROUTES, USER_ROUTES } from '@/constants/routes';
+import Login from '@/auth/Login';
 import theme from '@/theme/theme';
 import NavBar from '@/components/common/NavBar';
-import LandingPage from '@/pages/landing/LandingPage';
 import Dashboard from '@/pages/dashboard/Dashboard';
-import Publicaciones from '@/pages/landing/components/Publicaciones';
-import Proveedores from '@/pages/proveedores/Proveedores';
-import Layout_ex from '@/components/layouts/Layout_ex';
-import Login from '@/auth/Login';
-import { useAuth } from '@/contexts/AuthContext';
+import SearchPage from '@/pages/search/SearchPage';
+import LandingPage from '@/pages/landing/LandingPage';
+import Publications from '@/pages/publications/Publications';
+import MicroemprendimientosRouter from '@/pages/microemprendimientos/MicroemprendimientosRouter';
+import MicroentrepreneurshipRouter from '@/pages/admin-microentrepreneurship/MicroentrepreneurshipRouter';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -21,13 +23,19 @@ function App() {
         <Router>
           <NavBar />
           <Routes>
-            <Route path='/' element={<LandingPage />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/layout' element={<Layout_ex />} />
-            <Route path='/proveedores' element={<Proveedores />} />
-            <Route path='/publicaciones' element={<Publicaciones />} />
-            {!isAuthenticated && <Route path='/ingresar' element={<Login />} />}
-            {/* Agregar rutas necesarias */}
+            <Route path={USER_ROUTES.HOME} element={<LandingPage />} />
+            <Route path={USER_ROUTES.POSTS} element={<Publications />} />
+            <Route path={USER_ROUTES.SEARCH} element={<SearchPage />} />
+            <Route
+              path={USER_ROUTES.MICROENTREPRENEURSHIPS.ROUTER_ROUTE + '/*'}
+              element={<MicroemprendimientosRouter />}
+            />
+            <Route path={ADMIN_ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route
+              path={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.ROUTER_ROUTE + '/*'}
+              element={<MicroentrepreneurshipRouter />}
+            />
+            {!isAuthenticated && <Route path={USER_ROUTES.LOGIN} element={<Login />} />}
           </Routes>
         </Router>
       </ThemeProvider>
