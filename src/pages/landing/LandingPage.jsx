@@ -3,7 +3,6 @@ import Goals from '@/pages/landing/components/Goals';
 import Posts from '@/pages/landing/components/Posts';
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import Categories from '@/pages/landing/components/Categories';
-import { useAuth } from '@/contexts/AuthContext';
 
 
 function LandingPage() {
@@ -13,7 +12,6 @@ function LandingPage() {
     text: 'Impulsamos el desarrollo de finanzas de impacto, liderando la transición hacia un modelo financiero sostenible',
   };
 
-  useAuth
 
   return (
     <>
