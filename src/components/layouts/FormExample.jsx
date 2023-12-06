@@ -10,7 +10,7 @@ import {
   MenuItem,
   Box,
 } from '@mui/material';
-import schemaTest from '@/schemas/schemaTest';
+import schemaTest from '@/schemas/formsSchema';
 
 function ExampleForm({ handleAlert }) {
   const formik = useFormik({
