@@ -7,3 +7,6 @@ export { default as NoResultsIcon } from './NoResults.icon';
 export { default as EyeIcon } from './Eye.icon';
 export { default as MenuIcon } from './Menu.icon';
 export { default as ZoomInIcon } from './ZoomIn.icon';
+export { default as UploadIcon } from './Upload.icon';
+export { default as EditIcon } from './Edit.icon';
+export { default as TrashIcon } from './Trash.icon';
