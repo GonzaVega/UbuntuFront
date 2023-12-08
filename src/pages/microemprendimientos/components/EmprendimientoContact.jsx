@@ -1,17 +1,17 @@
-import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
+import { useState } from 'react';
 import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
-import React from 'react';
 import { useParams } from 'react-router-dom';
-import { contactSchema } from '@/schemas/formsSchema';
 import { Formik, Form } from 'formik';
-// import projectContactImage from '../../../';
+
+import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
+import { contactSchema } from '@/schemas/formsSchema';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
 }));
 
-export default function EmprendimientoContact() {
+const EmprendimientoContact = () => {
   const { categoryId, id } = useParams();
 
   const searchBarProps = {
@@ -29,9 +29,7 @@ export default function EmprendimientoContact() {
 
   const validationSchema = contactSchema;
 
-  const formSubmitHandler = (values) => {};
-
-  console.log(categoryId, id);
+  const formSubmitHandler = (value) => {};
 
   return (
     <>
@@ -77,7 +75,11 @@ export default function EmprendimientoContact() {
             Vas a contactar a Ubuntu para recibir mas información acerca del Microemprendimiento
             seleccionado.
           </Typography>
-          <Formik initialValues={initialValues} validationSchema={validationSchema}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={formSubmitHandler}
+          >
             <Form>
               <p>Input corto apellido y nombre</p>
               <p>input corto email</p>
@@ -92,4 +94,6 @@ export default function EmprendimientoContact() {
       </StyledContainer>
     </>
   );
-}
+};
+
+export default EmprendimientoContact;
