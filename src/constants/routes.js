@@ -5,7 +5,7 @@ export const USER_ROUTES = {
     ROUTER_ROUTE: '/microemprendimientos',
     ROOT: '/',
     BY_CATEGORY: ':categoryId',
-    CONTACT: ':categoryId/:id',
+    CONTACT: ':categoryId/:id/contacto',
   },
   POSTS: '/publicaciones',
   SEARCH: '/buscar',
