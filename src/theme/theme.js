@@ -79,6 +79,28 @@ const theme = createTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: ({ theme }) => ({
+          borderColor: theme.palette.text.primary,
+          borderWidth: '1px !important',
+        }),
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: `${theme.palette.primary.main}bf`,
+        }),
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          whiteSpace: 'wrap',
+        },
+      },
+    },
   },
   mixins: {
     cardExpanded: {

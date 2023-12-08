@@ -6,12 +6,12 @@ const standartValidations = {
   selectInput: yup.string().required(),
   commonText: yup
     .string()
-    .min(5, 'El texto debe tener al menos 5 caracteres')
+    .min(3, 'El texto debe tener al menos 3 caracteres')
     .max(40, 'El texto no debe exceder los 40 caracteres')
     .required('Este campo es obligatorio'),
   largeText: yup
     .string()
-    .min(5, 'El texto debe tener al menos 5 caracteres')
+    .min(20, 'El texto debe tener al menos 20 caracteres')
     .max(300, 'Máximo 300 caracteres')
     .required('Requerido'),
   imagesFilter: yup
@@ -39,7 +39,7 @@ export const contactSchema = yup.object().shape({
     .email('Debe ser un correo electrónico válido')
     .required('Este campo es obligatorio'),
   phoneInput: yup
-    .number()
+    .string()
     .matches(phoneValidation, 'Ingrese un numero de teléfono válido')
     .required('Este campo es obligatorio'),
   message: standartValidations.largeText,
@@ -47,6 +47,7 @@ export const contactSchema = yup.object().shape({
 
 export const microentrepreneurshipSchema = yup.object().shape({
   name: standartValidations.commonText,
+  category: standartValidations.selectInput,
   subcategory: standartValidations.commonText,
   // en country podriamos traer del back los paises y hacer .oneOf(arrayDePaises)
   country: standartValidations.selectInput,
@@ -61,7 +62,7 @@ export const publicationsSchema = yup.object().shape({
   title: standartValidations.commonText,
   publication: yup
     .string()
-    .min(5, 'El texto debe tener al menos 5 caracteres')
+    .min(20, 'El texto debe tener al menos 20 caracteres')
     .max(2000, 'El texto no debe exceder los 2000 caracteres')
     .required(),
   images: standartValidations.imagesFilter,
