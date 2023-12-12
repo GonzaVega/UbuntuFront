@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
+import FormikController from '@/components/form/FormikController';
 import { contactSchema } from '@/schemas/formsSchema';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
@@ -27,9 +28,9 @@ const EmprendimientoContact = () => {
     message: '',
   };
 
-  const validationSchema = contactSchema;
-
-  const formSubmitHandler = (value) => {};
+  const formSubmitHandler = (value) => {
+    console.log(value);
+  };
 
   return (
     <>
@@ -38,7 +39,7 @@ const EmprendimientoContact = () => {
         title={searchBarProps.title}
         text={searchBarProps.text}
       />
-      <StyledContainer sx={{ paddingTop: '4.5rem' }}>
+      <StyledContainer sx={{ paddingTop: '4.5rem', py: '2.5rem' }}>
         <Grid
           container
           spacing={2}
@@ -75,21 +76,62 @@ const EmprendimientoContact = () => {
             Vas a contactar a Ubuntu para recibir mas información acerca del Microemprendimiento
             seleccionado.
           </Typography>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={formSubmitHandler}
-          >
-            <Form>
-              <p>Input corto apellido y nombre</p>
-              <p>input corto email</p>
-              <p>input corto telefono</p>
-              <p>input largo mensaje</p>
-              <Button type='submit' variant='contained' color='primary'>
-                Enviar
-              </Button>
-            </Form>
-          </Formik>
+          <Box sx={{ paddingLeft: '1rem', paddingRight: '0.5rem' }}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={contactSchema}
+              onSubmit={formSubmitHandler}
+              isInitialValid={false}
+            >
+              {({ errors, touched, values, isSubmitting, isValid }) => (
+                <Form>
+                  <FormikController
+                    id='name'
+                    control='text'
+                    label='Apellido y Nombre*'
+                    name='name'
+                    error={touched.name && Boolean(errors.name)}
+                  />
+                  <FormikController
+                    id='email'
+                    control='text'
+                    label='Correo Electrónico*'
+                    name='email'
+                    error={touched.email && Boolean(errors.email)}
+                  />
+                  <FormikController
+                    id='phone'
+                    control='text'
+                    label='Teléfono*'
+                    name='phone'
+                    error={touched.phone && Boolean(errors.phone)}
+                    helperText={'Con el siguiente formato +54 9 261 002 002'}
+                  />
+                  <FormikController
+                    value={values.message}
+                    id='message'
+                    control='textarea'
+                    label='Mensaje*'
+                    name='message'
+                    error={touched.message && Boolean(errors.message)}
+                    helperText={'Máximo 300 caracteres'}
+                    maxLength={300}
+                  />
+
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    sx={{ textTransform: 'none' }}
+                    fullWidth
+                    disableElevation
+                    disabled={isSubmitting || !isValid}
+                  >
+                    Enviar
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </Box>
         </Grid>
       </StyledContainer>
     </>
