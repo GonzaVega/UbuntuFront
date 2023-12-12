@@ -38,7 +38,7 @@ export const contactSchema = yup.object().shape({
     .string()
     .email('Debe ser un correo electrónico válido')
     .required('Este campo es obligatorio'),
-  phoneInput: yup
+  phone: yup
     .string()
     .matches(phoneValidation, 'Ingrese un numero de teléfono válido')
     .required('Este campo es obligatorio'),
