@@ -6,6 +6,7 @@ import CardContent from '@/components/card/CardContent';
 import CardImageSlider from '@/components/card/CardImageSlider';
 import CardToggle from '@/components/card/CardToggle';
 import ButtonWithMenu from '@/components/common/ButtonWithMenu';
+import { ADMIN_ROUTES } from '@/constants/routes';
 
 export default function PostCard({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -22,7 +23,7 @@ export default function PostCard({ post }) {
     <CardContainer>
       <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
         <Typography variant='h3'>{post.title}</Typography>
-        <ButtonWithMenu />
+        <ButtonWithMenu editRoute={ADMIN_ROUTES.POSTS.EDIT} />
       </Box>
       <Box display='flex' flexDirection='column' gap='1.5rem'>
         <Box>

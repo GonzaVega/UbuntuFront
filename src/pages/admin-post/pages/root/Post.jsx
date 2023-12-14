@@ -2,7 +2,9 @@ import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import POST_IMAGE_01 from '@/assets/images/post_image_01.png';
 import POST_IMAGE_02 from '@/assets/images/post_image_02.png';
 import POST_IMAGE_03 from '@/assets/images/post_image_03.png';
-import PostCard from '@/pages/admin-post/pages/root/PostCard';
+import PostCard from '@/pages/admin-post/pages/root/components/PostCard';
+import { Link } from 'react-router-dom';
+import { ADMIN_ROUTES } from '@/constants/routes';
 
 const posts = [
   {
@@ -34,7 +36,13 @@ export default function Post() {
         <Typography variant='h1' textAlign={'center'}>
           Publicaciones
         </Typography>
-        <Button variant='contained' sx={{ textTransform: 'none', mt: '1.5rem' }} fullWidth>
+        <Button
+          component={Link}
+          to={ADMIN_ROUTES.POSTS.LOAD}
+          variant='contained'
+          sx={{ textTransform: 'none', mt: '1.5rem' }}
+          fullWidth
+        >
           Crear Publicación
         </Button>
       </Box>
