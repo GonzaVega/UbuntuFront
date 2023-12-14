@@ -4,6 +4,9 @@ import { Box, Typography, styled, Container, Grid } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import EmprendimientoCard from '@/pages/microemprendimientos/components/EmprendimientoCard';
+// import projectItems from '@/mocks/microentrepreneuships.json';
+import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
+import useFetch from '@/hooks/useFetch';
 
 const StyledContainerCategories = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -35,10 +38,20 @@ const CircleCut = styled(Box)(({ theme }) => ({
 const CategoryDetails = ({ category }) => {
   const { categoryId } = useParams();
   const [categoryData, setCategoryData] = useState({});
-  const [projects, setProjects] = useState([]);
+
+  const microEntrepreneurshipService = new MicroEntrepreneurshipService();
+  const {
+    data: results,
+    loading,
+    error,
+  } = useFetch({
+    queryFn: ({ abortController }) =>
+      microEntrepreneurshipService.find({ searchParams: {}, abortController }),
+  });
+  // console.log(results, loading, error);
 
   const searchBarProps = {
-    imageRoute: `url("../src/assets/images/imagen_microemprendimientos.jpg")`,
+    imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
     subtitle: 'Invertí sostenible',
     text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
@@ -47,88 +60,14 @@ const CategoryDetails = ({ category }) => {
   const loadCategoryHandler = () => {
     //esto esta pensado para que aca llamemos al hook useFetch y traernos los datos de la categoria especifica.
     const categoryDummyData = {
-      name: 'Agroecología - Orgánicos - Alimentación saludable',
+      name: 'Agroecología-Orgánicos-Alimentación saludable',
       description:
         'Conectate con Microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos.',
     };
     setCategoryData(categoryDummyData);
   };
 
-  const loadMicroemprendimientosHandler = (category) => {
-    // Simulando carga de datos de microemprendimientos basados en la categoría seleccionada
-    //esto esta pensado para que aca llamemos al hook useFetch y traernos los datos de la categoria especifica.
-    const dummyData = [
-      // Datos simulados de microemprendimientos
-      {
-        title: 'EcoSenda',
-        establishmentType: 'Finca agroecológica',
-        category: 'Agroecología - Orgánicos - Alimentación saludable',
-        location: 'Tunuyán, Mendoza, Argentina',
-        description:
-          'Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultiva frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.',
-        additionalInfo:
-          'Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina.',
-        images: [
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 1.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 2.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 3.png',
-        ],
-      },
-      {
-        title: 'EcoSenda',
-        establishmentType: 'Finca agroecológica',
-        category: 'Agroecología - Orgánicos - Alimentación saludable',
-        location: 'Tunuyán, Mendoza, Argentina',
-        description:
-          'Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultiva frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.',
-        additionalInfo:
-          'Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina.',
-        images: [
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 1.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 2.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 3.png',
-        ],
-      },
-      {
-        title: 'EcoSenda',
-        establishmentType: 'Finca agroecológica',
-        category: 'Agroecología - Orgánicos - Alimentación saludable',
-        location: 'Tunuyán, Mendoza, Argentina',
-        description:
-          'Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultiva frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.',
-        additionalInfo:
-          'Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina.',
-        images: [
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 1.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 2.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 3.png',
-        ],
-      },
-      {
-        title: 'EcoSenda',
-        establishmentType: 'Finca agroecológica',
-        category: 'Agroecología - Orgánicos - Alimentación saludable',
-        location: 'Tunuyán, Mendoza, Argentina',
-        description:
-          'Promueven un modelo de agricultura sostenible, protegiendo el medio ambiente, el agua y las semillas autóctonas. Cultiva frutas, verduras, plantas medicinales y crean derivados. Editan también contenidos educativos, gestionan un banco de semillas y comercializan o intercambian excedentes.',
-        additionalInfo:
-          'Nació del sueño de restaurar la salud y adoptar un estilo de vida ideal. Este proyecto familiar creció fundamentado en la permacultura, biodinámica y agroecología, comprometiéndose con la soberanía alimentaria, el bienestar, el regreso al campo, la venta directa y la dignidad de la vida campesina.',
-        images: [
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 1.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 2.png',
-          '/src/assets/images/microemprendimientos/dummysliders/dummy emprendimiento 3.png',
-        ],
-      },
-      // Agrega más microemprendimientos según sea necesario
-    ];
-
-    setProjects(dummyData);
-  };
-
-  useEffect(() => {
-    loadMicroemprendimientosHandler();
-    loadCategoryHandler();
-  }, []);
+  useEffect(() => loadCategoryHandler(), []);
 
   return (
     <>
@@ -169,17 +108,18 @@ const CategoryDetails = ({ category }) => {
           {categoryData.description}
         </Typography>
         <Grid container spacing={2}>
-          {projects.map((project, index) => (
+          {results?.map((result, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <EmprendimientoCard
-                key={index}
-                title={project.title}
-                establishmentType={project.establishmentType}
-                category={project.category}
-                location={project.location}
-                description={project.description}
-                additionalInfo={project.additionalInfo}
-                images={project.images}
+                key={result.id}
+                id={result.id}
+                title={result.nombre}
+                establishmentType={result.subCategoria}
+                category={result.categoria.nombre}
+                location={`${result.ciudad}, ${result.provincia}, ${result.pais}`}
+                description={result.descripcion}
+                additionalInfo={result.informacion_adicional}
+                images={result.imagenes}
               />
             </Grid>
           ))}
