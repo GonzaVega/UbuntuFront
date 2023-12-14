@@ -12,6 +12,8 @@ import LandingPage from '@/pages/landing/LandingPage';
 import Publications from '@/pages/publications/Publications';
 import MicroemprendimientosRouter from '@/pages/microemprendimientos/MicroemprendimientosRouter';
 import MicroentrepreneurshipRouter from '@/pages/admin-microentrepreneurship/MicroentrepreneurshipRouter';
+import PostRouter from '@/pages/admin-post/PostRouter';
+import RequestRouter from '@/pages/admin-request/RequestRouter';
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -35,7 +37,12 @@ function App() {
               path={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.ROUTER_ROUTE + '/*'}
               element={<MicroentrepreneurshipRouter />}
             />
+            <Route
+              path={ADMIN_ROUTES.CONTACT_REQUESTS.ROUTER_ROUTE + '/*'}
+              element={<RequestRouter />}
+            />
             {!isAuthenticated && <Route path={USER_ROUTES.LOGIN} element={<Login />} />}
+            <Route path={ADMIN_ROUTES.POSTS.ROUTER_ROUTE + '/*'} element={<PostRouter />} />
           </Routes>
         </Router>
       </ThemeProvider>
