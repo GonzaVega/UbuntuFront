@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import FormikController from '@/components/form/FormikController';
 import { contactSchema } from '@/schemas/formsSchema';
+import NoticeCard from '@/components/common/NoticeCard';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -14,6 +15,8 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 
 const EmprendimientoContact = () => {
   const { categoryId, id } = useParams();
+  const navigate = useNavigate();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const searchBarProps = {
     imageRoute: `url("../../../src/assets/images/microemprendimientos/contact/projectsContact.jpg")`,
@@ -30,6 +33,11 @@ const EmprendimientoContact = () => {
 
   const formSubmitHandler = (value) => {
     console.log(value);
+    setIsSubmitted(true);
+  };
+  const closeNoticeHandler = (event) => {
+    event.preventDefault();
+    navigate('/');
   };
 
   return (
@@ -131,6 +139,15 @@ const EmprendimientoContact = () => {
                 </Form>
               )}
             </Formik>
+            {isSubmitted && (
+              <NoticeCard
+                isOpen={true}
+                success={true}
+                mainMessage='Formulario enviado con éxito'
+                secondaryMessage='Gracias por contactarnos, nos comunicaremos en breve'
+                handleClose={closeNoticeHandler}
+              />
+            )}
           </Box>
         </Grid>
       </StyledContainer>
