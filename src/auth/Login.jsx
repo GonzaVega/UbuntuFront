@@ -1,9 +1,7 @@
-import { useGoogleLogin } from '@react-oauth/google';
-import { Card, Typography, Box, CardMedia, Button, Modal, Fade } from '@mui/material';
+import { Card, Typography, Box, CardMedia, Modal, Fade } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/AuthContext';
-import { googleOAuthCredential } from '@/helpers/googleCredentials';
 import { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -12,41 +10,38 @@ import { ADMIN_ROUTES } from '@/constants/routes';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, authError} = useAuth();
+  const { login, authError } = useAuth();
   const [open, setOpen] = useState(true);
   const [openError, setOpenError] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
 
-
-  const handleGoogleSuccess = async(credentialResponse) => {
+  const handleGoogleSuccess = async (credentialResponse) => {
     console.log(credentialResponse);
 
     if (credentialResponse && credentialResponse.credential) {
       const successResponse = await login(credentialResponse);
-      if(successResponse){
+      if (successResponse) {
         navigate(ADMIN_ROUTES.DASHBOARD);
       }
-      handleClose(); 
-      setOpenError(true)
+      handleClose();
+      setOpenError(true);
     } else {
-
-      console.error("Fallo en la autenticación de Google:", credentialResponse);
+      console.error('Fallo en la autenticación de Google:', credentialResponse);
     }
   };
 
   return (
     <>
       <NoticeCard
-        isOpen = {openError}
+        isOpen={openError}
         success={false}
         mainMessage={authError}
-        handleClose={()=> setOpenError(false)}
-        cancelFunction={()=>{
-          setOpenError(false)
-          setOpen(true)
+        handleClose={() => setOpenError(false)}
+        cancelFunction={() => {
+          setOpenError(false);
+          setOpen(true);
         }}
       />
       <Modal
@@ -76,10 +71,20 @@ const Login = () => {
           >
             <Card sx={{ width: '360px', borderRadius: '8px' }}>
               <Box display='flex' flexDirection='column' alignItems='center' padding='20px'>
-                <Typography variant='h1' align='center' paddingBottom='5px' sx={{ fontWeight: 800 }}>
+                <Typography
+                  variant='h1'
+                  align='center'
+                  paddingBottom='5px'
+                  sx={{ fontWeight: 800 }}
+                >
                   Ingreso
                 </Typography>
-                <Typography variant='h1' align='center' paddingBottom='20px' sx={{ fontWeight: 800 }}>
+                <Typography
+                  variant='h1'
+                  align='center'
+                  paddingBottom='20px'
+                  sx={{ fontWeight: 800 }}
+                >
                   Administrador
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -97,20 +102,18 @@ const Login = () => {
                   />
                 </Box>
                 <Box display='flex' justifyContent='center' mt={2}>
-                
-                  <GoogleOAuthProvider clientId="812742210015-teti3ojikbl41vlpmjc2osgmc1clj2hv.apps.googleusercontent.com">
+                  <GoogleOAuthProvider clientId='812742210015-teti3ojikbl41vlpmjc2osgmc1clj2hv.apps.googleusercontent.com'>
                     <GoogleLogin
                       onSuccess={handleGoogleSuccess}
                       onError={() => {
                         console.log('Login Failed');
                       }}
-                      cookiePolicy={"single_host_origin"}
-                      size="large"
-                      theme="filled_blue"
+                      cookiePolicy={'single_host_origin'}
+                      size='large'
+                      theme='filled_blue'
                       shape='pill'
                     />
                   </GoogleOAuthProvider>
-                              
                 </Box>
               </Box>
             </Card>

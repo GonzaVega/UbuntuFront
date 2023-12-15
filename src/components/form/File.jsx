@@ -24,7 +24,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function File({ setFieldValue, id, name, values, error }) {
+export default function File({ setFieldValue, id, name, values, error, rows }) {
   const [touched, setTouched] = useState(false);
   const [formValues, setFormValues] = useState(values);
 
@@ -101,18 +101,19 @@ export default function File({ setFieldValue, id, name, values, error }) {
       </Box>
       {isValidValues && (
         <ThumbnailContainer
-          values={formValues}
+          values={values}
           changeImage={changeImage}
           removeImage={removeImage}
+          rows={rows}
         />
       )}
     </Box>
   );
 }
 
-function ThumbnailContainer({ values, changeImage, removeImage }) {
+function ThumbnailContainer({ values, changeImage, removeImage, rows = false }) {
   return (
-    <ImageList cols={3} gap={8} rowHeight={90}>
+    <ImageList cols={rows ? 1 : 3} gap={8} rowHeight={90}>
       {values.map((image, index) => (
         <Thumbnail key={index} image={image} changeImage={changeImage} removeImage={removeImage} />
       ))}

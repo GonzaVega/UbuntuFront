@@ -4,6 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ExpandLess } from '@mui/icons-material';
 import { useTheme } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import CardImageSlider from '@/components/card/CardImageSlider';
 
@@ -23,6 +24,7 @@ const MainContainer = styled('div')(({ theme }) => ({
 }));
 
 const EmprendimientoCard = ({
+  id,
   title,
   establishmentType,
   category,
@@ -31,6 +33,7 @@ const EmprendimientoCard = ({
   additionalInfo,
   images,
 }) => {
+  // const { id } = useParams();
   const [expand, setExpand] = useState(false);
   const { palette } = useTheme();
 
@@ -39,7 +42,7 @@ const EmprendimientoCard = ({
   };
 
   return (
-    <MainContainer style={{ maxHeight: expand ? '1020px' : '500px' }}>
+    <MainContainer style={{ maxHeight: expand ? '1090px' : '500px' }}>
       <Box sx={{ padding: '16px 15px 0px 15px', borderRadius: '16px' }}>
         <CardImageSlider images={images} />
       </Box>
@@ -78,9 +81,14 @@ const EmprendimientoCard = ({
               {additionalInfo}
             </Typography>
             <Box textAlign='center' sx={{ mt: '40px' }}>
-              <Button variant='contained' color='primary' sx={{ width: '40%' }}>
-                Contactar
-              </Button>
+              <Link
+                to={`${title}/contacto`}
+                // key={projectId}
+              >
+                <Button variant='contained' color='primary' sx={{ width: '40%' }}>
+                  Contactar
+                </Button>
+              </Link>
             </Box>
             <Box textAlign='center' sx={{ mt: '8px' }}>
               <IconButton

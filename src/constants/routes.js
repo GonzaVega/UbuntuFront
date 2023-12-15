@@ -5,7 +5,7 @@ export const USER_ROUTES = {
     ROUTER_ROUTE: '/microemprendimientos',
     ROOT: '/',
     BY_CATEGORY: ':categoryId',
-    CONTACT: ':categoryId/:id',
+    CONTACT: ':categoryId/:id/contacto',
   },
   POSTS: '/publicaciones',
   SEARCH: '/buscar',
@@ -22,8 +22,17 @@ export const ADMIN_ROUTES = {
   },
   POSTS: {
     ROUTER_ROUTE: '/admin/publicaciones',
+    ROOT: '/',
+    LOAD: 'cargar',
+    EDIT: 'editar',
+    
   },
   CONTACT_REQUESTS: {
     ROUTER_ROUTE: '/admin/solicitudes-de-contacto',
+    ROOT: '/',
+    MANAGED: 'gestionadas',
+    UNMANAGED: 'no-gestionadas',
+    BY_ID: ':id',
+
   },
 };

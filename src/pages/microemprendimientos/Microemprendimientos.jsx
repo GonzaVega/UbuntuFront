@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Container, Typography, Box, styled, useTheme } from '@mui/material';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { Container, Typography, Box, styled } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/CategoryCard';
@@ -38,17 +38,32 @@ const CircleCut = styled(Box)(({ theme }) => ({
 }));
 
 const Microemprendimientos = () => {
-  const { palette } = useTheme();
   const navigate = useNavigate();
-  const { categoryName } = useParams();
   const [selectedCategories, setSelectedCategories] = useState({});
-
+  const [error, setError] = useState(false);
+  //para backend
+  // const [categories, setCategories] = useState([])
   const searchBarProps = {
-    imageRoute: `url("../src/assets/images/imagen_microemprendimientos.jpg")`,
+    imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
     subtitle: 'Invertí sostenible',
     text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
   };
+  //maqueta de la funcion para cargar las categorias desde el endpoint, habria que ver como usar usefetch y ahi si queda esta u otra.
+  // const categoriesFetch = async () => {
+  //   {
+  //     try {
+  //       const response = await axios.get('api/v1/category/all');
+  //       return response.data;
+  //     } catch (error) {
+  //       setError(true)
+  //       console.error(error.message);
+  //       throw new Error(error.message);
+  //     } finally {
+  //       setCategories(response.data)
+  //     }
+  //   }
+  // };
   //esto deberia ser reemplazado por una llamada al endpoint de categorias, por el momento es DummyData.
   const categories = [
     {
