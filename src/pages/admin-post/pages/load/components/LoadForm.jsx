@@ -3,7 +3,7 @@ import { publicationsSchema } from '@/schemas/formsSchema';
 import { Box, Button } from '@mui/material';
 import { Form, Formik } from 'formik';
 
-export default function LoadForm() {
+export default function LoadForm({ handleChange }) {
   return (
     <Box mt={'1.5rem'}>
       <Formik
@@ -13,10 +13,7 @@ export default function LoadForm() {
           images: [],
         }}
         validationSchema={publicationsSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setTimeout(() => setSubmitting(false), 2000);
-        }}
+        onSubmit={handleChange}
         isInitialValid={false}
       >
         {({ errors, touched, values, isSubmitting, isValid, setFieldValue }) => (
