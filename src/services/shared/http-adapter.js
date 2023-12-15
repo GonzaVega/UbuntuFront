@@ -1,8 +1,9 @@
-import microentrepreneurshipResponse from '@/mocks/microentrepreneurship.json';
+import instance from '@/helpers/axiosConfig';
+// import microentrepreneurshipResponse from '@/mocks/microentrepreneurship.json';
 
-const DATA = {
-  '/microentrepreneurship': microentrepreneurshipResponse,
-};
+// const DATA = {
+//   '/microentrepreneurship': microentrepreneurshipResponse,
+// };
 
 // export class HttpAdapter {
 //   #BASE_URL = 'https://e-commerce-api-dev.4.us-1.fl0.io/api';
@@ -26,49 +27,111 @@ const DATA = {
 //   }
 // }
 
+// export class HttpAdapter {
+//   async get({ path, searchParams = {}, abortController }) {
+//     const { signal } = abortController || new AbortController();
+//     const { query } = searchParams;
+
+//     return new Promise((resolve, reject) => {
+//       let [, response] = Object.entries(DATA).find((item) => path.includes(item[0]));
+
+//       if (query) {
+//         const regex = new RegExp(query, 'i');
+//         response = response.filter((item) => regex.test(item.nombre));
+//       }
+
+//       const id = path.split('/')[2];
+
+//       if (id) {
+//         response = response.find((item) => {
+//           return item.nombre === id;
+//         });
+//       }
+
+//       const timeout = setTimeout(() => {
+//         if (response.length > 0 || response.nombre) resolve(response);
+//         else reject(new Error('No se encotraron resultados'));
+//       }, [500]);
+
+//       signal.addEventListener('abort', () => {
+//         clearTimeout(timeout);
+//       });
+
+//       if (signal.aborted) reject(new Error('Operación cancelada'));
+//     });
+//   }
+
+//   async post({ payload, abortController }) {
+//     return { payload, abortController };
+//   }
+
+//   async patch({ id, payload, abortController }) {
+//     return { id, payload, abortController };
+//   }
+
+//   async delete({ id, abortController }) {
+//     return { id, abortController };
+//   }
+// }
+
 export class HttpAdapter {
-  async get({ path, searchParams = {}, abortController }) {
-    const { signal } = abortController || new AbortController();
-    const { query } = searchParams;
+  async get({ path, searchParams, abortController }) {
+    try {
+      const signal = abortController.signal || new AbortController().signal;
 
-    return new Promise((resolve, reject) => {
-      let [, response] = Object.entries(DATA).find((item) => path.includes(item[0]));
-
-      if (query) {
-        const regex = new RegExp(query, 'i');
-        response = response.filter((item) => regex.test(item.nombre));
-      }
-
-      const id = path.split('/')[2];
-
-      if (id) {
-        response = response.find((item) => {
-          return item.nombre === id;
-        });
-      }
-
-      const timeout = setTimeout(() => {
-        if (response.length > 0 || response.nombre) resolve(response);
-        else reject(new Error('No se encotraron resultados'));
-      }, [500]);
-
-      signal.addEventListener('abort', () => {
-        clearTimeout(timeout);
+      const { data } = await instance.get(path + '?' + new URLSearchParams(searchParams), {
+        signal,
       });
 
-      if (signal.aborted) reject(new Error('Operación cancelada'));
-    });
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        console.log('Solicitud cancelada');
+      }
+    }
   }
 
-  async post({ payload, abortController }) {
-    return { payload, abortController };
+  async post({ path, payload, abortController }) {
+    try {
+      const signal = abortController.signal || new AbortController().signal;
+      payload = JSON.stringify(payload);
+
+      const { data } = await instance.post(path, payload, { signal });
+
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        console.log('Solicitud cancelada');
+      }
+    }
   }
 
-  async patch({ id, payload, abortController }) {
-    return { id, payload, abortController };
+  async patch({ path, payload, abortController }) {
+    try {
+      const signal = abortController.signal || new AbortController().signal;
+      payload = JSON.stringify(payload);
+
+      const { data } = await instance.patch(path, payload, { signal });
+
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        console.log('Solicitud cancelada');
+      }
+    }
   }
 
-  async delete({ id, abortController }) {
-    return { id, abortController };
+  async delete({ path, abortController }) {
+    try {
+      const signal = abortController.signal || new AbortController().signal;
+
+      const { data } = await instance.delete(path, { signal });
+
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        console.log('Solicitud cancelada');
+      }
+    }
   }
 }

@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { EditIcon, TrashIcon, UploadIcon } from '@/components/icons';
+import { urlToFile } from '@/helpers/urlToFile';
 import {
   Box,
   Button,
@@ -8,7 +10,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -24,20 +26,32 @@ const VisuallyHiddenInput = styled('input')({
 
 export default function File({ setFieldValue, id, name, values, error }) {
   const [touched, setTouched] = useState(false);
+  const [formValues, setFormValues] = useState(values);
+
   const isValidValues = values.length >= 1 && !error;
 
   async function removeImage(image) {
     await setFieldValue(
       name,
-      values.filter((value) => value.name !== image.name),
+      formValues.filter((value) => value.name !== image.name),
     );
   }
 
   async function changeImage(image, file) {
-    const indexOfImage = values.findIndex((value) => value.name === image.name);
-    const newValues = values.toSpliced(indexOfImage, 1, file);
+    const indexOfImage = formValues.findIndex((value) => value.name === image.name);
+    const newValues = formValues.toSpliced(indexOfImage, 1, file);
     await setFieldValue(name, newValues);
   }
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const results = await Promise.all(values.map(async (value) => await urlToFile(value)));
+      setFormValues(results);
+    };
+
+    if (typeof values[0] !== 'object') fetchImages();
+    else setFormValues(values);
+  }, [values]);
 
   return (
     <Box my='2.5rem'>
@@ -86,7 +100,11 @@ export default function File({ setFieldValue, id, name, values, error }) {
         </Box>
       </Box>
       {isValidValues && (
-        <ThumbnailContainer values={values} changeImage={changeImage} removeImage={removeImage} />
+        <ThumbnailContainer
+          values={formValues}
+          changeImage={changeImage}
+          removeImage={removeImage}
+        />
       )}
     </Box>
   );
@@ -103,7 +121,7 @@ function ThumbnailContainer({ values, changeImage, removeImage }) {
 }
 
 function Thumbnail({ image, changeImage, removeImage }) {
-  const imageURL = URL.createObjectURL(image);
+  const imageURL = typeof image === 'object' ? URL.createObjectURL(image) : image;
 
   return (
     <ImageListItem sx={{ borderRadius: '0.5rem', overflow: 'hidden', position: 'relative' }}>

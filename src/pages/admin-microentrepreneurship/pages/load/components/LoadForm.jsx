@@ -68,26 +68,26 @@ const categories = [
   },
 ];
 
-export default function LoadForm() {
+export default function LoadForm({
+  initialValues = {
+    name: '',
+    category: '',
+    subcategory: '',
+    country: '',
+    state: '',
+    city: '',
+    description: '',
+    moreInfo: '',
+    images: [],
+  },
+  onSubmit,
+}) {
   return (
     <Box mt='1.5rem'>
       <Formik
-        initialValues={{
-          name: '',
-          category: '',
-          subcategory: '',
-          country: '',
-          state: '',
-          city: '',
-          description: '',
-          moreInfo: '',
-          images: [],
-        }}
+        initialValues={initialValues}
         validationSchema={microentrepreneurshipSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setTimeout(() => setSubmitting(false), 2000);
-        }}
+        onSubmit={onSubmit}
         isInitialValid={false}
       >
         {({ errors, touched, values, isSubmitting, isValid, setFieldValue }) => (

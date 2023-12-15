@@ -17,9 +17,10 @@ export default function CardContainer() {
         ? Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
         : data?.map((microentrepreneurship) => (
             <Card
-              key={microentrepreneurship.nombre}
-              title={microentrepreneurship.nombre}
-              category={microentrepreneurship.categoria.nombre}
+              key={microentrepreneurship.id}
+              id={microentrepreneurship.id}
+              title={microentrepreneurship.name}
+              category={microentrepreneurship.category.name}
             />
           ))}
     </Grid>
