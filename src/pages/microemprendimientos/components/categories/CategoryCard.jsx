@@ -1,5 +1,5 @@
 import { Card, Typography, Box, useTheme } from '@mui/material';
-import CategoryDetails from '@/pages/microemprendimientos/components/CategoryDetails';
+import CategoryDetails from '@/pages/microemprendimientos/components/categories/CategoryDetails';
 
 const CategoryCard = ({ icon, category, isSelected }) => {
   const { palette } = useTheme();

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Typography, styled, Container, Grid } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
-import EmprendimientoCard from '@/pages/microemprendimientos/components/EmprendimientoCard';
+import EmprendimientoCard from '@/pages/microemprendimientos/components/emprendimientos/EmprendimientoCard';
 // import projectItems from '@/mocks/microentrepreneuships.json';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import useFetch from '@/hooks/useFetch';

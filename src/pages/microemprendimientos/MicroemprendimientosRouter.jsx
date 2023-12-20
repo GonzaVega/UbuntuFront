@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Microemprendimientos from '@/pages/microemprendimientos/Microemprendimientos';
-import CategoryDetails from '@/pages/microemprendimientos/components/CategoryDetails';
+import CategoryDetails from '@/pages/microemprendimientos/components/categories/CategoryDetails';
 import { USER_ROUTES } from '@/constants/routes';
-import EmprendimientoContact from '@/pages/microemprendimientos/components/EmprendimientoContact';
+import EmprendimientoContact from '@/pages/microemprendimientos/components/emprendimientos/EmprendimientoContact';
 
 export default function MicroemprendimientosRouter() {
   return (

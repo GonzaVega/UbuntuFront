@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography, Box, styled } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
-import CategoryCard from '@/pages/microemprendimientos/components/CategoryCard';
+import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
 import agroecologyIcon from '@/assets/images/agroecology.png';
@@ -42,7 +43,7 @@ const Microemprendimientos = () => {
   const [selectedCategories, setSelectedCategories] = useState({});
   const [error, setError] = useState(false);
   //para backend
-  // const [categories, setCategories] = useState([])
+  const [backCategories, setBackCategories] = useState([]);
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
@@ -53,17 +54,21 @@ const Microemprendimientos = () => {
   // const categoriesFetch = async () => {
   //   {
   //     try {
-  //       const response = await axios.get('api/v1/category/all');
+  //       const response = await axios.get('http://localhost:8080/api/v1/category/all', {
+  //         'Content-Type': 'application/json',
+  //       });
   //       return response.data;
   //     } catch (error) {
-  //       setError(true)
+  //       setError(true);
   //       console.error(error.message);
   //       throw new Error(error.message);
   //     } finally {
-  //       setCategories(response.data)
+  //       console.log(response.data);
+  //       setBackCategories(response.data);
   //     }
   //   }
   // };
+  // useEffect(categoriesFetch(), []);
   //esto deberia ser reemplazado por una llamada al endpoint de categorias, por el momento es DummyData.
   const categories = [
     {
