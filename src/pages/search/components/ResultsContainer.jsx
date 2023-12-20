@@ -30,7 +30,7 @@ export default function ResultsContainer({ query }) {
   );
 }
 
-function Card({ nombre, subCategoria, categoria, imagenes, pais, provincia, ciudad }) {
+function Card({ name, subCategory, category, images, country, province, city }) {
   const { palette } = useTheme();
   return (
     <Grid item xs={12} sm={6} lg={4}>
@@ -43,7 +43,7 @@ function Card({ nombre, subCategoria, categoria, imagenes, pais, provincia, ciud
       >
         <Box mb='1.5rem'>
           <img
-            src={imagenes[0]}
+            src={images[0]}
             style={{
               width: '100%',
               height: '8rem',
@@ -54,7 +54,7 @@ function Card({ nombre, subCategoria, categoria, imagenes, pais, provincia, ciud
         </Box>
         <Stack alignItems='flex-start'>
           <Typography variant='h3' component='h3'>
-            {nombre}
+            {name}
           </Typography>
           <Typography
             mt='0.25rem'
@@ -66,17 +66,17 @@ function Card({ nombre, subCategoria, categoria, imagenes, pais, provincia, ciud
               lineHeight: '1.125rem',
             }}
           >
-            {subCategoria}
+            {subCategory}
           </Typography>
 
           <Typography variant='body2' component='span' mt='0.5rem'>
-            {categoria.nombre}
+            {category.name}
           </Typography>
         </Stack>
         <Stack direction='row' spacing='0.25rem' alignItems='center' mt='1rem'>
           <LocationIcon />
           <Typography variant='body2' component='span'>
-            {ciudad}, {provincia}, {pais}
+            {city}, {province}, {country}
           </Typography>
         </Stack>
         <Box mt='1rem'>

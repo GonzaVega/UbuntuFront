@@ -1,3 +1,4 @@
+import NoResults from '@/components/common/NoResults';
 import useFetch from '@/hooks/useFetch';
 import Card from '@/pages/admin-microentrepreneurship/pages/root/components/Card';
 import SkeletonCard from '@/pages/admin-microentrepreneurship/pages/root/components/SkeletonCard';
@@ -10,6 +11,8 @@ export default function CardContainer() {
   const { data, loading } = useFetch({
     queryFn: ({ abortController }) => microentrepreneurshipService.find({ abortController }),
   });
+
+  if (data?.length === 0) return <NoResults />;
 
   return (
     <Grid container spacing='1rem' py='2.5rem' mt='0.5rem'>
