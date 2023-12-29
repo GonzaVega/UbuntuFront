@@ -1,3 +1,5 @@
+import NoticeCard from '@/components/common/NoticeCard';
+import { useBoolean } from '@/hooks/useBoolean';
 import ManageForm from '@/pages/admin-request/pages/manage/components/ManageForm';
 import Managed from '@/pages/admin-request/pages/managed/Managed';
 import {
@@ -15,9 +17,14 @@ import { useState } from 'react';
 export default function Manage() {
   const [manage, setManage] = useState('');
   const { palette } = useTheme();
+  const { value, setFalse, toggle } = useBoolean(false);
 
   const handleChange = (event) => {
     setManage(event.target.value);
+
+    setTimeout(() => {
+      toggle(!value);
+    }, 500);
   };
 
   return (
@@ -84,6 +91,12 @@ export default function Manage() {
         Fecha de solicitud: 20/08/2023
       </Typography>
       <ManageForm />
+      <NoticeCard
+        isOpen={value}
+        success={true}
+        handleClose={setFalse}
+        mainMessage={'Estado modificado con éxito'}
+      />
     </Grid>
   );
 }

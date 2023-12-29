@@ -113,13 +113,13 @@ const CategoryDetails = ({ category, description, id }) => {
               <EntrepreneurshipCard
                 key={result.id}
                 id={result.id}
-                title={result.nombre}
-                establishmentType={result.subCategoria}
-                category={result.categoria.nombre}
-                location={`${result.ciudad}, ${result.provincia}, ${result.pais}`}
-                description={result.descripcion}
-                additionalInfo={result.informacion_adicional}
-                images={result.imagenes}
+                title={result.name}
+                establishmentType={result.subCategory}
+                category={result.category.name}
+                location={`${result.city}, ${result.province}, ${result.country}`}
+                description={result.description}
+                additionalInfo={result.moreInfo}
+                images={result.images}
               />
             </Grid>
           ))}

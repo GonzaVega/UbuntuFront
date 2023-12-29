@@ -31,46 +31,46 @@ export default function MicroentrepreneurshipDetail() {
       </Typography>
       <Box mt={'2.5rem'}>
         <Typography variant='h2' textAlign={'center'} color={'primary.main'}>
-          {data.nombre}
+          {data.name}
         </Typography>
         <Typography variant='body1' textAlign={'center'} mt={'0.5rem'}>
-          {data.categoria.nombre}
+          {data.category.name}
         </Typography>
         <Box display='flex' flexDirection='column' gap='1.5rem' my='1.5rem'>
           <TextField
             label={'Subcategoría'}
-            value={data.subCategoria}
+            value={data.subCategory}
             fullWidth
             InputLabelProps={{ sx: { color: 'primary.main' } }}
           />
           <TextField
             label={'País'}
-            value={data.pais}
+            value={data.country}
             fullWidth
             InputLabelProps={{ sx: { color: 'primary.main' } }}
           />
           <TextField
             label={'Provincia/Estado'}
-            value={data.provincia}
+            value={data.province}
             fullWidth
             InputLabelProps={{ sx: { color: 'primary.main' } }}
           />
           <TextField
             label={'Ciudad'}
-            value={data.ciudad}
+            value={data.city}
             fullWidth
             InputLabelProps={{ sx: { color: 'primary.main' } }}
           />
           <TextField
             label={'Descripción del Microemprendimiento'}
-            value={data.descripcion}
+            value={data.description}
             fullWidth
             multiline
             InputLabelProps={{ sx: { color: 'primary.main' } }}
           />
           <TextField
             label={'Más información del Microemprendimiento'}
-            value={data.informacion_adicional}
+            value={data.moreInfo}
             fullWidth
             multiline
             InputLabelProps={{ sx: { color: 'primary.main' } }}
@@ -78,7 +78,7 @@ export default function MicroentrepreneurshipDetail() {
         </Box>
         <Box>
           <ImageList cols={3} sx={{ height: '5rem' }} gap={8}>
-            {data.imagenes.map((image, index) => (
+            {data.images.map((image, index) => (
               <ImageItem key={image} src={image} handleOpen={() => initializeSlider(index)} />
             ))}
           </ImageList>
@@ -86,7 +86,7 @@ export default function MicroentrepreneurshipDetail() {
       </Box>
       <ImageBackdrop
         open={open}
-        images={data.imagenes}
+        images={data.images}
         initialSlide={initialSlide}
         handleClose={handleClose}
       />
