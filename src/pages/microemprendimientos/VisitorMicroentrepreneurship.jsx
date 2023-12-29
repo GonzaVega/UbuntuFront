@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
+import { baseURL } from '@/helpers/baseURL';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
 import agroecologyIcon from '@/assets/images/agroecology.png';
@@ -38,60 +39,77 @@ const CircleCut = styled(Box)(({ theme }) => ({
   zIndex: -1,
 }));
 
-const Microemprendimientos = () => {
+const VisitorMicroentrepreneurship = () => {
   const navigate = useNavigate();
   const [selectedCategories, setSelectedCategories] = useState({});
   const [error, setError] = useState(false);
   //para backend
-  const [backCategories, setBackCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
     subtitle: 'Invertí sostenible',
     text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
   };
-  //maqueta de la funcion para cargar las categorias desde el endpoint, habria que ver como usar usefetch y ahi si queda esta u otra.
-  // const categoriesFetch = async () => {
-  //   {
-  //     try {
-  //       const response = await axios.get('http://localhost:8080/api/v1/category/all', {
-  //         'Content-Type': 'application/json',
-  //       });
-  //       return response.data;
-  //     } catch (error) {
-  //       setError(true);
-  //       console.error(error.message);
-  //       throw new Error(error.message);
-  //     } finally {
-  //       console.log(response.data);
-  //       setBackCategories(response.data);
-  //     }
-  //   }
-  // };
-  // useEffect(categoriesFetch(), []);
-  //esto deberia ser reemplazado por una llamada al endpoint de categorias, por el momento es DummyData.
-  const categories = [
-    {
-      id: '0',
-      title: 'Economía social - Desarrollo local - Inclusión financiera',
-      image: socialEconomyIcon,
-    },
-    {
-      id: '1',
-      title: 'Agroecología - Orgánicos - Alimentación saludable',
-      image: agroecologyIcon,
-    },
-    {
-      id: '2',
-      title: 'Conservación - Regeneración - Servicios ecosistémicos',
-      image: conservationIcon,
-    },
-    {
-      id: '3',
-      title: 'Empresas - Organismos de impacto - Economía circular',
-      image: circularEconomyIcon,
-    },
-  ];
+
+  const assignCategoryImages = (categoriesData) => {
+    const categoriesWithImages = categoriesData.map((category) => {
+      let image;
+      const defaultImage = 'no image assigned';
+
+      switch (true) {
+        case category.name.includes('Economía'):
+          image = socialEconomyIcon;
+          break;
+        case category.name.includes('Agroecología'):
+          image = agroecologyIcon;
+          break;
+        case category.name.includes('Conservación'):
+          image = conservationIcon;
+          break;
+        case category.name.includes('Empresas'):
+          image = circularEconomyIcon;
+          break;
+        default:
+          image = defaultImage;
+          break;
+      }
+
+      return {
+        id: category.id,
+        name: category.name,
+        image,
+      };
+    });
+
+    return categoriesWithImages;
+  };
+
+  const categoriesFetch = async () => {
+    try {
+      const response = await axios.get(`${baseURL}/api/v1/category/all`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const filteredCategories = response.data.filter((category) => category.name.length > 5);
+
+      const categoriesWithImages = assignCategoryImages(filteredCategories);
+
+      setCategories(categoriesWithImages);
+      return response.data;
+    } catch (error) {
+      setError(true);
+      console.error(error.message);
+      throw new Error(error.message);
+    }
+  };
+  console.log(categories);
+  useEffect(() => {
+    console.log('useEffect disparado');
+    categoriesFetch();
+  }, []);
 
   return (
     <>
@@ -126,16 +144,17 @@ const Microemprendimientos = () => {
             Categorías
           </Typography>
         </Box>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <Link
-            to={encodeURIComponent(category.title)}
-            key={category.title}
+            to={encodeURIComponent(category.name)}
+            key={category.name}
             style={{ textDecoration: 'none', cursor: 'pointer' }}
           >
             <CategoryCard
               icon={category.image}
-              category={category.title}
-              isSelected={selectedCategories[category.title]}
+              category={category.name}
+              isSelected={selectedCategories[category.name]}
+              id={category.id}
             />
           </Link>
         ))}
@@ -144,4 +163,4 @@ const Microemprendimientos = () => {
   );
 };
 
-export default Microemprendimientos;
+export default VisitorMicroentrepreneurship;

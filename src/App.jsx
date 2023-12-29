@@ -10,7 +10,7 @@ import Dashboard from '@/pages/dashboard/Dashboard';
 import SearchPage from '@/pages/search/SearchPage';
 import LandingPage from '@/pages/landing/LandingPage';
 import Publications from '@/pages/publications/Publications';
-import MicroemprendimientosRouter from '@/pages/microemprendimientos/MicroemprendimientosRouter';
+import VisitorMicroentrepreneurshipRouter from '@/pages/microemprendimientos/VisitorMicroentrepreneurshipRouter';
 import MicroentrepreneurshipRouter from '@/pages/admin-microentrepreneurship/MicroentrepreneurshipRouter';
 import PostRouter from '@/pages/admin-post/PostRouter';
 import RequestRouter from '@/pages/admin-request/RequestRouter';
@@ -30,7 +30,7 @@ function App() {
             <Route path={USER_ROUTES.SEARCH} element={<SearchPage />} />
             <Route
               path={USER_ROUTES.MICROENTREPRENEURSHIPS.ROUTER_ROUTE + '/*'}
-              element={<MicroemprendimientosRouter />}
+              element={<VisitorMicroentrepreneurshipRouter />}
             />
             <Route path={ADMIN_ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route

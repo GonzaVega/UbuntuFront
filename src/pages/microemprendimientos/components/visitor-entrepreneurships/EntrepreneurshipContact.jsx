@@ -13,7 +13,7 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   overflow: 'hidden',
 }));
 
-const EmprendimientoContact = () => {
+const EntrepreneurshipContact = () => {
   const { categoryId, id } = useParams();
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -155,4 +155,4 @@ const EmprendimientoContact = () => {
   );
 };
 
-export default EmprendimientoContact;
+export default EntrepreneurshipContact;

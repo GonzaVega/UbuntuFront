@@ -1,12 +1,32 @@
 import { Card, Typography, Box, useTheme } from '@mui/material';
 import CategoryDetails from '@/pages/microemprendimientos/components/categories/CategoryDetails';
+import { CategoryRounded } from '@mui/icons-material';
 
-const CategoryCard = ({ icon, category, isSelected }) => {
+const CategoryCard = ({ icon, category, isSelected, id }) => {
   const { palette } = useTheme();
 
   //variable de prueba.
   const categoryDescription =
     'Conectate con Microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos.';
+
+  const iconHandler = (image) => {
+    if (image === 'no image assigned') {
+      return <CategoryRounded />;
+    } else {
+      return (
+        <img
+          src={image}
+          alt='Icono de la categoría'
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            borderRadius: '50%',
+          }}
+        />
+      );
+    }
+  };
 
   return (
     <>
@@ -41,23 +61,16 @@ const CategoryCard = ({ icon, category, isSelected }) => {
                 padding: '4px',
               }}
             >
-              <img
-                src={icon}
-                alt='Icono de la categoría'
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: '50%',
-                }}
-              />
+              {iconHandler(icon)}
             </Box>
             <Typography variant='body1' color={palette.primary.main}>
               {category}
             </Typography>
           </Card>
         )}
-        {isSelected && <CategoryDetails category={category} description={categoryDescription} />}
+        {isSelected && (
+          <CategoryDetails category={category} description={categoryDescription} categoryId={id} />
+        )}
       </Box>
     </>
   );

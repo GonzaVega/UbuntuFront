@@ -23,7 +23,7 @@ const MainContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const EmprendimientoCard = ({
+const EntrepreneurshipCard = ({
   id,
   title,
   establishmentType,
@@ -111,4 +111,4 @@ const EmprendimientoCard = ({
   );
 };
 
-export default EmprendimientoCard;
+export default EntrepreneurshipCard;

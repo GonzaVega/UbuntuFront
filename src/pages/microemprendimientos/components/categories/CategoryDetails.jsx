@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Typography, styled, Container, Grid } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
-import EmprendimientoCard from '@/pages/microemprendimientos/components/emprendimientos/EmprendimientoCard';
+import EntrepreneurshipCard from '@/pages/microemprendimientos/components/visitor-entrepreneurships/EntrepreneurshipCard';
 // import projectItems from '@/mocks/microentrepreneuships.json';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import useFetch from '@/hooks/useFetch';
@@ -35,7 +35,7 @@ const CircleCut = styled(Box)(({ theme }) => ({
   zIndex: -1,
 }));
 
-const CategoryDetails = ({ category }) => {
+const CategoryDetails = ({ category, description, id }) => {
   const { categoryId } = useParams();
   const [categoryData, setCategoryData] = useState({});
 
@@ -48,7 +48,7 @@ const CategoryDetails = ({ category }) => {
     queryFn: ({ abortController }) =>
       microEntrepreneurshipService.find({ searchParams: {}, abortController }),
   });
-  // console.log(results, loading, error);
+  console.log(category, id);
 
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
@@ -102,7 +102,7 @@ const CategoryDetails = ({ category }) => {
           </Typography>
         </Box>
         <Typography variant='h2' align='center' color='#093C59' sx={{ pb: '20px' }}>
-          {categoryData.name}
+          {categoryId}
         </Typography>
         <Typography align='center' sx={{ pb: '20px' }}>
           {categoryData.description}
@@ -110,7 +110,7 @@ const CategoryDetails = ({ category }) => {
         <Grid container spacing={2}>
           {results?.map((result, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <EmprendimientoCard
+              <EntrepreneurshipCard
                 key={result.id}
                 id={result.id}
                 title={result.nombre}
