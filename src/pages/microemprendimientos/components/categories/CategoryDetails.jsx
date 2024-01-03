@@ -25,10 +25,10 @@ const Background = styled(Box)(({ theme }) => ({
 
 const CircleCut = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  top: '-4500px',
-  right: '-2350px',
-  width: '300%',
-  height: '300%',
+  top: '-290%',
+  right: '-440%',
+  width: '3500px',
+  height: '3500px',
   borderRadius: '50%',
   backgroundColor: 'white',
   transform: 'rotate(45deg)',

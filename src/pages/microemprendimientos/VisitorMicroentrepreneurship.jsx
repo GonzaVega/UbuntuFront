@@ -109,6 +109,7 @@ const VisitorMicroentrepreneurship = () => {
 
   useEffect(() => {
     categoriesFetch();
+    console.log('useEffect disparado');
   }, []);
 
   return (
@@ -148,7 +149,7 @@ const VisitorMicroentrepreneurship = () => {
           <Link
             to={`${encodeURIComponent(category.name)}`}
             state={{ categoryId: category.id, categoryName: category.name }}
-            key={category.name}
+            key={category.id}
             style={{ textDecoration: 'none', cursor: 'pointer' }}
           >
             <CategoryCard

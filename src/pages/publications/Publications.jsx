@@ -1,4 +1,5 @@
-import { styled, Box, Grid, Container } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { styled, Box, Grid, Container, CircularProgress } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import PostCard from '@/pages/landing/components/PostCard';
@@ -6,6 +7,8 @@ import PostCard from '@/pages/landing/components/PostCard';
 import POST_IMAGE_01 from '@/assets/images/post_image_01.png';
 import POST_IMAGE_02 from '@/assets/images/post_image_02.png';
 import POST_IMAGE_03 from '@/assets/images/post_image_03.png';
+import { PublicationService } from '@/services/publication.service';
+import useFetch from '@/hooks/useFetch';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -24,10 +27,10 @@ const Background = styled(Box)(({ theme }) => ({
 
 const CircleCut = styled(Box)(({ theme }) => ({
   position: 'absolute',
-  top: '-3200px',
-  right: '-1700px',
-  width: '300%',
-  height: '300%',
+  top: '-120%',
+  right: '-580%',
+  width: '3500px',
+  height: '3500px',
   borderRadius: '50%',
   backgroundColor: 'white',
   transform: 'rotate(45deg)',
@@ -35,12 +38,25 @@ const CircleCut = styled(Box)(({ theme }) => ({
 }));
 
 const Publications = () => {
+  const [publications, setPublications] = useState([]);
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/publications/publications background compressed.jpg")`,
     title: 'PUBLICACIONES',
     subtitle: 'Explorando finanzas de impacto',
     text: 'Conocé cómo decisiones financieras pueden impactar positivamente en la sociedad y el medio ambiente',
   };
+
+  const publicationService = new PublicationService();
+
+  const { data, loading, error } = useFetch({
+    queryFn: ({ abortController }) => publicationService.find({ abortController }),
+  });
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setPublications(data);
+    }
+  }, [data]);
 
   const posts = [
     {
@@ -78,9 +94,20 @@ const Publications = () => {
         <CircleCut />
         <Grid item xs={12} mt='2rem'>
           <Grid container spacing={'1rem'}>
-            {posts.map((post, index) => (
-              <PostCard key={index} post={post} />
-            ))}
+            {loading ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: 'white',
+                }}
+              >
+                <CircularProgress color='inherit' />
+              </Box>
+            ) : (
+              publications.map((publication, index) => <PostCard key={index} post={publication} />)
+            )}
           </Grid>
         </Grid>
       </StyledContainer>

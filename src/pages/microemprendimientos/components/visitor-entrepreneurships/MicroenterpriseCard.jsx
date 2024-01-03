@@ -80,7 +80,7 @@ const MicroenterpriseCard = ({
               {additionalInfo}
             </Typography>
             <Box textAlign='center' sx={{ mt: '40px' }}>
-              <Link to={`${title}/contacto`} key={id}>
+              <Link to={`${title}/contacto`} state={{ enterpriseId: id }}>
                 <Button variant='contained' color='primary' sx={{ width: '40%' }}>
                   Contactar
                 </Button>

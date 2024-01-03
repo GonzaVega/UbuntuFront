@@ -9,13 +9,28 @@ import CardToggle from '@/components/card/CardToggle';
 export default function PostCard({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { mixins } = useTheme();
-  const headerText = post.content.split('\n\n')[0];
+  const headerText = post.description.split('\n\n')[0];
 
   const sx = isExpanded ? mixins.cardExpanded : mixins.cardCollapsed;
 
   function handleClick() {
     setIsExpanded(!isExpanded);
   }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const formattedDay = String(day).padStart(2, '0');
+    const formattedMonth = String(month).padStart(2, '0');
+
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  }
+
+  const imgObj = post?.images.map((img) => ({ url: img }));
+  console.log(imgObj);
 
   return (
     <CardContainer>
@@ -24,12 +39,12 @@ export default function PostCard({ post }) {
       </Typography>
       <Box display='flex' flexDirection='column' gap='1.5rem'>
         <Box>
-          <CardImageSlider images={post.picture} />
+          <CardImageSlider images={imgObj} />
         </Box>
         <Box display='flex' flexDirection='column' gap='0.5rem'>
           <CardContent
-            header={Header({ date: post.date, text: headerText, sx })}
-            content={FormatParagraphs({ content: post.content, from: 1 })}
+            header={Header({ date: formatDate(post.creationDate), text: headerText, sx })}
+            content={FormatParagraphs({ content: post.description, from: 1 })}
             isExpanded={isExpanded}
           />
           <CardToggle isExpanded={isExpanded} onClick={handleClick} renderButton={Button} />
