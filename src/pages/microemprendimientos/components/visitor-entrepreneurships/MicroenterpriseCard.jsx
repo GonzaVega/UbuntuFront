@@ -23,7 +23,7 @@ const MainContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const EntrepreneurshipCard = ({
+const MicroenterpriseCard = ({
   id,
   title,
   establishmentType,
@@ -33,7 +33,6 @@ const EntrepreneurshipCard = ({
   additionalInfo,
   images,
 }) => {
-  // const { id } = useParams();
   const [expand, setExpand] = useState(false);
   const { palette } = useTheme();
 
@@ -81,10 +80,7 @@ const EntrepreneurshipCard = ({
               {additionalInfo}
             </Typography>
             <Box textAlign='center' sx={{ mt: '40px' }}>
-              <Link
-                to={`${title}/contacto`}
-                // key={projectId}
-              >
+              <Link to={`${title}/contacto`} key={id}>
                 <Button variant='contained' color='primary' sx={{ width: '40%' }}>
                   Contactar
                 </Button>
@@ -111,4 +107,4 @@ const EntrepreneurshipCard = ({
   );
 };
 
-export default EntrepreneurshipCard;
+export default MicroenterpriseCard;

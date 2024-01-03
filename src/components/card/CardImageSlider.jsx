@@ -58,7 +58,7 @@ export default function CardImageSlider({
       {images.map((image) => (
         <SwiperSlide key={image}>
           <img
-            src={image}
+            src={image.url}
             style={{
               width: '100%',
               height: '8rem',

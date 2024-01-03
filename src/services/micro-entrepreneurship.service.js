@@ -15,6 +15,12 @@ export class MicroEntrepreneurshipService {
     return await repository.findOne({ id, abortController });
   }
 
+  //fetch microentrepreneurships by category.
+  async findByCategory({ categoryDataId, abortController }) {
+    const path = `/microentrepreneurship/find/category/${categoryDataId}`;
+    return await repository.find({ path, abortController });
+  }
+
   async create({ payload, abortController }) {
     const path = this.collection;
 

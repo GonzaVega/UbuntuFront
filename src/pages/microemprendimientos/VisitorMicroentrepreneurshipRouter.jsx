@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import VisitorMicroentrepreneurship from '@/pages/microemprendimientos/VisitorMicroentrepreneurship';
 import CategoryDetails from '@/pages/microemprendimientos/components/categories/CategoryDetails';
 import { USER_ROUTES } from '@/constants/routes';
-import EntrepreneurshipContact from '@/pages/microemprendimientos/components/visitor-entrepreneurships/EntrepreneurshipContact';
+import MicroenterpriseContact from '@/pages/microemprendimientos/components/visitor-entrepreneurships/MicroenterpriseContact';
 
 export default function VisitorMicroentrepreurshipRouter() {
   return (
@@ -14,7 +14,7 @@ export default function VisitorMicroentrepreurshipRouter() {
       <Route path={USER_ROUTES.MICROENTREPRENEURSHIPS.BY_CATEGORY} element={<CategoryDetails />} />
       <Route
         path={USER_ROUTES.MICROENTREPRENEURSHIPS.CONTACT}
-        element={<EntrepreneurshipContact />}
+        element={<MicroenterpriseContact />}
       />
     </Routes>
   );

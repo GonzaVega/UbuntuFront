@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Typography, styled, Container, Grid } from '@mui/material';
+import { useLocation, useParams } from 'react-router-dom';
+import { Box, Typography, styled, Container, Grid, CircularProgress } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
-import EntrepreneurshipCard from '@/pages/microemprendimientos/components/visitor-entrepreneurships/EntrepreneurshipCard';
-// import projectItems from '@/mocks/microentrepreneuships.json';
+import MicroenterpriseCard from '@/pages/microemprendimientos/components/visitor-entrepreneurships/MicroenterpriseCard';
+
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import useFetch from '@/hooks/useFetch';
 
@@ -37,18 +37,18 @@ const CircleCut = styled(Box)(({ theme }) => ({
 
 const CategoryDetails = ({ category, description, id }) => {
   const { categoryId } = useParams();
+  const location = useLocation();
   const [categoryData, setCategoryData] = useState({});
+  const [microenterprises, setMicroenterprises] = useState([]);
+
+  const categoryDataId = location.state?.categoryId;
 
   const microEntrepreneurshipService = new MicroEntrepreneurshipService();
-  const {
-    data: results,
-    loading,
-    error,
-  } = useFetch({
+
+  const { data, loading, error } = useFetch({
     queryFn: ({ abortController }) =>
-      microEntrepreneurshipService.find({ searchParams: {}, abortController }),
+      microEntrepreneurshipService.findByCategory({ categoryDataId, abortController }),
   });
-  console.log(category, id);
 
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
@@ -67,7 +67,12 @@ const CategoryDetails = ({ category, description, id }) => {
     setCategoryData(categoryDummyData);
   };
 
-  useEffect(() => loadCategoryHandler(), []);
+  useEffect(() => {
+    loadCategoryHandler();
+    if (data && data.microentrepreneurships && data.microentrepreneurships.length > 0) {
+      setMicroenterprises(data.microentrepreneurships);
+    }
+  }, [data]);
 
   return (
     <>
@@ -107,23 +112,37 @@ const CategoryDetails = ({ category, description, id }) => {
         <Typography align='center' sx={{ pb: '20px' }}>
           {categoryData.description}
         </Typography>
-        <Grid container spacing={2}>
-          {results?.map((result, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <EntrepreneurshipCard
-                key={result.id}
-                id={result.id}
-                title={result.name}
-                establishmentType={result.subCategory}
-                category={result.category.name}
-                location={`${result.city}, ${result.province}, ${result.country}`}
-                description={result.description}
-                additionalInfo={result.moreInfo}
-                images={result.images}
-              />
-            </Grid>
-          ))}
-        </Grid>
+
+        {loading ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'white',
+            }}
+          >
+            <CircularProgress color='inherit' />
+          </Box>
+        ) : (
+          <Grid container spacing={2}>
+            {microenterprises?.map((microenterprise, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <MicroenterpriseCard
+                  key={microenterprise.id}
+                  id={microenterprise.id}
+                  title={microenterprise.name}
+                  establishmentType={microenterprise.subCategory}
+                  category={microenterprise.category.name}
+                  location={`${microenterprise.city}, ${microenterprise.province}, ${microenterprise.country}`}
+                  description={microenterprise.description}
+                  additionalInfo={microenterprise.moreInfo}
+                  images={microenterprise.images}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </StyledContainerCategories>
     </>
   );

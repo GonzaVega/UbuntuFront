@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
@@ -13,8 +13,8 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   overflow: 'hidden',
 }));
 
-const EntrepreneurshipContact = () => {
-  const { categoryId, id } = useParams();
+const MicroenterpriseContact = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -30,6 +30,8 @@ const EntrepreneurshipContact = () => {
     phone: '',
     message: '',
   };
+
+  console.log(id);
 
   const formSubmitHandler = (value) => {
     console.log(value);
@@ -155,4 +157,4 @@ const EntrepreneurshipContact = () => {
   );
 };
 
-export default EntrepreneurshipContact;
+export default MicroenterpriseContact;

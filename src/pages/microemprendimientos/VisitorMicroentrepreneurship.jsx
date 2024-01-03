@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
-import { baseURL } from '@/helpers/baseURL';
+import { baseURLDevelop, baseURLDeployed } from '@/helpers/baseURL';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
 import agroecologyIcon from '@/assets/images/agroecology.png';
@@ -43,8 +43,8 @@ const VisitorMicroentrepreneurship = () => {
   const navigate = useNavigate();
   const [selectedCategories, setSelectedCategories] = useState({});
   const [error, setError] = useState(false);
-  //para backend
   const [categories, setCategories] = useState([]);
+
   const searchBarProps = {
     imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
     title: 'MICROEMPRENDIMIENTOS',
@@ -87,15 +87,16 @@ const VisitorMicroentrepreneurship = () => {
 
   const categoriesFetch = async () => {
     try {
-      const response = await axios.get(`${baseURL}/api/v1/category/all`, {
+      const response = await axios.get(`${baseURLDevelop}/api/v1/category/all`, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       const filteredCategories = response.data.filter((category) => category.name.length > 5);
-
       const categoriesWithImages = assignCategoryImages(filteredCategories);
+
+      console.log(filteredCategories);
 
       setCategories(categoriesWithImages);
       return response.data;
@@ -105,9 +106,8 @@ const VisitorMicroentrepreneurship = () => {
       throw new Error(error.message);
     }
   };
-  console.log(categories);
+
   useEffect(() => {
-    console.log('useEffect disparado');
     categoriesFetch();
   }, []);
 
@@ -146,7 +146,8 @@ const VisitorMicroentrepreneurship = () => {
         </Box>
         {categories?.map((category) => (
           <Link
-            to={encodeURIComponent(category.name)}
+            to={`${encodeURIComponent(category.name)}`}
+            state={{ categoryId: category.id, categoryName: category.name }}
             key={category.name}
             style={{ textDecoration: 'none', cursor: 'pointer' }}
           >
