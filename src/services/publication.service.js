@@ -30,7 +30,7 @@ export class PublicationService {
   //creates a publication, auth token must be included.
   async create({ payload, token, abortController }) {
     const path = this.collection + `/create`;
-    const authenticatedPayload = [...payload, token];
+    const authenticatedPayload = { ...payload, token };
 
     return repository.save({ path, authenticatedPayload, abortController });
   }
@@ -38,7 +38,7 @@ export class PublicationService {
   //edits a publication, auth token must be included.
   async update({ id, token, payload, abortController }) {
     const path = this.collection + `/change/${id}`;
-    const authenticatedPayload = [...payload, token];
+    const authenticatedPayload = { ...payload, token };
 
     return repository.update({ path, authenticatedPayload, abortController });
   }

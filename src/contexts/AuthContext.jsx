@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
+
 import { googleLogout } from '@react-oauth/google';
 import axios from 'axios';
-import NoticeCard from '@/components/common/NoticeCard';
+
 import { USER_ROUTES } from '@/constants/routes';
-//import { render } from 'react-dom';
 
 const AuthContext = createContext();
 
@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
 
   const API_BASE_URL = 'http://localhost:8081';
 
@@ -30,12 +29,12 @@ export const AuthProvider = ({ children }) => {
         console.log('Backend Auth Response:', JSON.stringify(authResponse, null, 2));
 
         saveUserInfo(authResponse);
-        console.log('User----'+user);
+        console.log('User----' + user);
 
-        return true
+        return true;
       }
     } catch (error) {
-      setAuthError("No puede acceder a este sitio")
+      setAuthError('No puede acceder a este sitio');
     }
   };
 
@@ -51,12 +50,12 @@ export const AuthProvider = ({ children }) => {
 
   const saveUserInfo = (authResponse) => {
     if (authResponse != null) {
-      console.log(authResponse.firstName)
-      console.log("tiene datos data------------")
-      if(authResponse.role === 'ADMIN'){
-        console.log("es admin------------")
+      console.log(authResponse.firstName);
+      console.log('tiene datos data------------');
+      if (authResponse.role === 'ADMIN') {
+        console.log('es admin------------');
         const { token } = authResponse;
-        console.log("token---"+token)
+        console.log('token---' + token);
         localStorage.setItem('token', token);
         setUser(authResponse);
         setIsAuthenticated(true);
@@ -80,7 +79,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, authError, logout  }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, authError, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
 import { Formik, Form } from 'formik';
-import axios from 'axios';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import FormikController from '@/components/form/FormikController';
 import { contactSchema } from '@/schemas/formsSchema';
 import NoticeCard from '@/components/common/NoticeCard';
-import { baseURLDevelop, baseURLDeployed } from '@/helpers/baseURL';
+import { MessageService } from '@/services/message.service';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -22,7 +22,7 @@ const MicroenterpriseContact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
-  console.log(id, location);
+  const messageService = new MessageService();
 
   const searchBarProps = {
     imageRoute: `url("../../../src/assets/images/microemprendimientos/contact/projectsContact.jpg")`,
@@ -37,37 +37,30 @@ const MicroenterpriseContact = () => {
     message: '',
   };
 
-  console.log(id);
-
   const microenterpriseId = location.state?.enterpriseId;
-  console.log(microenterpriseId);
 
   const formSubmitHandler = async (values) => {
-    console.log(values);
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+    const payload = {
+      ...values,
+      sentDate: formattedDate,
+    };
+
     try {
-      const currentDate = new Date();
+      const response = await messageService.create({
+        payload: payload,
+        microentrepreneurshipId: microenterpriseId,
+        abortController: new AbortController(),
+      });
 
-      const formattedDate = currentDate.toISOString();
-
-      const payload = {
-        ...values,
-        sentDate: formattedDate,
-      };
-
-      console.log(payload);
-
-      const response = await axios.post(
-        `${baseURLDeployed}/api/v1/message/save/${microenterpriseId}`,
-        payload,
-      );
-
-      if (response.status === 200 || response.status === 201) {
+      if (response.created) {
         setIsSubmitted(true);
       } else {
         setError('Error al enviar el formulario. Inténtalo nuevamente.');
       }
     } catch (error) {
-      setError('Hubo un problema al enviar el formulario.');
+      setError('Error al enviar el formulario. Inténtalo nuevamente.');
     }
   };
 

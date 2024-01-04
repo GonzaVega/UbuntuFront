@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Container, Typography, Box, styled } from '@mui/material';
-import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+
+import { Container, Typography, Box, styled, CircularProgress } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
+import NoticeCard from '@/components/common/NoticeCard';
 import { baseURLDevelop, baseURLDeployed } from '@/helpers/baseURL';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
@@ -43,6 +45,7 @@ const VisitorMicroentrepreneurship = () => {
   const navigate = useNavigate();
   const [selectedCategories, setSelectedCategories] = useState({});
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
   const searchBarProps = {
@@ -84,9 +87,10 @@ const VisitorMicroentrepreneurship = () => {
 
     return categoriesWithImages;
   };
-
+  // instance.baseURL esto ponerlo en la llamada a las categorias.
   const categoriesFetch = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(`${baseURLDevelop}/api/v1/category/all`, {
         headers: {
           'Content-Type': 'application/json',
@@ -99,8 +103,10 @@ const VisitorMicroentrepreneurship = () => {
       console.log(filteredCategories);
 
       setCategories(categoriesWithImages);
+      setLoading(false);
       return response.data;
     } catch (error) {
+      setLoading(false);
       setError(true);
       console.error(error.message);
       throw new Error(error.message);
@@ -145,21 +151,49 @@ const VisitorMicroentrepreneurship = () => {
             Categorías
           </Typography>
         </Box>
-        {categories?.map((category) => (
-          <Link
-            to={`${encodeURIComponent(category.name)}`}
-            state={{ categoryId: category.id, categoryName: category.name }}
-            key={category.id}
-            style={{ textDecoration: 'none', cursor: 'pointer' }}
+        {loading ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'white',
+            }}
           >
-            <CategoryCard
-              icon={category.image}
-              category={category.name}
-              isSelected={selectedCategories[category.name]}
-              id={category.id}
-            />
-          </Link>
-        ))}
+            <CircularProgress color='inherit' />
+          </Box>
+        ) : (
+          categories?.map((category) => (
+            <Link
+              to={`${encodeURIComponent(category.name)}`}
+              state={{ categoryId: category.id, categoryName: category.name }}
+              key={category.id}
+              style={{ textDecoration: 'none', cursor: 'pointer' }}
+            >
+              <CategoryCard
+                icon={category.image}
+                category={category.name}
+                isSelected={selectedCategories[category.name]}
+                id={category.id}
+              />
+            </Link>
+          ))
+        )}
+        {error && (
+          <NoticeCard
+            isOpen={true}
+            success={false}
+            mainMessage={
+              'Estamos experimentando problemas para mostrar las categorías, inténtalo más tarde'
+            }
+            handleClose={() => {
+              navigate('/');
+            }}
+            cancelFunction={() => {
+              navigate('/');
+            }}
+          />
+        )}
       </StyledContainer>
     </>
   );

@@ -30,10 +30,12 @@ export class MessageService {
     return repository.save({ path, payload, abortController });
   }
 
-  async update({ id, payload, abortController }) {
+  async update({ id, payload, token, abortController }) {
     const path = this.collection + `/${id}/change/`;
 
-    return repository.update({ path, payload, abortController });
+    const authenticatedPayload = { ...payload, token };
+
+    return repository.update({ path, authenticatedPayload, abortController });
   }
 
   //no 'delete messages' endpoint created so far.

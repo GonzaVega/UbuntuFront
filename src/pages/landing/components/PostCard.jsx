@@ -9,7 +9,9 @@ import CardToggle from '@/components/card/CardToggle';
 export default function PostCard({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { mixins } = useTheme();
-  const headerText = post.description.split('\n\n')[0];
+  const headerText = post.description;
+  // esto agregar al final de headerText
+  // .split('\n\n')[0];
 
   const sx = isExpanded ? mixins.cardExpanded : mixins.cardCollapsed;
 
@@ -29,8 +31,9 @@ export default function PostCard({ post }) {
     return `${formattedDay}/${formattedMonth}/${year}`;
   }
 
-  const imgObj = post?.images.map((img) => ({ url: img }));
-  console.log(imgObj);
+  const imgObj = post?.images;
+  //esto agregar al final de imgobj
+  // .map((img) => ({ url: img }));
 
   return (
     <CardContainer>

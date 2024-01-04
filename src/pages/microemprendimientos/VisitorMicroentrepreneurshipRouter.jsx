@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+
 import VisitorMicroentrepreneurship from '@/pages/microemprendimientos/VisitorMicroentrepreneurship';
 import CategoryDetails from '@/pages/microemprendimientos/components/categories/CategoryDetails';
 import { USER_ROUTES } from '@/constants/routes';
