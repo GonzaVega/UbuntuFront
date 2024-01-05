@@ -7,17 +7,24 @@ export default function useFetch({ queryFn, dependencies = [] }) {
   const [error, setError] = useState();
 
   useEffect(() => {
-    setLoading(true);
-    setError();
-    setData();
-
     const abortController = new AbortController();
 
-    queryFn({ abortController })
-      .then((data) => setData(data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
+    const fetchData = async () => {
+      setLoading(true);
+      setError();
+      setData();
 
+      try {
+        const result = await queryFn({ abortController });
+        if (!abortController.signal.aborted) setData(result);
+      } catch (err) {
+        if (!abortController.signal.aborted) setError(err.message);
+      } finally {
+        if (!abortController.signal.aborted) setLoading(false);
+      }
+    };
+
+    fetchData();
     return () => abortController.abort();
   }, dependencies);
 

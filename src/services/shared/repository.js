@@ -15,8 +15,8 @@ class Repository {
     return await this.#http.post({ path, payload, abortController });
   }
 
-  async update({ id, payload }) {
-    return await this.#http.patch({ path: id, payload });
+  async update({ id, payload, abortController }) {
+    return await this.#http.patch({ path: id, payload, abortController });
   }
 
   async delete({ id, abortController }) {

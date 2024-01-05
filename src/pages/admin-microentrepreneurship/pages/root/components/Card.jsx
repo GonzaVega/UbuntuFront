@@ -14,7 +14,7 @@ function ocultar() {
   });
 }
 
-export default function Card({ title, category }) {
+export default function Card({ id, title, category }) {
   const { value: IsSuccess, setTrue: setSuccess, setFalse: setFail } = useBoolean();
   const { value: isToastVisible, setTrue: showToast, setFalse: hiddenToast } = useBoolean();
 
@@ -41,7 +41,7 @@ export default function Card({ title, category }) {
           </Typography>
           <ButtonWithMenu
             onHidden={handleHidden}
-            editRoute={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.EDIT + '/' + title}
+            editRoute={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.EDIT + '/' + id}
           />
         </Box>
         <Divider sx={{ width: '70%', bgcolor: 'secondary.main', height: '1px' }} />
@@ -49,7 +49,7 @@ export default function Card({ title, category }) {
           <Typography variant='body2' lineHeight='1.5rem' width='80%'>
             {category}
           </Typography>
-          <Link to={title}>
+          <Link to={String(id)}>
             <ButtonBase sx={{ width: '2rem', height: '2rem' }}>
               <ArrowRightIcon fill={'#090909'} />
             </ButtonBase>

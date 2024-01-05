@@ -4,7 +4,7 @@ export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
   async find({ searchParams = {}, abortController }) {
-    const path = this.collection;
+    const path = '/all';
 
     return await repository.find({ path, searchParams, abortController });
   }
