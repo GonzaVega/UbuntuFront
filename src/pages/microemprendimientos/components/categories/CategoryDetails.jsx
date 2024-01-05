@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { Box, Typography, styled, Container, Grid, CircularProgress } from '@mui/material';
+import { useLocation, useParams, Link } from 'react-router-dom';
+import { Box, Typography, styled, Container, Grid, CircularProgress, Button } from '@mui/material';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import MicroenterpriseCard from '@/pages/microemprendimientos/components/visitor-entrepreneurships/MicroenterpriseCard';
+import { searchBarProps } from '@/pages/microemprendimientos/VisitorMicroentrepreneurship';
 
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import useFetch from '@/hooks/useFetch';
@@ -35,6 +36,14 @@ const CircleCut = styled(Box)(({ theme }) => ({
   zIndex: -1,
 }));
 
+const NoMicroenterprisesBox = styled(Box)({
+  border: '1px solid #ccc',
+  borderRadius: '8px',
+  backgroundColor: '#d2d2d2',
+  padding: '20px',
+  textAlign: 'center',
+});
+
 const CategoryDetails = ({ category, description, id }) => {
   const { categoryId } = useParams();
   const location = useLocation();
@@ -50,15 +59,8 @@ const CategoryDetails = ({ category, description, id }) => {
       microEntrepreneurshipService.findByCategory({ categoryDataId, abortController }),
   });
 
-  const searchBarProps = {
-    imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
-    title: 'MICROEMPRENDIMIENTOS',
-    subtitle: 'Invertí sostenible',
-    text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
-  };
-
+  //solo usamos la description aca./
   const loadCategoryHandler = () => {
-    //esto esta pensado para que aca llamemos al hook useFetch y traernos los datos de la categoria especifica.
     const categoryDummyData = {
       name: 'Agroecología-Orgánicos-Alimentación saludable',
       description:
@@ -142,6 +144,18 @@ const CategoryDetails = ({ category, description, id }) => {
               </Grid>
             ))}
           </Grid>
+        )}
+        {error && (
+          <NoMicroenterprisesBox sx={{ marginTop: '1rem' }}>
+            <Typography variant='h3' color='textPrimary'>
+              {`${error}. Intenta en la demás categorías.`}
+            </Typography>
+            <Link to='/microemprendimientos' style={{ textDecoration: 'none', cursor: 'pointer' }}>
+              <Button variant='contained' sx={{ marginTop: '10px' }}>
+                Volver a categorías
+              </Button>
+            </Link>
+          </NoMicroenterprisesBox>
         )}
       </StyledContainerCategories>
     </>

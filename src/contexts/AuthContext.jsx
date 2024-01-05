@@ -22,14 +22,10 @@ export const AuthProvider = ({ children }) => {
     try {
       if (credentialResponse.credential) {
         const tokenId = credentialResponse.credential;
-        console.log('Token ID:', tokenId);
 
         const authResponse = await authenticateWithGoogle(tokenId);
 
-        console.log('Backend Auth Response:', JSON.stringify(authResponse, null, 2));
-
         saveUserInfo(authResponse);
-        console.log('User----' + user);
 
         return true;
       }
@@ -51,16 +47,11 @@ export const AuthProvider = ({ children }) => {
   const saveUserInfo = (authResponse) => {
     if (authResponse != null) {
       console.log(authResponse.firstName);
-      console.log('tiene datos data------------');
       if (authResponse.role === 'ADMIN') {
-        console.log('es admin------------');
         const { token } = authResponse;
-        console.log('token---' + token);
         localStorage.setItem('token', token);
         setUser(authResponse);
         setIsAuthenticated(true);
-
-        console.log('User:', user);
       }
     }
   };

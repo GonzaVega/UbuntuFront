@@ -55,7 +55,7 @@ export default function CardImageSlider({
       }
       modules={[Pagination, Autoplay, Navigation]}
     >
-      {images.map((image) => (
+      {images?.map((image) => (
         <SwiperSlide key={image}>
           <img
             src={image.url}

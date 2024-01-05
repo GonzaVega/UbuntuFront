@@ -88,6 +88,7 @@ export class HttpAdapter {
       if (error.code === 'ERR_CANCELED') {
         console.log('Solicitud cancelada');
       }
+      throw new Error(error.response.data.Message);
     }
   }
 

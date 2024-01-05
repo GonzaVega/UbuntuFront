@@ -31,9 +31,7 @@ export default function PostCard({ post }) {
     return `${formattedDay}/${formattedMonth}/${year}`;
   }
 
-  const imgObj = post?.images;
-  //esto agregar al final de imgobj
-  // .map((img) => ({ url: img }));
+  const imgObj = post?.images?.map((img) => ({ url: img }));
 
   return (
     <CardContainer>
@@ -49,6 +47,7 @@ export default function PostCard({ post }) {
             header={Header({ date: formatDate(post.creationDate), text: headerText, sx })}
             content={FormatParagraphs({ content: post.description, from: 1 })}
             isExpanded={isExpanded}
+            sx={{ flex: 1 }}
           />
           <CardToggle isExpanded={isExpanded} onClick={handleClick} renderButton={Button} />
         </Box>

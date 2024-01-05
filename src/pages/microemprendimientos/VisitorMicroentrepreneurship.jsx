@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { Container, Typography, Box, styled, CircularProgress } from '@mui/material';
@@ -7,12 +6,13 @@ import { Container, Typography, Box, styled, CircularProgress } from '@mui/mater
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
 import NoticeCard from '@/components/common/NoticeCard';
-import { baseURLDevelop, baseURLDeployed } from '@/helpers/baseURL';
+import useFetch from '@/hooks/useFetch';
 
 import socialEconomyIcon from '@/assets/images/social-economy.png';
 import agroecologyIcon from '@/assets/images/agroecology.png';
 import conservationIcon from '@/assets/images/conservation.png';
 import circularEconomyIcon from '@/assets/images/circular-economy.png';
+import instance from '@/helpers/axiosConfig';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
@@ -41,22 +41,19 @@ const CircleCut = styled(Box)(({ theme }) => ({
   zIndex: -1,
 }));
 
+export const searchBarProps = {
+  imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
+  title: 'MICROEMPRENDIMIENTOS',
+  subtitle: 'Invertí sostenible',
+  text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
+};
+
 const VisitorMicroentrepreneurship = () => {
   const navigate = useNavigate();
   const [selectedCategories, setSelectedCategories] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  const searchBarProps = {
-    imageRoute: `url("../src/assets/images/microemprendimientos/imagen_microemprendimientos.jpg")`,
-    title: 'MICROEMPRENDIMIENTOS',
-    subtitle: 'Invertí sostenible',
-    text: 'Explorá las categorías y encontrá la inversión sostenible que mejor se ajuste a tus metas financieras',
-  };
 
   const assignCategoryImages = (categoriesData) => {
-    const categoriesWithImages = categoriesData.map((category) => {
+    const categoriesWithImages = categoriesData?.map((category) => {
       let image;
       const defaultImage = 'no image assigned';
 
@@ -87,36 +84,19 @@ const VisitorMicroentrepreneurship = () => {
 
     return categoriesWithImages;
   };
-  // instance.baseURL esto ponerlo en la llamada a las categorias.
-  const categoriesFetch = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${baseURLDevelop}/api/v1/category/all`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
 
-      const filteredCategories = response.data.filter((category) => category.name.length > 5);
-      const categoriesWithImages = assignCategoryImages(filteredCategories);
+  const {
+    data: categories,
+    loading,
+    error,
+  } = useFetch({
+    queryFn: async (abortController) =>
+      await instance.get('/category/all', { signal: abortController.signal }),
+  });
 
-      console.log(filteredCategories);
+  const filteredCategories = categories?.data.filter((category) => category.name.length > 5);
 
-      setCategories(categoriesWithImages);
-      setLoading(false);
-      return response.data;
-    } catch (error) {
-      setLoading(false);
-      setError(true);
-      console.error(error.message);
-      throw new Error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    categoriesFetch();
-    console.log('useEffect disparado');
-  }, []);
+  const categoriesWithImages = assignCategoryImages(filteredCategories);
 
   return (
     <>
@@ -163,7 +143,7 @@ const VisitorMicroentrepreneurship = () => {
             <CircularProgress color='inherit' />
           </Box>
         ) : (
-          categories?.map((category) => (
+          categoriesWithImages?.map((category) => (
             <Link
               to={`${encodeURIComponent(category.name)}`}
               state={{ categoryId: category.id, categoryName: category.name }}
@@ -192,6 +172,7 @@ const VisitorMicroentrepreneurship = () => {
             cancelFunction={() => {
               navigate('/');
             }}
+            secondaryMessage={error}
           />
         )}
       </StyledContainer>
