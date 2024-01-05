@@ -15,6 +15,12 @@ export class MicroEntrepreneurshipService {
     return await repository.findOne({ id, abortController });
   }
 
+  async findLatest({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count';
+
+    return await repository.find({ path, searchParams, abortController });
+  }
+
   async create({ payload, abortController }) {
     const path = this.collection;
 

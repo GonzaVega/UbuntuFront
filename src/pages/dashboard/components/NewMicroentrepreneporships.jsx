@@ -1,7 +1,14 @@
+import useFetch from '@/hooks/useFetch';
+import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import { Grid, Box, Typography, useTheme } from '@mui/material';
 
 const NewMicroentrepreneporships = () => {
   const { palette } = useTheme();
+  const service = new MicroEntrepreneurshipService();
+  const { data, loading } = useFetch({
+    queryFn: ({ abortController }) => service.findLatest({ abortController }),
+  });
+  console.log(data, loading);
   return (
     <Box
       sx={{
