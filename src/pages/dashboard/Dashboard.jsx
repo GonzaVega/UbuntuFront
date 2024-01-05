@@ -4,9 +4,11 @@ import EstatisticsCard from '@/pages/dashboard/components/EstatisticsCard';
 import CategoryWrapper from '@/pages/dashboard/components/CategoryWrapper';
 import CategoriesCard from '@/pages/dashboard/components/CategoriesCard';
 import ViewCard from '@/pages/dashboard/components/ViewCard';
+import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 
 function Dashboard() {
   const { palette } = useTheme();
+  const service = new MicroEntrepreneurshipService();
   return (
     <Container>
       <Box mt={'2.5rem'}>
@@ -20,13 +22,17 @@ function Dashboard() {
       <NewMicroentrepreneporships />
       <Grid container mt={'1rem'} spacing={'1.5rem'}>
         <Grid item xs={6}>
-          <EstatisticsCard borderColor={palette.success.main} text={'Gestionados'} value={'80'} />
+          <EstatisticsCard
+            borderColor={palette.success.main}
+            text={'Gestionados'}
+            method={service.findManaged}
+          />
         </Grid>
         <Grid item xs={6}>
           <EstatisticsCard
             borderColor={palette.warning.main}
             text={'No gestionados'}
-            value={'20'}
+            value={service.findUnmanaged}
           />
         </Grid>
       </Grid>

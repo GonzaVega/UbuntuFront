@@ -4,7 +4,7 @@ export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
   async find({ searchParams = {}, abortController }) {
-    const path = '/all';
+    const path = this.collection;
 
     return await repository.find({ path, searchParams, abortController });
   }
@@ -37,5 +37,16 @@ export class MicroEntrepreneurshipService {
     id = this.collection + '/' + id;
 
     return repository.delete({ id, abortController });
+  }
+  async findManaged({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count/active';
+
+    return await repository.find({ path, searchParams, abortController });
+  }
+
+  async findUnmanaged({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count/notactive';
+
+    return await repository.find({ path, searchParams, abortController });
   }
 }

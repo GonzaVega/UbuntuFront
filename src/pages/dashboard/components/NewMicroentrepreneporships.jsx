@@ -8,7 +8,7 @@ const NewMicroentrepreneporships = () => {
   const { data, loading } = useFetch({
     queryFn: ({ abortController }) => service.findLatest({ abortController }),
   });
-  console.log(data, loading);
+
   return (
     <Box
       sx={{
@@ -46,7 +46,7 @@ const NewMicroentrepreneporships = () => {
               color: '#FDFDFE',
             }}
           >
-            100
+            {loading ? null : data}
           </Typography>
         </Grid>
       </Grid>
