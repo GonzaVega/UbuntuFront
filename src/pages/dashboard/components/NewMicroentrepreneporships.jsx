@@ -1,6 +1,6 @@
 import useFetch from '@/hooks/useFetch';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
-import { Grid, Box, Typography, useTheme } from '@mui/material';
+import { Grid, Box, Typography, useTheme, Skeleton } from '@mui/material';
 
 const NewMicroentrepreneporships = () => {
   const { palette } = useTheme();
@@ -9,6 +9,9 @@ const NewMicroentrepreneporships = () => {
     queryFn: ({ abortController }) => service.findLatest({ abortController }),
   });
 
+  if (loading === true) {
+    return <Skeleton sx={{ height: '66px', borderRadius: '0.5rem', transform: 'none' }} />;
+  }
   return (
     <Box
       sx={{
@@ -46,7 +49,7 @@ const NewMicroentrepreneporships = () => {
               color: '#FDFDFE',
             }}
           >
-            {loading ? null : data}
+            {data}
           </Typography>
         </Grid>
       </Grid>

@@ -49,4 +49,12 @@ export class MicroEntrepreneurshipService {
 
     return await repository.find({ path, searchParams, abortController });
   }
+  async findCountByCategory ({searchParams = {}, abortController}) {
+    const path = this.collection + '/count/categories';
+
+    return await repository.find({ path, searchParams, abortController });
+
+  }
+ 
+
 }

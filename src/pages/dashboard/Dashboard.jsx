@@ -2,13 +2,14 @@ import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
 import NewMicroentrepreneporships from '@/pages/dashboard/components/NewMicroentrepreneporships';
 import EstatisticsCard from '@/pages/dashboard/components/EstatisticsCard';
 import CategoryWrapper from '@/pages/dashboard/components/CategoryWrapper';
-import CategoriesCard from '@/pages/dashboard/components/CategoriesCard';
-import ViewCard from '@/pages/dashboard/components/ViewCard';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
+import PublicationWrapper from '@/pages/dashboard/components/PublicationWrapper';
+import { PublicationService } from '@/services/publication.service';
 
 function Dashboard() {
   const { palette } = useTheme();
   const service = new MicroEntrepreneurshipService();
+  const publicationService = new PublicationService();
   return (
     <Container>
       <Box mt={'2.5rem'}>
@@ -25,65 +26,19 @@ function Dashboard() {
           <EstatisticsCard
             borderColor={palette.success.main}
             text={'Gestionados'}
-            method={service.findManaged}
+            method={(context) => service.findManaged(context)}
           />
         </Grid>
         <Grid item xs={6}>
           <EstatisticsCard
             borderColor={palette.warning.main}
             text={'No gestionados'}
-            value={service.findUnmanaged}
+            method={(context) => service.findUnmanaged(context)}
           />
         </Grid>
       </Grid>
-      <CategoryWrapper>
-        <CategoriesCard
-          text={'Economía social/Desarrollo local/Inclusión financiera'}
-          value={'40'}
-        />
-        <CategoriesCard
-          text={'Economía social/Desarrollo local/Inclusión financiera'}
-          value={'40'}
-        />
-        <CategoriesCard
-          text={'Economía social/Desarrollo local/Inclusión financiera'}
-          value={'40'}
-        />
-        <CategoriesCard
-          text={'Economía social/Desarrollo local/Inclusión financiera'}
-          value={'40'}
-        />
-      </CategoryWrapper>
-      <Box my={'3rem'}>
-        <Typography
-          sx={{ fontSize: '1.25rem', fontWeight: '600', lineHeight: '1.875rem' }}
-          textAlign={'center'}
-        >
-          Visualizaciones por Publicación
-        </Typography>
-        <Box mt={'2rem'} display={'flex'} flexDirection={'column'} gap={'1rem'}>
-          <ViewCard
-            text={'Inversiones Éticas: Más que ganacias'}
-            value={'50'}
-            date={'17/04/2023'}
-          />
-          <ViewCard
-            text={'Inversiones Éticas: Más que ganacias'}
-            value={'50'}
-            date={'17/04/2023'}
-          />
-          <ViewCard
-            text={'Inversiones Éticas: Más que ganacias'}
-            value={'50'}
-            date={'17/04/2023'}
-          />
-          <ViewCard
-            text={'Inversiones Éticas: Más que ganacias'}
-            value={'50'}
-            date={'17/04/2023'}
-          />
-        </Box>
-      </Box>
+      <CategoryWrapper method={(context) => service.findCountByCategory(context)} />
+      <PublicationWrapper method={(context) => publicationService.find(context)} />
     </Container>
   );
 }
