@@ -46,7 +46,7 @@ const Publications = () => {
   const publicationService = new PublicationService();
 
   const { data, loading, error } = useFetch({
-    queryFn: ({ abortController }) => publicationService.find({ abortController }),
+    queryFn: ({ abortController }) => publicationService.findActive({ abortController }),
   });
 
   useEffect(() => {
