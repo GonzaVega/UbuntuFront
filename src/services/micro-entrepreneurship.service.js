@@ -4,7 +4,7 @@ export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
   async find({ searchParams = {}, abortController }) {
-    const path = '/all';
+    const path = this.collection;
 
     return await repository.find({ path, searchParams, abortController });
   }
@@ -20,6 +20,12 @@ export class MicroEntrepreneurshipService {
     const path = this.collection + `/find/category/${categoryDataId}`;
 
     return await repository.find({ path, abortController });
+  }
+
+  async findLatest({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count';
+
+    return await repository.find({ path, searchParams, abortController });
   }
 
   async create({ payload, abortController }) {
@@ -38,5 +44,21 @@ export class MicroEntrepreneurshipService {
     id = this.collection + '/' + id;
 
     return repository.delete({ id, abortController });
+  }
+  async findManaged({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count/active';
+
+    return await repository.find({ path, searchParams, abortController });
+  }
+
+  async findUnmanaged({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count/notactive';
+
+    return await repository.find({ path, searchParams, abortController });
+  }
+  async findCountByCategory({ searchParams = {}, abortController }) {
+    const path = this.collection + '/count/categories';
+
+    return await repository.find({ path, searchParams, abortController });
   }
 }

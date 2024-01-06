@@ -1,7 +1,18 @@
-import { Box, Divider, Typography, useTheme } from '@mui/material';
+import useFetch from '@/hooks/useFetch';
+import CategoriesCard from '@/pages/dashboard/components/CategoriesCard';
+import { Box, Divider, Skeleton, Typography, useTheme } from '@mui/material';
 
-export default function CategoryWrapper({ children }) {
+export default function CategoryWrapper({ method }) {
   const { palette } = useTheme();
+  const { data, loading } = useFetch({
+    queryFn: ({ abortController }) => method({ abortController }),
+  });
+
+  if (loading === true) {
+    return (
+      <Skeleton sx={{ height: '259px', borderRadius: '0.5rem', mt: '2rem', transform: 'none' }} />
+    );
+  }
   return (
     <Box bgcolor='lightGray.main' mt='2rem' borderRadius={'0.5rem'}>
       <Box padding={'1rem'}>
@@ -15,7 +26,11 @@ export default function CategoryWrapper({ children }) {
         </Typography>
       </Box>
       <Divider sx={{ backgroundColor: 'success.main', height: '2px' }} />
-      <Box padding={' 1rem 1.25rem'}>{children}</Box>
+      <Box padding={' 1rem 1.25rem'}>
+        {data.map((value, index) => (
+          <CategoriesCard text={value[0]} value={value[1]} key={index} />
+        ))}
+      </Box>
     </Box>
   );
 }
