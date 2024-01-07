@@ -1,10 +1,11 @@
 import { useState } from 'react';
+
+import { Link } from 'react-router-dom';
 import { Typography, Button, IconButton, Divider, Box, styled } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ExpandLess } from '@mui/icons-material';
 import { useTheme } from '@emotion/react';
-import { Link } from 'react-router-dom';
 
 import CardImageSlider from '@/components/card/CardImageSlider';
 
@@ -23,7 +24,7 @@ const MainContainer = styled('div')(({ theme }) => ({
   },
 }));
 
-const EmprendimientoCard = ({
+const MicroenterpriseCard = ({
   id,
   title,
   establishmentType,
@@ -33,7 +34,6 @@ const EmprendimientoCard = ({
   additionalInfo,
   images,
 }) => {
-  // const { id } = useParams();
   const [expand, setExpand] = useState(false);
   const { palette } = useTheme();
 
@@ -81,10 +81,7 @@ const EmprendimientoCard = ({
               {additionalInfo}
             </Typography>
             <Box textAlign='center' sx={{ mt: '40px' }}>
-              <Link
-                to={`${title}/contacto`}
-                // key={projectId}
-              >
+              <Link to={`${title}/contacto`} state={{ enterpriseId: id }}>
                 <Button variant='contained' color='primary' sx={{ width: '40%' }}>
                   Contactar
                 </Button>
@@ -111,4 +108,4 @@ const EmprendimientoCard = ({
   );
 };
 
-export default EmprendimientoCard;
+export default MicroenterpriseCard;

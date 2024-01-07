@@ -12,28 +12,65 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  CircularProgress,
 } from '@mui/material';
 
-const categories = [
-  {
-    title: 'Economía social/Desarrollo local/ Inclusión financiera',
-    image: socialEconomyIcon,
-  },
-  {
-    title: 'Agroecología/Orgánicos/ Alimentación saludable',
-    image: agroecologyIcon,
-  },
-  {
-    title: 'Conservación/Regeneración/ Servicios ecosistémicos',
-    image: conservationIcon,
-  },
-  {
-    title: 'Empresas/Organismos de impacto/Economía circular',
-    image: circularEconomyIcon,
-  },
-];
+import CategoryCard from '@/pages/microemprendimientos/components/categories/CategoryCard';
+import useFetch from '@/hooks/useFetch';
+import instance from '@/helpers/axiosConfig';
+import { Link } from 'react-router-dom';
+
+const limitCategories = 4;
 
 export default function Categories() {
+  const assignCategoryImages = (categoriesData) => {
+    const categoriesWithImages = categoriesData?.map((category) => {
+      let image;
+      const defaultImage = 'no image assigned';
+
+      switch (true) {
+        case category.name.includes('Economía'):
+          image = socialEconomyIcon;
+          break;
+        case category.name.includes('Agroecología'):
+          image = agroecologyIcon;
+          break;
+        case category.name.includes('Conservación'):
+          image = conservationIcon;
+          break;
+        case category.name.includes('Empresas'):
+          image = circularEconomyIcon;
+          break;
+        default:
+          image = defaultImage;
+          break;
+      }
+
+      return {
+        id: category.id,
+        name: category.name,
+        image,
+      };
+    });
+
+    return categoriesWithImages;
+  };
+
+  const {
+    data: categories,
+    loading,
+    error,
+  } = useFetch({
+    queryFn: async (abortController) =>
+      await instance.get('/category/all', { signal: abortController.signal }),
+  });
+
+  const filteredCategories = categories?.data.filter((category) => category.name.length > 5);
+
+  const categoriesWithImages = assignCategoryImages(filteredCategories);
+
+  const limitedCategories = categoriesWithImages?.slice(0, limitCategories);
+
   return (
     <Grid container component='section' mt='2rem'>
       <Grid item xs={12}>
@@ -44,64 +81,39 @@ export default function Categories() {
           <Typography variant='h2' component='h2'>
             Categorías
           </Typography>
-          <List sx={{ mt: '1rem' }}>
-            {categories.map((category, index) => (
-              <Category key={index} {...category} />
-            ))}
-          </List>
-          <Box mt='1rem'>
-            <Button
-              variant='contained'
+          {loading ? (
+            <Box
               sx={{
-                lineHeight: '1.25rem',
-                padding: '0.625rem 1.89rem',
-                textTransform: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'white',
               }}
-              disableElevation
             >
-              Ver más categorías
-            </Button>
+              <CircularProgress color='inherit' />
+            </Box>
+          ) : (
+            limitedCategories?.map((category) => (
+              <CategoryCard icon={category.image} category={category.name} id={category.id} />
+            ))
+          )}
+          <Box mt='1rem'>
+            <Link to='/microemprendimientos' style={{ textDecoration: 'none', cursor: 'pointer' }}>
+              <Button
+                variant='contained'
+                sx={{
+                  lineHeight: '1.25rem',
+                  padding: '0.625rem 1.89rem',
+                  textTransform: 'none',
+                }}
+                disableElevation
+              >
+                Ver más categorías
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Grid>
     </Grid>
-  );
-}
-
-function Category({ title, image }) {
-  const { palette } = useTheme();
-
-  return (
-    <ListItem sx={{ gap: '0.5rem', px: '1.3rem' }}>
-      <ListItemIcon
-        sx={{
-          minWidth: 'unset',
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          border: `1px solid ${palette.secondary.main}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <img src={image} />
-      </ListItemIcon>
-      <ListItemText
-        primary={title}
-        primaryTypographyProps={{
-          sx: {
-            fontSize: '1rem',
-            fontWeight: '400',
-            lineHeight: '1.5625rem',
-          },
-          color: 'primary',
-        }}
-        sx={{
-          paddingBottom: '0.25rem',
-          borderBottom: `1px solid ${palette.secondary.main}`,
-        }}
-      />
-    </ListItem>
   );
 }

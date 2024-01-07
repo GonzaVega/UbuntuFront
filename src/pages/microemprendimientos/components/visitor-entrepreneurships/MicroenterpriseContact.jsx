@@ -1,22 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
 import FormikController from '@/components/form/FormikController';
 import { contactSchema } from '@/schemas/formsSchema';
 import NoticeCard from '@/components/common/NoticeCard';
+import { MessageService } from '@/services/message.service';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
 }));
 
-const EmprendimientoContact = () => {
-  const { categoryId, id } = useParams();
+const MicroenterpriseContact = () => {
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+
+  const messageService = new MessageService();
 
   const searchBarProps = {
     imageRoute: `url("../../../src/assets/images/microemprendimientos/contact/projectsContact.jpg")`,
@@ -25,19 +31,46 @@ const EmprendimientoContact = () => {
   };
 
   const initialValues = {
-    name: '',
+    fullName: '',
     email: '',
     phone: '',
     message: '',
   };
 
-  const formSubmitHandler = (value) => {
-    console.log(value);
-    setIsSubmitted(true);
+  const microenterpriseId = location.state?.enterpriseId;
+
+  const formSubmitHandler = async (values) => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+    const payload = {
+      ...values,
+      sentDate: formattedDate,
+    };
+
+    try {
+      const response = await messageService.create({
+        payload: payload,
+        microentrepreneurshipId: microenterpriseId,
+        abortController: new AbortController(),
+      });
+
+      if (response.created) {
+        setIsSubmitted(true);
+      } else {
+        setError('Error al enviar el formulario. Inténtalo nuevamente.');
+      }
+    } catch (error) {
+      setError('Error al enviar el formulario. Inténtalo nuevamente.');
+    }
   };
+
   const closeNoticeHandler = (event) => {
     event.preventDefault();
-    navigate('/');
+    if (isSubmitted) {
+      navigate('/');
+    } else {
+      setError(null);
+    }
   };
 
   return (
@@ -94,11 +127,11 @@ const EmprendimientoContact = () => {
               {({ errors, touched, values, isSubmitting, isValid }) => (
                 <Form>
                   <FormikController
-                    id='name'
+                    id='fullName'
                     control='text'
                     label='Apellido y Nombre*'
-                    name='name'
-                    error={touched.name && Boolean(errors.name)}
+                    name='fullName'
+                    error={touched.fullName && Boolean(errors.fullName)}
                   />
                   <FormikController
                     id='email'
@@ -148,6 +181,16 @@ const EmprendimientoContact = () => {
                 handleClose={closeNoticeHandler}
               />
             )}
+            {error && (
+              <NoticeCard
+                isOpen={true}
+                success={false}
+                mainMessage='Error al enviar el formulario'
+                secondaryMessage={error}
+                handleClose={closeNoticeHandler}
+                cancelFunction={closeNoticeHandler}
+              />
+            )}
           </Box>
         </Grid>
       </StyledContainer>
@@ -155,4 +198,4 @@ const EmprendimientoContact = () => {
   );
 };
 
-export default EmprendimientoContact;
+export default MicroenterpriseContact;

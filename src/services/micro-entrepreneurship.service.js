@@ -15,6 +15,13 @@ export class MicroEntrepreneurshipService {
     return await repository.findOne({ id, abortController });
   }
 
+  //get microentrepreneurships by category.
+  async findByCategory({ categoryDataId, abortController }) {
+    const path = this.collection + `/find/category/${categoryDataId}`;
+
+    return await repository.find({ path, abortController });
+  }
+
   async findLatest({ searchParams = {}, abortController }) {
     const path = this.collection + '/count';
 
@@ -49,12 +56,9 @@ export class MicroEntrepreneurshipService {
 
     return await repository.find({ path, searchParams, abortController });
   }
-  async findCountByCategory ({searchParams = {}, abortController}) {
+  async findCountByCategory({ searchParams = {}, abortController }) {
     const path = this.collection + '/count/categories';
 
     return await repository.find({ path, searchParams, abortController });
-
   }
- 
-
 }

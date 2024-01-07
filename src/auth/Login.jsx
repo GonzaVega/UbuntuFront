@@ -18,8 +18,6 @@ const Login = () => {
   const handleClose = () => setOpen(false);
 
   const handleGoogleSuccess = async (credentialResponse) => {
-    console.log(credentialResponse);
-
     if (credentialResponse && credentialResponse.credential) {
       const successResponse = await login(credentialResponse);
       if (successResponse) {

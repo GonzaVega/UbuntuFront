@@ -33,7 +33,7 @@ const standartValidations = {
 };
 
 export const contactSchema = yup.object().shape({
-  name: standartValidations.commonText,
+  fullName: standartValidations.commonText,
   email: yup
     .string()
     .email('Debe ser un correo electrónico válido')
