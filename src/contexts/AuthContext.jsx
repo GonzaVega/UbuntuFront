@@ -10,13 +10,14 @@ const AuthContext = createContext();
 export const useAuth = () => {
   return useContext(AuthContext);
 };
-//SE REALIZARON MODIFICACIONES SOLO PARA PRUEBAS.
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const API_BASE_URL = 'http://localhost:8081';
+  const API_BASE_URL = 'http://localhost:8080/api/v1/auth';
+  const API_BASE_URL_DEPLOY = 'http://t-ubuntu02.qi.local:31934/api/v1/auth';
 
   const login = async (credentialResponse) => {
     try {
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const authenticateWithGoogle = async (tokenId) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/google?tokenId=${tokenId}`);
+      const response = await axios.post(`${API_BASE_URL_DEPLOY}/google?tokenId=${tokenId}`);
       return response.data;
     } catch (error) {
       console.error('Authentication API Error:', error.message);
@@ -46,7 +47,6 @@ export const AuthProvider = ({ children }) => {
 
   const saveUserInfo = (authResponse) => {
     if (authResponse != null) {
-      console.log(authResponse.firstName);
       if (authResponse.role === 'ADMIN') {
         const { token } = authResponse;
         localStorage.setItem('token', token);
@@ -56,11 +56,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Cierra la sesión y elimina la información del usuario del estado. revisar comentarios: se han efectuado para realizar demostracion
+  // Cierra la sesión y elimina la información del usuario del estado.
   const logout = async () => {
     if (user) {
-      // Logica de cierre de sesión cuando haya backend.
-      await axios.post('/auth/google/logout', { token: user.token });
+      await axios.post(`${API_BASE_URL_DEPLOY}/logout`);
       googleLogout();
       localStorage.clear();
       setUser(null);

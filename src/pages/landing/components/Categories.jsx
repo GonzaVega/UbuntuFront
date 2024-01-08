@@ -94,7 +94,12 @@ export default function Categories() {
             </Box>
           ) : (
             limitedCategories?.map((category) => (
-              <CategoryCard icon={category.image} category={category.name} id={category.id} />
+              <CategoryCard
+                icon={category.image}
+                category={category.name}
+                id={category.id}
+                key={category.id}
+              />
             ))
           )}
           <Box mt='1rem'>
