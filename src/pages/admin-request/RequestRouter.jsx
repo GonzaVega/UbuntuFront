@@ -5,7 +5,7 @@ import Managed from '@/pages/admin-request/pages/managed/Managed';
 import Unmanaged from '@/pages/admin-request/pages/unmanaged/Unmanaged';
 import { Box, Container, Grid, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 export default function RequestRouter() {
   const [value, setValue] = useState(0);
@@ -34,6 +34,7 @@ export default function RequestRouter() {
         </Grid>
       </Grid>
       <Routes>
+        <Route path={'/'} element={<Navigate to={ADMIN_ROUTES.CONTACT_REQUESTS.UNMANAGED} />} />
         <Route path={ADMIN_ROUTES.CONTACT_REQUESTS.UNMANAGED} element={<Unmanaged />} />
         <Route path={ADMIN_ROUTES.CONTACT_REQUESTS.MANAGED} element={<Managed />} />
         <Route path={ADMIN_ROUTES.CONTACT_REQUESTS.BY_ID} element={<Manage />} />

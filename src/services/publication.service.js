@@ -3,44 +3,44 @@ import { repository } from '@/services/shared/repository';
 export class PublicationService {
   collection = '/publication';
 
-  async find({ abortController }) {
+  async find({ abortController, jwt }) {
     const path = this.collection;
 
-    return await repository.find({ path, abortController });
+    return await repository.find({ path, abortController, jwt });
   }
 
-  async findOne({ id, abortController }) {
+  async findOne({ id, abortController, jwt }) {
     const path = this.collection + `/${id}`;
 
-    return await repository.findOne({ path, abortController });
+    return await repository.findOne({ path, abortController, jwt });
   }
 
-  async findActive({ abortController }) {
+  async findActive({ abortController, jwt }) {
     const path = this.collection + '/activas';
 
-    return await repository.find({ path, abortController });
+    return await repository.find({ path, abortController, jwt });
   }
 
-  async findLastTen({ abortController }) {
+  async findLastTen({ abortController, jwt }) {
     const path = this.collection + '/ultimas10';
 
-    return await repository.find({ path, abortController });
+    return await repository.find({ path, abortController, jwt });
   }
 
   //creates a publication, auth token must be included.
-  async create({ payload, token, abortController }) {
+  async create({ payload, token, abortController, jwt }) {
     const path = this.collection + `/create`;
     const authenticatedPayload = { ...payload, token };
 
-    return repository.save({ path, authenticatedPayload, abortController });
+    return repository.save({ path, authenticatedPayload, abortController, jwt });
   }
 
   //edits a publication, auth token must be included.
-  async update({ id, token, payload, abortController }) {
+  async update({ id, token, payload, abortController, jwt }) {
     const path = this.collection + `/change/${id}`;
     const authenticatedPayload = { ...payload, token };
 
-    return repository.update({ path, authenticatedPayload, abortController });
+    return repository.update({ path, authenticatedPayload, abortController, jwt });
   }
 
   // deletes a publication, auth token must be included.No endpoint created so far.

@@ -5,27 +5,27 @@ import { Form, Formik } from 'formik';
 
 const countries = [
   {
-    value: 'pe',
+    value: 'Perú',
     label: 'Perú',
   },
   {
-    value: 'co',
+    value: 'Colombia',
     label: 'Colombia',
   },
   {
-    value: 'mx',
+    value: 'México',
     label: 'México',
   },
   {
-    value: 'us',
+    value: 'Estados Unidos',
     label: 'Estados Unidos',
   },
   {
-    value: 'ar',
+    value: 'Argentina',
     label: 'Argentina',
   },
   {
-    value: 'ven',
+    value: 'Venezuela',
     label: 'Venezuela',
   },
 ];

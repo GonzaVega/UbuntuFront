@@ -1,4 +1,5 @@
 import { EyeIcon } from '@/components/icons';
+import { parseDate } from '@/helpers/utils';
 import { Grid, Typography, useTheme } from '@mui/material';
 
 export default function ViewCard({ value, text, date }) {
@@ -12,17 +13,19 @@ export default function ViewCard({ value, text, date }) {
         borderWidth: '1px',
         borderStyle: 'solid',
         padding: '0.5rem',
+        gap: '1rem',
+        flexWrap: 'nowrap',
       }}
     >
-      <Grid item xs={9}>
+      <Grid item xs={9.5}>
         <Typography variant='body1' sx={{ fontWeight: '600' }}>
           {text}
         </Typography>
         <Typography variant='caption' sx={{ fontWeight: '500', lineHeight: '1.5625rem' }}>
-          {date}
+          {parseDate(date)}
         </Typography>
       </Grid>
-      <Grid item xs={3} sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <Grid item xs={2.5} sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <EyeIcon />
         <Typography variant='h3' sx={{ fontWeight: '700' }}>
           {value}

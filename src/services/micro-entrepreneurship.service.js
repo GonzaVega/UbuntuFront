@@ -3,62 +3,70 @@ import { repository } from '@/services/shared/repository';
 export class MicroEntrepreneurshipService {
   collection = '/microentrepreneurship';
 
-  async find({ searchParams = {}, abortController }) {
-    const path = this.collection;
+  async find({ searchParams = {}, abortController, jwt }) {
+    const path = this.collection + '/all';
 
-    return await repository.find({ path, searchParams, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
   }
 
-  async findOne({ id, abortController }) {
-    id = this.collection + '/' + id;
+  async findByName({ searchParams = {}, abortController, jwt }) {
+    const path = this.collection + '/find';
 
-    return await repository.findOne({ id, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
+  }
+
+  async findOne({ id, abortController, jwt }) {
+    const path = this.collection + '/' + id;
+
+    return await repository.find({ path, abortController, jwt });
   }
 
   //get microentrepreneurships by category.
-  async findByCategory({ categoryDataId, abortController }) {
+  async findByCategory({ categoryDataId, abortController, jwt }) {
     const path = this.collection + `/find/category/${categoryDataId}`;
 
-    return await repository.find({ path, abortController });
+    return await repository.find({ path, abortController, jwt });
   }
 
-  async findLatest({ searchParams = {}, abortController }) {
+  async findLatest({ searchParams = {}, abortController, jwt }) {
     const path = this.collection + '/count';
 
-    return await repository.find({ path, searchParams, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
   }
 
-  async create({ payload, abortController }) {
+  async create({ formData, payload, abortController, jwt }) {
     const path = this.collection;
 
-    return repository.save({ path, payload, abortController });
+    return repository.save({ path, formData, payload, abortController, jwt });
   }
 
-  async update({ id, payload, abortController }) {
+  async update({ id, payload, abortController, jwt }) {
     id = this.collection + '/' + id;
 
-    return repository.update({ id, payload, abortController });
+    return repository.update({ id, payload, abortController, jwt });
   }
 
-  async delete({ id, abortController }) {
+  async delete({ id, abortController, jwt }) {
     id = this.collection + '/' + id;
 
-    return repository.delete({ id, abortController });
+    return repository.delete({ id, abortController, jwt });
   }
-  async findManaged({ searchParams = {}, abortController }) {
+
+  async findManaged({ searchParams = {}, abortController, jwt }) {
     const path = this.collection + '/count/active';
 
-    return await repository.find({ path, searchParams, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
   }
 
-  async findUnmanaged({ searchParams = {}, abortController }) {
+  async findUnmanaged({ searchParams = {}, abortController, jwt }) {
     const path = this.collection + '/count/notactive';
 
-    return await repository.find({ path, searchParams, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
   }
-  async findCountByCategory({ searchParams = {}, abortController }) {
+
+  async findCountByCategory({ searchParams = {}, abortController, jwt }) {
     const path = this.collection + '/count/categories';
 
-    return await repository.find({ path, searchParams, abortController });
+    return await repository.find({ path, searchParams, abortController, jwt });
   }
 }

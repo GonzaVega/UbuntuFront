@@ -1,16 +1,38 @@
 import NoticeCard from '@/components/common/NoticeCard';
 import { useBoolean } from '@/hooks/useBoolean';
 import LoadForm from '@/pages/admin-microentrepreneurship/pages/load/components/LoadForm';
+import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import { Box, Container, Grid, Typography } from '@mui/material';
+import { useState } from 'react';
 
 export default function LoadMicroentrepreneurship() {
+  const jwt = localStorage.getItem('token');
   const { value, setFalse, toggle } = useBoolean(false);
+  const [success, setSuccess] = useState(true);
+  const [message, setMessage] = useState('');
 
-  function handleSubmit(values, { setSubmitting }) {
-    setTimeout(() => {
-      toggle((preValue) => !preValue);
+  async function handleSubmit(values, { setSubmitting }) {
+    const { images, state: province, ...rest } = values;
+
+    const formData = new FormData();
+    formData.append('microentrepreneurshipJson', JSON.stringify({ province, ...rest }));
+    images.forEach((file) => {
+      formData.append('files', file, file.name);
+    });
+
+    try {
+      const service = new MicroEntrepreneurshipService();
+      await service.create({ payload: {}, abortController: new AbortController(), formData, jwt });
+      setSuccess(true);
+      setMessage('Microemprendimiento cargado con éxito');
+    } catch (error) {
+      setSuccess(false);
+      setMessage('Lo sentimos, el Microemprendimiento no pudo ser cargado.');
+      console.log(error);
+    } finally {
       setSubmitting(false);
-    }, 500);
+      toggle((preValue) => !preValue);
+    }
   }
 
   return (
@@ -35,9 +57,10 @@ export default function LoadMicroentrepreneurship() {
       </Grid>
       <NoticeCard
         isOpen={value}
-        success={true}
+        success={success}
         handleClose={setFalse}
-        mainMessage={'Microemprendimiento cargado con éxito'}
+        mainMessage={message}
+        cancelFunction={setFalse}
       />
     </Container>
   );
