@@ -75,12 +75,13 @@ import instance from '@/helpers/axiosConfig';
 // }
 
 export class HttpAdapter {
-  async get({ path, searchParams, abortController }) {
+  async get({ path, searchParams, abortController, jwt }) {
     try {
       const signal = abortController.signal || new AbortController().signal;
 
       const { data } = await instance.get(path + '?' + new URLSearchParams(searchParams), {
         signal,
+        headers: { Authorization: `Bearer ${jwt}` },
       });
 
       return data;
@@ -88,51 +89,66 @@ export class HttpAdapter {
       if (error.code === 'ERR_CANCELED') {
         console.log('Solicitud cancelada');
       }
-      throw new Error(error.response.data.Message);
+      throw new Error(error.response.data.Message || error.message);
     }
   }
 
-  async post({ path, payload, abortController }) {
+  async post({ path, formData, payload, abortController, jwt }) {
+    try {
+      const signal = abortController.signal || new AbortController().signal;
+      payload = formData || JSON.stringify(payload);
+
+      const { data } = await instance.post(path, payload, {
+        signal,
+        headers: { Authorization: `Bearer ${jwt}` },
+      });
+
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        console.log('Solicitud cancelada');
+      }
+
+      throw new Error(error.response.data.Message || error.message);
+    }
+  }
+
+  async patch({ path, payload, abortController, jwt }) {
     try {
       const signal = abortController.signal || new AbortController().signal;
       payload = JSON.stringify(payload);
 
-      const { data } = await instance.post(path, payload, { signal });
+      const { data } = await instance.patch(path, payload, {
+        signal,
+        headers: { Authorization: `Bearer ${jwt}` },
+      });
 
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
         console.log('Solicitud cancelada');
       }
+
+      throw new Error(error.response.data.Message || error.message);
     }
   }
 
-  async patch({ path, payload, abortController }) {
+  async delete({ path, abortController, jwt }) {
     try {
       const signal = abortController.signal || new AbortController().signal;
-      payload = JSON.stringify(payload);
 
-      const { data } = await instance.patch(path, payload, { signal });
+      const { data } = await instance.delete(path, {
+        signal,
+        headers: { Authorization: `Bearer ${jwt}` },
+      });
 
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
         console.log('Solicitud cancelada');
       }
-    }
-  }
 
-  async delete({ path, abortController }) {
-    try {
-      const signal = abortController.signal || new AbortController().signal;
-
-      const { data } = await instance.delete(path, { signal });
-
-      return data;
-    } catch (error) {
-      if (error.code === 'ERR_CANCELED') {
-        console.log('Solicitud cancelada');
-      }
+      throw new Error(error.response.data.Message || error.message);
     }
   }
 }

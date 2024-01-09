@@ -13,7 +13,7 @@ export default function MicroentrepreneurshipDetail() {
   const [initialSlide, setInitialSlide] = useState(1);
   const { value: open, setTrue: handleOpen, setFalse: handleClose } = useBoolean();
   const microentrepreneurshipService = new MicroEntrepreneurshipService();
-  const { data, loading } = useFetch({
+  const { data, loading, error } = useFetch({
     queryFn: ({ abortController }) => microentrepreneurshipService.findOne({ id, abortController }),
   });
 
@@ -23,6 +23,25 @@ export default function MicroentrepreneurshipDetail() {
   }
 
   if (loading) return <SkeletonView />;
+
+  if (error)
+    return (
+      <Container
+        sx={{
+          py: '2.5rem',
+          minHeight: 'calc(100dvh - 56px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Box>
+          <Typography align='center' fontWeight={800} fontSize={'2rem'}>
+            500 - Error interno
+          </Typography>
+        </Box>
+      </Container>
+    );
 
   return (
     <Container sx={{ py: '2.5rem' }}>

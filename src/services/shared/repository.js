@@ -3,24 +3,24 @@ import { HttpAdapter } from '@/services/shared/http-adapter';
 class Repository {
   #http = new HttpAdapter();
 
-  async find({ path = '', searchParams = {}, abortController }) {
-    return await this.#http.get({ path, searchParams, abortController });
+  async find({ path = '', searchParams = {}, abortController, jwt }) {
+    return await this.#http.get({ path, searchParams, abortController, jwt });
   }
 
-  async findOne({ id, abortController }) {
-    return await this.#http.get({ path: id, abortController });
+  async findOne({ id, abortController, jwt }) {
+    return await this.#http.get({ path: id, abortController, jwt });
   }
 
-  async save({ path, payload, abortController }) {
-    return await this.#http.post({ path, payload, abortController });
+  async save({ path, payload, formData, abortController, jwt }) {
+    return await this.#http.post({ path, payload, formData, abortController, jwt });
   }
 
-  async update({ id, payload, abortController }) {
-    return await this.#http.patch({ path: id, payload, abortController });
+  async update({ id, payload, abortController, jwt }) {
+    return await this.#http.patch({ path: id, payload, abortController, jwt });
   }
 
-  async delete({ id, abortController }) {
-    return await this.#http.delete({ path: id, abortController });
+  async delete({ id, abortController, jwt }) {
+    return await this.#http.delete({ path: id, abortController, jwt });
   }
 }
 
