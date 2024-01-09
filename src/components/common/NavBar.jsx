@@ -71,7 +71,15 @@ function Navbar() {
         }}
       >
         <BurgerBtn isActive={drawerIsOpen} handleShowMenu={handleToggle} />
-        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingLeft: '22px',
+          }}
+        >
           <img
             src={images}
             alt='Logo de Ubuntu'
@@ -83,72 +91,68 @@ function Navbar() {
               margin: 'auto',
             }}
           />
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              right: '8px',
-              transform: 'translateY(-50%)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            {!isAuthenticated && (
-              <Link
-                style={{
-                  textDecoration: 'none',
-                  color: `${palette.background.paper}`,
-                  fontSize: '1.125rem',
-                  fontWeight: '500',
-                  lineHeight: '1.25rem',
-                }}
-                onClick={logout}
-                to={USER_ROUTES.LOGIN}
-              >
-                <Typography variant='p' sx={{ color: 'black' }}>
-                  Iniciar Sesión
-                </Typography>
-              </Link>
-            )}
-            {isAuthenticated && (
-              <>
-                <Button onClick={handleLogoutClick}>
-                  <AdminAvatar />
-                </Button>
-                <StyledCollapse in={showLogout}>
-                  <Box
-                    sx={{
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s ease-in-out',
-                      '&:hover': {
-                        bgcolor: '#B3B3B3',
-                      },
-                      '&:active': {
-                        bgcolor: '#A3A3A3',
-                      },
-                    }}
-                    display='flex'
-                    justifyContent='center'
-                    alignItems='center'
-                    bgcolor='#D2D2D2'
-                    boxShadow={1}
-                    p={2}
-                    borderRadius='0px 0px 4px 4px'
-                    onClick={handleCloseLogout}
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {!isAuthenticated && (
+            <Link
+              style={{
+                textDecoration: 'none',
+                color: `${palette.background.paper}`,
+                fontSize: '1.125rem',
+                fontWeight: '500',
+                lineHeight: '1.25rem',
+              }}
+              onClick={logout}
+              to={USER_ROUTES.LOGIN}
+            >
+              <Typography variant='p' sx={{ color: 'black' }}>
+                Ingresar
+              </Typography>
+            </Link>
+          )}
+          {isAuthenticated && (
+            <>
+              <Button onClick={handleLogoutClick}>
+                <AdminAvatar />
+              </Button>
+              <StyledCollapse in={showLogout}>
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s ease-in-out',
+                    '&:hover': {
+                      bgcolor: '#B3B3B3',
+                    },
+                    '&:active': {
+                      bgcolor: '#A3A3A3',
+                    },
+                  }}
+                  display='flex'
+                  justifyContent='center'
+                  alignItems='center'
+                  bgcolor='#D2D2D2'
+                  boxShadow={1}
+                  p={2}
+                  borderRadius='0px 0px 4px 4px'
+                  onClick={handleCloseLogout}
+                >
+                  <Typography
+                    variant='p'
+                    color='black'
+                    sx={{ whiteSpace: 'nowrap', fontWeight: '500' }}
                   >
-                    <Typography
-                      variant='p'
-                      color='black'
-                      sx={{ whiteSpace: 'nowrap', fontWeight: '500' }}
-                    >
-                      Cerrar sesión
-                    </Typography>
-                  </Box>
-                </StyledCollapse>
-              </>
-            )}
-          </Box>
+                    Cerrar sesión
+                  </Typography>
+                </Box>
+              </StyledCollapse>
+            </>
+          )}
         </Box>
         <StyledDrawer anchor={'left'} open={drawerIsOpen} onClose={handleToggle}>
           <Box sx={{ width: '15rem', background: `${palette.primary.main}`, height: '100%' }}>

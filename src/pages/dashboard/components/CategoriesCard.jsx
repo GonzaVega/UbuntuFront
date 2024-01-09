@@ -3,7 +3,7 @@ import { Divider, Grid, Typography } from '@mui/material';
 export default function CategoriesCard({ text, value }) {
   return (
     <>
-      <Grid container alignItems='center'>
+      <Grid container alignItems='center' sx={{ gap: '1rem', flexWrap: 'nowrap' }}>
         <Grid item xs={11}>
           <Typography variant='body1' sx={{ fontWeight: '400', lineHeight: '1.5625rem' }}>
             {text}
