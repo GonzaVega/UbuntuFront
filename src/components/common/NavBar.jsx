@@ -37,7 +37,7 @@ const StyledCollapse = styled(Collapse)({
 });
 
 function Navbar() {
-  const { isAuthenticated, logout, user } = useAuth();
+  const { isAuthenticated, logout, user, login } = useAuth();
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const { palette } = useTheme();
@@ -203,7 +203,7 @@ function Navbar() {
                   fontWeight: '500',
                   lineHeight: '1.25rem',
                 }}
-                onClick={logout}
+                onClick={login}
                 to={USER_ROUTES.LOGIN}
               >
                 Iniciar Sesión en Ubuntu
