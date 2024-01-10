@@ -27,7 +27,7 @@ export default function CategoryWrapper({ method }) {
       </Box>
       <Divider sx={{ backgroundColor: 'success.main', height: '2px' }} />
       <Box padding={' 1rem 1.25rem'}>
-        {data.map((value, index) => (
+        {data?.map((value, index) => (
           <CategoriesCard text={value[0]} value={value[1]} key={index} />
         ))}
       </Box>

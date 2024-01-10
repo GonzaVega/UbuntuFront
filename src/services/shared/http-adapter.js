@@ -78,10 +78,10 @@ export class HttpAdapter {
   async get({ path, searchParams, abortController, jwt }) {
     try {
       const signal = abortController.signal || new AbortController().signal;
-
+      const headers = jwt ? { Authorization: `Bearer ${jwt}` } : undefined;
       const { data } = await instance.get(path + '?' + new URLSearchParams(searchParams), {
         signal,
-        headers: { Authorization: `Bearer ${jwt}` },
+        headers,
       });
 
       return data;
@@ -98,9 +98,11 @@ export class HttpAdapter {
       const signal = abortController.signal || new AbortController().signal;
       payload = formData || JSON.stringify(payload);
 
+      const headers = jwt ? { Authorization: `Bearer ${jwt}` } : undefined;
+
       const { data } = await instance.post(path, payload, {
         signal,
-        headers: { Authorization: `Bearer ${jwt}` },
+        headers,
       });
 
       return data;

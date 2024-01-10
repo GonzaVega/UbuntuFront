@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const authenticateWithGoogle = async (tokenId) => {
     try {
-      const response = await axios.post(`${API_BASE_URL_DEPLOY}/google?tokenId=${tokenId}`);
+      const response = await axios.post(`${API_BASE_URL}/google?tokenId=${tokenId}`);
       return response.data;
     } catch (error) {
       console.error('Authentication API Error:', error.message);
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   // Cierra la sesión y elimina la información del usuario del estado.
   const logout = async () => {
     if (user) {
-      await axios.post(`${API_BASE_URL_DEPLOY}/logout`);
+      await axios.post(`${API_BASE_URL}/logout`);
       googleLogout();
       localStorage.clear();
       setUser(null);

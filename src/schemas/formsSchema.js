@@ -60,10 +60,10 @@ export const microentrepreneurshipSchema = yup.object().shape({
 
 export const publicationsSchema = yup.object().shape({
   title: standartValidations.commonText,
-  publication: yup
+  description: yup
     .string()
     .min(20, 'El texto debe tener al menos 20 caracteres')
     .max(2000, 'El texto no debe exceder los 2000 caracteres')
     .required(),
-  images: standartValidations.imagesFilter,
+  multipartImages: standartValidations.imagesFilter,
 });
