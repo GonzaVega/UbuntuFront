@@ -45,8 +45,10 @@ const Publications = () => {
 
   const publicationService = new PublicationService();
 
+  const jwt = localStorage.getItem('token');
+
   const { data, loading, error } = useFetch({
-    queryFn: ({ abortController }) => publicationService.findActive({ abortController }),
+    queryFn: ({ abortController }) => publicationService.findActive({ abortController, jwt }),
   });
 
   useEffect(() => {

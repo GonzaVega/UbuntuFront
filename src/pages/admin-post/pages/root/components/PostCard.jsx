@@ -7,11 +7,12 @@ import CardImageSlider from '@/components/card/CardImageSlider';
 import CardToggle from '@/components/card/CardToggle';
 import ButtonWithMenu from '@/components/common/ButtonWithMenu';
 import { ADMIN_ROUTES } from '@/constants/routes';
+import instance from '@/helpers/axiosConfig';
 
 export default function PostCard({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { mixins } = useTheme();
-  const headerText = post.content.split('\n\n')[0];
+  const headerText = post.description;
 
   const sx = isExpanded ? mixins.cardExpanded : mixins.cardCollapsed;
 
@@ -19,19 +20,54 @@ export default function PostCard({ post }) {
     setIsExpanded(!isExpanded);
   }
 
+  const receivedDate = post.creationDate;
+  const date = new Date(receivedDate);
+
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
+  const formatedDate = `${day}/${month}/${year}`;
+
+  console.log(post);
+  const jwt = localStorage.getItem('token');
+
+  const hidePublicationHandler = async (id) => {
+    const url = `/publication/change-status/${id}`;
+
+    try {
+      const response = await instance.put(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        },
+      );
+    } catch (error) {
+      console.error('Error hiding publication:', error);
+    }
+  };
+
   return (
     <CardContainer>
       <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
         <Typography variant='h3'>{post.title}</Typography>
-        <ButtonWithMenu editRoute={ADMIN_ROUTES.POSTS.EDIT} />
+        <ButtonWithMenu
+          editRoute={ADMIN_ROUTES.POSTS.EDIT}
+          onHidden={() => {
+            hidePublicationHandler(post.id);
+          }}
+          postData={post}
+        />
       </Box>
       <Box display='flex' flexDirection='column' gap='1.5rem'>
         <Box>
-          <CardImageSlider images={post.picture} />
+          <CardImageSlider images={post.images} />
         </Box>
         <Box display='flex' flexDirection='column' gap='0.5rem'>
           <CardContent
-            header={Header({ date: post.date, text: headerText, sx })}
+            header={Header({ date: formatedDate, text: headerText, sx })}
             content={FormatParagraphs({ content: post.content, from: 1 })}
             isExpanded={isExpanded}
           />

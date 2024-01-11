@@ -23,7 +23,7 @@ export default function PublicationWrapper({ method }) {
         Visualizaciones por Publicación
       </Typography>
       <Box mt={'2rem'} display={'flex'} flexDirection={'column'} gap={'1rem'}>
-        {data.map((value, index) => (
+        {data?.map((value, index) => (
           <ViewCard key={index} text={value.title} date={value.creationDate} value={value.views} />
         ))}
       </Box>

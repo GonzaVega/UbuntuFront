@@ -108,7 +108,7 @@ function Navbar() {
                 fontWeight: '500',
                 lineHeight: '1.25rem',
               }}
-              onClick={logout}
+              onClick={login}
               to={USER_ROUTES.LOGIN}
             >
               <Typography variant='p' sx={{ color: 'black' }}>

@@ -39,6 +39,16 @@ export default function CardImageSlider({
   delay = 5000,
   stopOnLastSlide = false,
 }) {
+  const imagesWithUrls = images?.map((image) => {
+    if (typeof image === 'string') {
+      return { url: image };
+    } else if (typeof image === 'object') {
+      if (!image.hasOwnProperty('url')) {
+        return { ...image, url: image };
+      }
+    }
+    return image;
+  });
   return (
     <StyledSwiper
       spaceBetween={24}

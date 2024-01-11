@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
   // Cierra la sesión y elimina la información del usuario del estado.
   const logout = async () => {
     if (user) {
-      await axios.post(`${API_BASE_URL_DEPLOY}/logout`);
+      await axios.post(`${API_BASE_URL}/logout`);
       googleLogout();
       localStorage.clear();
       removeUser();

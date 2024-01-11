@@ -28,11 +28,10 @@ export class PublicationService {
   }
 
   //creates a publication, auth token must be included.
-  async create({ payload, token, abortController, jwt }) {
+  async create({ payload, abortController, jwt }) {
     const path = this.collection + `/create`;
-    const authenticatedPayload = { ...payload, token };
 
-    return repository.save({ path, authenticatedPayload, abortController, jwt });
+    return repository.save({ path, payload, abortController, jwt });
   }
 
   //edits a publication, auth token must be included.

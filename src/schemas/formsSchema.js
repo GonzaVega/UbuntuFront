@@ -49,7 +49,6 @@ export const microentrepreneurshipSchema = yup.object().shape({
   name: standartValidations.commonText,
   category: standartValidations.selectInput,
   subcategory: standartValidations.commonText,
-  // en country podriamos traer del back los paises y hacer .oneOf(arrayDePaises)
   country: standartValidations.selectInput,
   state: standartValidations.selectInput,
   city: standartValidations.commonText,
@@ -60,10 +59,10 @@ export const microentrepreneurshipSchema = yup.object().shape({
 
 export const publicationsSchema = yup.object().shape({
   title: standartValidations.commonText,
-  publication: yup
+  description: yup
     .string()
     .min(20, 'El texto debe tener al menos 20 caracteres')
     .max(2000, 'El texto no debe exceder los 2000 caracteres')
     .required(),
-  images: standartValidations.imagesFilter,
+  multipartImages: standartValidations.imagesFilter,
 });
