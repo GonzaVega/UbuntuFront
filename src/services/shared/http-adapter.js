@@ -90,6 +90,7 @@ export class HttpAdapter {
       if (error.code === 'ERR_CANCELED') {
         return;
       }
+
       throw new Error(error.response?.data?.Message || error.message);
     }
   }
@@ -161,6 +162,7 @@ export class HttpAdapter {
       if (error.code === 'ERR_CANCELED') {
         return;
       }
+
       throw new Error(error.response?.data?.Message || error.message);
     }
   }
