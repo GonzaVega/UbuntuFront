@@ -1,15 +1,15 @@
 import { Box, TextField } from '@mui/material';
 
-export default function ManageForm() {
+export default function ManageForm({ fullName, email, phone, message }) {
   return (
-    <Box mb={'2.5rem'}>
+    <Box mb={'2.5rem'} mt={'0.5rem'}>
       <TextField
         sx={{ mt: '1rem' }}
         id='outlined-basic'
         label='Apellido y Nombre'
         variant='outlined'
         fullWidth
-        value={'Martinez, Juan'}
+        value={fullName}
       />
       <TextField
         sx={{ mt: '1rem' }}
@@ -17,7 +17,7 @@ export default function ManageForm() {
         label='Correo electrónico'
         variant='outlined'
         fullWidth
-        value={'martinezjuan@gmail.com'}
+        value={email}
       />
       <TextField
         sx={{ mt: '1rem' }}
@@ -25,7 +25,7 @@ export default function ManageForm() {
         label='Telefono'
         variant='outlined'
         fullWidth
-        value={'+ 54 9 261 589 645'}
+        value={phone}
       />
       <TextField
         sx={{ mt: '1rem' }}
@@ -35,7 +35,7 @@ export default function ManageForm() {
         multiline
         variant='outlined'
         fullWidth
-        value={`Hola, me gustaría recibir más \ninformación sobre cómo invertir en el \nMicroemprendimiento.\n\nAguardo su contacto.\n\nGracias`}
+        value={message}
       />
     </Box>
   );

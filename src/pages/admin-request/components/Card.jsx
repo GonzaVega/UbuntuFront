@@ -2,7 +2,7 @@ import { ArrowRightIcon } from '@/components/icons';
 import { Box, ButtonBase, Divider, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export default function Card({ title, date, managed }) {
+export default function Card({ id, title, date, managed }) {
   return (
     <Grid item xs={12} sm={6} md={6}>
       <Box
@@ -33,7 +33,7 @@ export default function Card({ title, date, managed }) {
             </Typography>
           </Box>
         </Box>
-        <Link to={`../${title}`} style={{ flexShrink: '1.5rem' }}>
+        <Link to={`../${id}`} style={{ flexShrink: '1.5rem' }}>
           <ButtonBase sx={{ width: '2rem', height: '2rem' }}>
             <ArrowRightIcon fill={'#090909'} />
           </ButtonBase>
