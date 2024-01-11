@@ -2,14 +2,17 @@ import FormikController from '@/components/form/FormikController';
 import { publicationsSchema } from '@/schemas/formsSchema';
 import { Box, Button } from '@mui/material';
 import { Form, Formik } from 'formik';
+import { useLocation } from 'react-router-dom';
 
 export default function LoadForm({ handleChange }) {
+  const location = useLocation();
+
   return (
     <Box mt={'1.5rem'}>
       <Formik
         initialValues={{
-          title: '',
-          description: '',
+          title: location?.state?.title || '',
+          description: location?.state?.description || '',
           multipartImages: [],
         }}
         validationSchema={publicationsSchema}
@@ -56,7 +59,7 @@ export default function LoadForm({ handleChange }) {
               disableElevation
               disabled={isSubmitting || !isValid}
             >
-              Crear publicación
+              {location?.state ? 'Editar Publicación' : 'Cargar Publicación'}
             </Button>
           </Form>
         )}

@@ -49,7 +49,6 @@ export const microentrepreneurshipSchema = yup.object().shape({
   name: standartValidations.commonText,
   category: standartValidations.selectInput,
   subcategory: standartValidations.commonText,
-  // en country podriamos traer del back los paises y hacer .oneOf(arrayDePaises)
   country: standartValidations.selectInput,
   state: standartValidations.selectInput,
   city: standartValidations.commonText,

@@ -10,7 +10,7 @@ export default function PostCard({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { mixins } = useTheme();
   const headerText = post.description;
-  // esto agregar al final de headerText
+  // esto agregar al final de headerText. (con la configuración actual de deploy, no hace falta)
   // .split('\n\n')[0];
 
   const sx = isExpanded ? mixins.cardExpanded : mixins.cardCollapsed;

@@ -5,7 +5,6 @@ import { CategoryRounded } from '@mui/icons-material';
 const CategoryCard = ({ icon, category, isSelected, id }) => {
   const { palette } = useTheme();
 
-  //variable de prueba.
   const categoryDescription =
     'Conectate con Microemprendimientos que respetan la tierra y priorizan la salud, a través de prácticas agrícolas limpias y alimentos nutritivos.';
 
