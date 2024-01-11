@@ -4,8 +4,9 @@ import { Box, Divider, Skeleton, Typography, useTheme } from '@mui/material';
 
 export default function CategoryWrapper({ method }) {
   const { palette } = useTheme();
+  const jwt = localStorage.getItem('token');
   const { data, loading } = useFetch({
-    queryFn: ({ abortController }) => method({ abortController }),
+    queryFn: ({ abortController }) => method({ abortController, jwt }),
   });
 
   if (loading === true) {
