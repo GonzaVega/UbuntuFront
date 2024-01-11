@@ -2,8 +2,9 @@ import useFetch from '@/hooks/useFetch';
 import { Box, Typography, Divider, Skeleton } from '@mui/material';
 
 export default function EstatisticsCard({ borderColor, text, method }) {
+  const jwt = localStorage.getItem('token');
   const { data, loading } = useFetch({
-    queryFn: ({ abortController }) => method({ abortController }),
+    queryFn: ({ abortController }) => method({ abortController, jwt }),
   });
 
   if (loading === true) {

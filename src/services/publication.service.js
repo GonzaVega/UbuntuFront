@@ -10,9 +10,9 @@ export class PublicationService {
   }
 
   async findOne({ id, abortController, jwt }) {
-    const path = this.collection + `/${id}`;
+    id = this.collection + `/${id}`;
 
-    return await repository.findOne({ path, abortController, jwt });
+    return await repository.findOne({ id, abortController, jwt });
   }
 
   async findActive({ abortController, jwt }) {
@@ -35,11 +35,11 @@ export class PublicationService {
   }
 
   //edits a publication, auth token must be included.
-  async update({ id, token, payload, abortController, jwt }) {
+  async update({ id, token, formData, payload, abortController, jwt }) {
     const path = this.collection + `/change/${id}`;
     const authenticatedPayload = { ...payload, token };
 
-    return repository.update({ path, authenticatedPayload, abortController, jwt });
+    return repository.update({ path, formData, authenticatedPayload, abortController, jwt });
   }
 
   // deletes a publication, auth token must be included.No endpoint created so far.

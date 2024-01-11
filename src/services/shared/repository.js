@@ -15,8 +15,12 @@ class Repository {
     return await this.#http.post({ path, payload, formData, abortController, jwt });
   }
 
-  async update({ id, payload, abortController, jwt }) {
-    return await this.#http.patch({ path: id, payload, abortController, jwt });
+  async update({ id, formData, payload, abortController, jwt }) {
+    return await this.#http.put({ path: id, formData, payload, abortController, jwt });
+  }
+
+  async patch({ id, formData, payload, abortController, jwt }) {
+    return await this.#http.patch({ path: id, formData, payload, abortController, jwt });
   }
 
   async delete({ id, abortController, jwt }) {

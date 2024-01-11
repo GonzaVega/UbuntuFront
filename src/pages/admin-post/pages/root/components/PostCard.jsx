@@ -58,7 +58,7 @@ export default function PostCard({ post }) {
           onHidden={() => {
             hidePublicationHandler(post.id);
           }}
-          postData={post}
+          storedState={post}
         />
       </Box>
       <Box display='flex' flexDirection='column' gap='1.5rem'>

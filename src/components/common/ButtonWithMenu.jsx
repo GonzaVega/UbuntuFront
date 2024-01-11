@@ -27,7 +27,7 @@ const StyledButton = styled(ButtonBase)(({ theme, open }) => ({
   },
 }));
 
-export default function ButtonWithMenu({ editRoute = 'edit', onHidden = () => null, postData }) {
+export default function ButtonWithMenu({ editRoute = 'edit', onHidden = () => null, storedState }) {
   const { value: open, setFalse: handleTooltipClose, toggle: handleTooltioToggle } = useBoolean();
 
   return (
@@ -61,7 +61,7 @@ export default function ButtonWithMenu({ editRoute = 'edit', onHidden = () => nu
         disableFocusListener
         disableHoverListener
         disableTouchListener
-        title={<MenuOptions editRoute={editRoute} onHidden={onHidden} postData={postData} />}
+        title={<MenuOptions editRoute={editRoute} onHidden={onHidden} storedState={storedState} />}
       >
         <StyledButton onClick={handleTooltioToggle} open={open}>
           <MenuIcon />
@@ -71,7 +71,7 @@ export default function ButtonWithMenu({ editRoute = 'edit', onHidden = () => nu
   );
 }
 
-function MenuOptions({ editRoute, onHidden, postData }) {
+function MenuOptions({ storedState, editRoute, onHidden }) {
   return (
     <Box>
       <List sx={{ padding: '0' }}>
@@ -89,7 +89,7 @@ function MenuOptions({ editRoute, onHidden, postData }) {
           <Link
             component={NavLink}
             to={editRoute}
-            state={postData}
+            state={storedState}
             underline='none'
             sx={{
               flex: '1 1 auto',

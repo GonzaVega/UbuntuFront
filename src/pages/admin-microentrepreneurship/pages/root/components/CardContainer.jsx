@@ -21,9 +21,10 @@ export default function CardContainer() {
         : data?.map((microentrepreneurship) => (
             <Card
               key={microentrepreneurship.id}
-              id={microentrepreneurship.id}
+              // id={microentrepreneurship.id}
               title={microentrepreneurship.name}
               category={microentrepreneurship.category.name}
+              microentrepreneurship={microentrepreneurship}
             />
           ))}
     </Grid>

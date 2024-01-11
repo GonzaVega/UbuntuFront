@@ -35,15 +35,15 @@ export class MicroEntrepreneurshipService {
   }
 
   async create({ formData, payload, abortController, jwt }) {
-    const path = this.collection;
+    const path = this.collection + '/save';
 
     return repository.save({ path, formData, payload, abortController, jwt });
   }
 
-  async update({ id, payload, abortController, jwt }) {
+  async update({ id, formData, payload, abortController, jwt }) {
     id = this.collection + '/' + id;
 
-    return repository.update({ id, payload, abortController, jwt });
+    return repository.update({ id, formData, payload, abortController, jwt });
   }
 
   async delete({ id, abortController, jwt }) {
@@ -56,6 +56,12 @@ export class MicroEntrepreneurshipService {
     const path = this.collection + '/count/active';
 
     return await repository.find({ path, searchParams, abortController, jwt });
+  }
+
+  async hidde({ id, formData, payload, abortController, jwt }) {
+    id = this.collection + `/${id}/hide`;
+
+    return await repository.patch({ id, formData, payload, abortController, jwt });
   }
 
   async findUnmanaged({ searchParams = {}, abortController, jwt }) {

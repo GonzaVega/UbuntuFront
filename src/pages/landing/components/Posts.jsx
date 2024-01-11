@@ -53,7 +53,7 @@ export default function Posts() {
         ) : (
           <Grid container spacing={2} justifyContent='center'>
             {publications?.map((publication) => (
-              <PostCard post={publication} />
+              <PostCard post={publication} key={publication.id} />
             ))}
           </Grid>
         )}

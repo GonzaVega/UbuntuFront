@@ -5,9 +5,7 @@ import { Grid, Box, Typography, useTheme, Skeleton } from '@mui/material';
 const NewMicroentrepreneporships = () => {
   const { palette } = useTheme();
   const service = new MicroEntrepreneurshipService();
-
   const jwt = localStorage.getItem('token');
-
   const { data, loading } = useFetch({
     queryFn: ({ abortController }) => service.findLatest({ abortController, jwt }),
   });

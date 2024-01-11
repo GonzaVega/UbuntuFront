@@ -1,5 +1,5 @@
 import { Card, Typography, Box, CardMedia, Modal, Fade } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import { ADMIN_ROUTES } from '@/constants/routes';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, authError } = useAuth();
   const [open, setOpen] = useState(true);
   const [openError, setOpenError] = useState(false);
@@ -21,7 +22,8 @@ const Login = () => {
     if (credentialResponse && credentialResponse.credential) {
       const successResponse = await login(credentialResponse);
       if (successResponse) {
-        navigate(ADMIN_ROUTES.DASHBOARD);
+        const origin = location.state?.from?.pathname || ADMIN_ROUTES.DASHBOARD;
+        navigate(origin);
       }
       handleClose();
       setOpenError(true);

@@ -12,12 +12,29 @@ export default function LoadMicroentrepreneurship() {
   const [message, setMessage] = useState('');
 
   async function handleSubmit(values, { setSubmitting }) {
-    const { images, state: province, ...rest } = values;
+    const {
+      images,
+      state: province,
+      name,
+      category,
+      subcategory,
+      country,
+      city,
+      description,
+      moreInfo,
+    } = values;
 
     const formData = new FormData();
-    formData.append('microentrepreneurshipJson', JSON.stringify({ province, ...rest }));
+    formData.append('name', name);
+    formData.append('country', country); // Se debe enviar el valor obtenido desde la base de datos ✅
+    formData.append('province', province); // Se debe enviar el valor obtenido desde la base de datos ✅
+    formData.append('category', category); // Se debe enviar el id del microemprendimiento, no el número. ✅
+    formData.append('subcategory', subcategory);
+    formData.append('description', description);
+    formData.append('moreInfo', moreInfo);
+    formData.append('city', city);
     images.forEach((file) => {
-      formData.append('files', file, file.name);
+      formData.append('multipartImages', file, file.name);
     });
 
     try {
@@ -61,6 +78,7 @@ export default function LoadMicroentrepreneurship() {
         handleClose={setFalse}
         mainMessage={message}
         cancelFunction={setFalse}
+        reload
       />
     </Container>
   );
