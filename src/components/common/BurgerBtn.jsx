@@ -1,6 +1,6 @@
 import { IconButton, styled } from '@mui/material';
 
-const StyledBurgerBtn = styled(IconButton)(({ $isActive }) => ({
+const StyledBurgerBtn = styled(IconButton)(({ active }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -11,26 +11,26 @@ const StyledBurgerBtn = styled(IconButton)(({ $isActive }) => ({
     width: '1.5rem',
     height: '2px',
     opacity: 1,
-    background: $isActive ? 'black' : 'black',
+    background: active ? 'black' : 'black',
     transition: 'all 0.3s ease',
   },
 
-  '& div:first-child': {
-    transform: $isActive ? 'rotate(-45deg) translate(-7px, 2px)' : 'none',
+  '& div:first-of-type': {
+    transform: active ? 'rotate(-45deg) translate(-7px, 2px)' : 'none',
   },
 
-  '& div:nth-child(2)': {
-    opacity: $isActive ? '0' : '1',
+  '& div:nth-of-type(2)': {
+    opacity: active ? '0' : '1',
   },
 
-  '& div:nth-child(3)': {
-    transform: $isActive ? 'rotate(45deg) translate(-7px, -2px)' : 'none',
+  '& div:nth-of-type(3)': {
+    transform: active ? 'rotate(45deg) translate(-7px, -2px)' : 'none',
   },
 }));
 
 export default function BurgerBtn({ isActive, handleShowMenu }) {
   return (
-    <StyledBurgerBtn $isActive={isActive} onClick={handleShowMenu}>
+    <StyledBurgerBtn active={isActive ? 1 : undefined} onClick={handleShowMenu}>
       <div></div>
       <div></div>
       <div></div>

@@ -1,5 +1,6 @@
 import { Typography, Card, Modal, Box, Button, Fade } from '@mui/material';
 import { CheckCircleOutline, CancelOutlined } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const NoticeCard = ({
   isOpen,
@@ -8,7 +9,9 @@ const NoticeCard = ({
   mainMessage,
   secondaryMessage,
   cancelFunction,
+  reload = false,
 }) => {
+  const navigate = useNavigate();
   return (
     <Modal
       open={isOpen}
@@ -28,6 +31,7 @@ const NoticeCard = ({
             textAlign: 'center',
             padding: '1rem 1.25rem 0.25rem',
             paddingBottom: '1px',
+            outline: 'none',
           }}
         >
           {success ? (
@@ -62,7 +66,10 @@ const NoticeCard = ({
                 </Button>
               </>
             ) : (
-              <Button sx={{ textTransform: 'none' }} onClick={handleClose}>
+              <Button
+                sx={{ textTransform: 'none' }}
+                onClick={() => (handleClose(), reload && navigate('..'))}
+              >
                 Aceptar
               </Button>
             )}
