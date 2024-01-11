@@ -7,13 +7,20 @@ import useFetch from '@/hooks/useFetch';
 
 export default function ResultsContainer({ query }) {
   const microEntrepreneurshipService = new MicroEntrepreneurshipService();
+
+  const method = {
+    all: ({ abortController }) =>
+      microEntrepreneurshipService.find({ searchParams: { name: query }, abortController }),
+    byName: ({ abortController }) =>
+      microEntrepreneurshipService.findByName({ searchParams: { name: query }, abortController }),
+  };
+
   const {
     data: results,
     loading,
     error,
   } = useFetch({
-    queryFn: ({ abortController }) =>
-      microEntrepreneurshipService.find({ searchParams: { query }, abortController }),
+    queryFn: query ? method.byName : method.all,
     dependencies: [query],
   });
 
@@ -23,8 +30,10 @@ export default function ResultsContainer({ query }) {
         Array.from({ length: 6 }).map((_, index) => <SkeletonCard key={index} />)
       ) : error ? (
         <NoResults />
+      ) : results.microentrepreneurships ? (
+        results.microentrepreneurships.map((result, index) => <Card key={index} {...result} />)
       ) : (
-        results?.map((result, index) => <Card key={index} {...result} />)
+        results.map((result, index) => <Card key={index} {...result} />)
       )}
     </Grid>
   );
