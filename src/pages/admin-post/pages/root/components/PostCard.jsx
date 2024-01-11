@@ -8,9 +8,13 @@ import CardToggle from '@/components/card/CardToggle';
 import ButtonWithMenu from '@/components/common/ButtonWithMenu';
 import { ADMIN_ROUTES } from '@/constants/routes';
 import instance from '@/helpers/axiosConfig';
+import { useNavigate } from 'react-router-dom';
+import NoticeCard from '@/components/common/NoticeCard';
 
 export default function PostCard({ post }) {
+  const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hidded, setHidded] = useState(false);
   const { mixins } = useTheme();
   const headerText = post.description;
 
@@ -28,7 +32,6 @@ export default function PostCard({ post }) {
   const year = date.getFullYear().toString();
   const formatedDate = `${day}/${month}/${year}`;
 
-  console.log(post);
   const jwt = localStorage.getItem('token');
 
   const hidePublicationHandler = async (id) => {
@@ -46,6 +49,8 @@ export default function PostCard({ post }) {
       );
     } catch (error) {
       console.error('Error hiding publication:', error);
+    } finally {
+      setHidded(true);
     }
   };
 
@@ -53,6 +58,21 @@ export default function PostCard({ post }) {
     <CardContainer>
       <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
         <Typography variant='h3'>{post.title}</Typography>
+        {hidded && (
+          <NoticeCard
+            isOpen={true}
+            success={true}
+            handleClose={() => {
+              navigate('..');
+            }}
+            mainMessage='Publicación ocultada con éxito a visitantes'
+            cancelFunction={() => {
+              navigate('..');
+            }}
+            reload
+          />
+        )}
+
         <ButtonWithMenu
           editRoute={ADMIN_ROUTES.POSTS.EDIT}
           onHidden={() => {

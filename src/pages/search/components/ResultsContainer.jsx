@@ -1,6 +1,6 @@
 import { Box, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
-import { ArrowDownIcon, LocationIcon } from '@/components/icons';
+import { LocationIcon } from '@/components/icons';
 import SkeletonCard from '@/pages/search/components/SkeletonCard';
 import NoResults from '@/pages/search/components/NoResults';
 import useFetch from '@/hooks/useFetch';
@@ -88,9 +88,6 @@ function Card({ name, subCategory, category, images, country, province, city }) 
             {city}, {province}, {country}
           </Typography>
         </Stack>
-        <Box mt='1rem'>
-          <ArrowDownIcon />
-        </Box>
       </Box>
     </Grid>
   );

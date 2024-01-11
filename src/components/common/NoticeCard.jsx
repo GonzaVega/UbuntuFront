@@ -1,6 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import { Typography, Card, Modal, Box, Button, Fade } from '@mui/material';
 import { CheckCircleOutline, CancelOutlined } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
 const NoticeCard = ({
   isOpen,
@@ -10,6 +10,7 @@ const NoticeCard = ({
   secondaryMessage,
   cancelFunction,
   reload = false,
+  goBack = false,
 }) => {
   const navigate = useNavigate();
   return (
@@ -68,7 +69,12 @@ const NoticeCard = ({
             ) : (
               <Button
                 sx={{ textTransform: 'none' }}
-                onClick={() => (handleClose(), reload && navigate('..'))}
+                onClick={() => {
+                  handleClose();
+
+                  if (reload) location.reload();
+                  if (goBack) navigate('..');
+                }}
               >
                 Aceptar
               </Button>

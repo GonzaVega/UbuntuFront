@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { Grid, styled, Container, Box, Typography, Button } from '@mui/material';
+import { Grid, styled, Container, Box, Typography, Button, CircularProgress } from '@mui/material';
 import { Formik, Form } from 'formik';
 
 import SearchBarContainer from '@/components/searchbar/SearchBarContainer';
@@ -20,6 +20,7 @@ const MicroenterpriseContact = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
   const messageService = new MessageService();
@@ -46,7 +47,7 @@ const MicroenterpriseContact = () => {
       ...values,
       sentDate: formattedDate,
     };
-
+    setSubmitting(true);
     try {
       const response = await messageService.create({
         payload: payload,
@@ -61,6 +62,8 @@ const MicroenterpriseContact = () => {
       }
     } catch (error) {
       setError('Error al enviar el formulario. Inténtalo nuevamente.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -113,6 +116,19 @@ const MicroenterpriseContact = () => {
           <Typography variant='h5' sx={{ color: '#093C59', padding: '1.5rem', fontWeight: 600 }}>
             {id}
           </Typography>
+          {submitting && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#093c59',
+                paddingBottom: '15px',
+              }}
+            >
+              <CircularProgress color='inherit' />
+            </Box>
+          )}
           <Typography variant='h2'>
             Vas a contactar a Ubuntu para recibir mas información acerca del Microemprendimiento
             seleccionado.
@@ -178,7 +194,9 @@ const MicroenterpriseContact = () => {
                 success={true}
                 mainMessage='Formulario enviado con éxito'
                 secondaryMessage='Gracias por contactarnos, nos comunicaremos en breve'
-                handleClose={closeNoticeHandler}
+                handleClose={() => {
+                  navigate('/');
+                }}
               />
             )}
             {error && (
@@ -187,8 +205,12 @@ const MicroenterpriseContact = () => {
                 success={false}
                 mainMessage='Error al enviar el formulario'
                 secondaryMessage={error}
-                handleClose={closeNoticeHandler}
-                cancelFunction={closeNoticeHandler}
+                handleClose={() => {
+                  navigate('/');
+                }}
+                cancelFunction={() => {
+                  navigate('/');
+                }}
               />
             )}
           </Box>

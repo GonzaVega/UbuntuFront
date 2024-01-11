@@ -10,8 +10,7 @@ export default function ContactRequestProvider({ children }) {
   const [managed, setManaged] = useState([]);
   const [unmanaged, setUnmanaged] = useState([]);
   let { data, loading } = useFetch({
-    queryFn: ({ abortController }) =>
-      service.findByMicroentrepreneurship({ abortController, jwt, microentrepreneurshipId: 1 }),
+    queryFn: ({ abortController }) => service.find({ abortController, jwt }),
   });
 
   useEffect(() => {

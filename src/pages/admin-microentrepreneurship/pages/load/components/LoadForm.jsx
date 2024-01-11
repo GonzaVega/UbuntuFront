@@ -8,71 +8,6 @@ import { Box, Button } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useEffect } from 'react';
 
-// const countries = [
-//   {
-//     value: 'Perú',
-//     label: 'Perú',
-//   },
-//   {
-//     value: 'Colombia',
-//     label: 'Colombia',
-//   },
-//   {
-//     value: 'México',
-//     label: 'México',
-//   },
-//   {
-//     value: 'Estados Unidos',
-//     label: 'Estados Unidos',
-//   },
-//   {
-//     value: 'Argentina',
-//     label: 'Argentina',
-//   },
-//   {
-//     value: 'Venezuela',
-//     label: 'Venezuela',
-//   },
-// ];
-
-// const states = [
-//   {
-//     value: 'Buenos aires',
-//     label: 'Buenos Aires',
-//   },
-//   {
-//     value: 'Cordoba',
-//     label: 'Cordoba',
-//   },
-//   {
-//     value: 'Mendoza',
-//     label: 'Mendoza',
-//   },
-//   {
-//     value: 'San Luis',
-//     label: 'San Luis',
-//   },
-// ];
-
-// const categories = [
-//   {
-//     value: 'Economía social/Desarrollo local/ Inclusión financiera',
-//     label: 'Economía social/Desarrollo local/ Inclusión financiera',
-//   },
-//   {
-//     value: 'Agroecología/Orgánicos/Alimentación saludable',
-//     label: 'Agroecología/Orgánicos/Alimentación saludable',
-//   },
-//   {
-//     value: 'Conservación/Regeneración/Servicios ecosistémicos',
-//     label: 'Conservación/Regeneración/Servicios ecosistémicos',
-//   },
-//   {
-//     value: 'Empresas/Organismos de impacto/ Economía circular',
-//     label: 'Empresas/Organismos de impacto/ Economía circular',
-//   },
-// ];
-
 export default function LoadForm({
   initialValues = {
     name: '',
@@ -204,7 +139,9 @@ export default function LoadForm({
               disableElevation
               disabled={isSubmitting || !isValid}
             >
-              Cargar microemprendimiento
+              {initialValues?.name != ''
+                ? 'Editar Microemprendimiento'
+                : 'Cargar Microemprendimiento'}
             </Button>
           </Form>
         )}

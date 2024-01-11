@@ -2,7 +2,7 @@ import NoticeCard from '@/components/common/NoticeCard';
 import { useBoolean } from '@/hooks/useBoolean';
 import LoadForm from '@/pages/admin-microentrepreneurship/pages/load/components/LoadForm';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 
 export default function LoadMicroentrepreneurship() {
@@ -10,6 +10,7 @@ export default function LoadMicroentrepreneurship() {
   const { value, setFalse, toggle } = useBoolean(false);
   const [success, setSuccess] = useState(true);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(values, { setSubmitting }) {
     const {
@@ -37,6 +38,8 @@ export default function LoadMicroentrepreneurship() {
       formData.append('multipartImages', file, file.name);
     });
 
+    setLoading(true);
+
     try {
       const service = new MicroEntrepreneurshipService();
       await service.create({ payload: {}, abortController: new AbortController(), formData, jwt });
@@ -49,6 +52,7 @@ export default function LoadMicroentrepreneurship() {
     } finally {
       setSubmitting(false);
       toggle((preValue) => !preValue);
+      setLoading(false);
     }
   }
 
@@ -68,6 +72,19 @@ export default function LoadMicroentrepreneurship() {
             >
               Completá el formulario para cargar un Microemprendimiento
             </Typography>
+            {loading && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#093c59',
+                  paddingTop: '15px',
+                }}
+              >
+                <CircularProgress color='inherit' />
+              </Box>
+            )}
             <LoadForm onSubmit={handleSubmit} />
           </Box>
         </Grid>
@@ -78,7 +95,7 @@ export default function LoadMicroentrepreneurship() {
         handleClose={setFalse}
         mainMessage={message}
         cancelFunction={setFalse}
-        reload
+        goBack
       />
     </Container>
   );

@@ -3,7 +3,7 @@ import { ADMIN_ROUTES } from '@/constants/routes';
 import { useBoolean } from '@/hooks/useBoolean';
 import LoadForm from '@/pages/admin-microentrepreneurship/pages/load/components/LoadForm';
 import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material';
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -14,16 +14,8 @@ export default function EditMicroentrepreneurship() {
   const [success, setSuccess] = useState(true);
   const [message, setMessage] = useState('');
   const { value, setFalse, toggle } = useBoolean(false);
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  // const microentrepreneurshipService = new MicroEntrepreneurshipService();
-
-  // // console.log('StoredState :', state.storedState);
-
-  // const { data, loading } = useFetch({
-  //   queryFn: ({ abortController }) => microentrepreneurshipService.findOne({ id, abortController }),
-  // });
-
-  // const microentrepreneurship = data ? { ...data, images: data.images ? data.images : [] } : null;
 
   async function handleSubmit(values, { setSubmitting }) {
     const {
@@ -51,6 +43,8 @@ export default function EditMicroentrepreneurship() {
       formData.append('multipartImages', file, file.name);
     });
 
+    setLoading(true);
+
     try {
       const service = new MicroEntrepreneurshipService();
       await service.update({
@@ -68,6 +62,7 @@ export default function EditMicroentrepreneurship() {
     } finally {
       setSubmitting(false);
       toggle((preValue) => !preValue);
+      setLoading(false);
     }
   }
 
@@ -79,7 +74,10 @@ export default function EditMicroentrepreneurship() {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant='h1' align='center'>
-            Carga de Microemprendimiento
+            Edición de Microemprendimiento
+          </Typography>
+          <Typography variant='h1' align='center' sx={{ color: '#093c59', marginTop: '2%' }}>
+            {state?.storedState?.name}
           </Typography>
           <Box>
             <Typography
@@ -88,9 +86,21 @@ export default function EditMicroentrepreneurship() {
               align='center'
               mt={'2rem'}
             >
-              Completá el formulario para cargar un Microemprendimiento
+              Completá el formulario para editar un Microemprendimiento
             </Typography>
-
+            {loading && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  color: '#093c59',
+                  paddingTop: '15px',
+                }}
+              >
+                <CircularProgress color='inherit' />
+              </Box>
+            )}
             <LoadForm
               initialValues={{
                 ...state?.storedState,
@@ -109,7 +119,7 @@ export default function EditMicroentrepreneurship() {
         handleClose={setFalse}
         mainMessage={message}
         cancelFunction={setFalse}
-        reload
+        goBack
       />
     </Container>
   );
