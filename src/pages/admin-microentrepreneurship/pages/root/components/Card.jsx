@@ -3,18 +3,22 @@ import NoticeCard from '@/components/common/NoticeCard';
 import { ArrowRightIcon } from '@/components/icons';
 import { ADMIN_ROUTES } from '@/constants/routes';
 import { useBoolean } from '@/hooks/useBoolean';
+import { MicroEntrepreneurshipService } from '@/services/micro-entrepreneurship.service';
 import { Box, ButtonBase, Divider, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-function ocultar() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('error');
-    }, 500);
-  });
-}
+// function ocultar() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve('error');
+//     }, 500);
+//   });
+// }
 
-export default function Card({ id, title, category }) {
+export default function Card({ microentrepreneurship }) {
+  const { id, name, category } = microentrepreneurship;
+  const jwt = localStorage.getItem('token');
+  const service = new MicroEntrepreneurshipService();
   const { value: IsSuccess, setTrue: setSuccess, setFalse: setFail } = useBoolean();
   const { value: isToastVisible, setTrue: showToast, setFalse: hiddenToast } = useBoolean();
 
@@ -22,7 +26,7 @@ export default function Card({ id, title, category }) {
     hiddenToast();
 
     try {
-      await ocultar();
+      await service.hidde({ id, abortController: new AbortController(), jwt });
       setSuccess();
     } catch (error) {
       console.log(error.message);
@@ -37,19 +41,20 @@ export default function Card({ id, title, category }) {
       <Box padding='1rem 1.75rem' bgcolor='lightGray.main' borderRadius='1rem'>
         <Box display='flex' justifyContent='space-between' mb='0.5rem'>
           <Typography variant='h3' color='primary.main' fontWeight={700}>
-            {title}
+            {name}
           </Typography>
           <ButtonWithMenu
             onHidden={handleHidden}
             editRoute={ADMIN_ROUTES.MICROENTREPRENEURSHIPS.EDIT + '/' + id}
+            storedState={{ storedState: microentrepreneurship }}
           />
         </Box>
         <Divider sx={{ width: '70%', bgcolor: 'secondary.main', height: '1px' }} />
         <Box display='flex' justifyContent='space-between' mt='1rem'>
           <Typography variant='body2' lineHeight='1.5rem' width='80%'>
-            {category}
+            {category.name}
           </Typography>
-          <Link to={String(id)}>
+          <Link to={String(id)} state={{ storedState: microentrepreneurship }}>
             <ButtonBase sx={{ width: '2rem', height: '2rem' }}>
               <ArrowRightIcon fill={'#090909'} />
             </ButtonBase>
@@ -63,6 +68,7 @@ export default function Card({ id, title, category }) {
           success={IsSuccess}
           mainMessage={'Publicación ocultada con éxito'}
           cancelFunction={handleHidden}
+          reload
         />
       )}
     </Grid>

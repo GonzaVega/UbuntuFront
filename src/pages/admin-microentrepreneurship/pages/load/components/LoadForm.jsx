@@ -1,72 +1,77 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import FormikController from '@/components/form/FormikController';
+import useFetch from '@/hooks/useFetch';
+import useGeo from '@/hooks/useGeo';
 import { microentrepreneurshipSchema } from '@/schemas/formsSchema';
+import { CategoryService } from '@/services/category.repository';
 import { Box, Button } from '@mui/material';
 import { Form, Formik } from 'formik';
+import { useEffect } from 'react';
 
-const countries = [
-  {
-    value: 'Perú',
-    label: 'Perú',
-  },
-  {
-    value: 'Colombia',
-    label: 'Colombia',
-  },
-  {
-    value: 'México',
-    label: 'México',
-  },
-  {
-    value: 'Estados Unidos',
-    label: 'Estados Unidos',
-  },
-  {
-    value: 'Argentina',
-    label: 'Argentina',
-  },
-  {
-    value: 'Venezuela',
-    label: 'Venezuela',
-  },
-];
+// const countries = [
+//   {
+//     value: 'Perú',
+//     label: 'Perú',
+//   },
+//   {
+//     value: 'Colombia',
+//     label: 'Colombia',
+//   },
+//   {
+//     value: 'México',
+//     label: 'México',
+//   },
+//   {
+//     value: 'Estados Unidos',
+//     label: 'Estados Unidos',
+//   },
+//   {
+//     value: 'Argentina',
+//     label: 'Argentina',
+//   },
+//   {
+//     value: 'Venezuela',
+//     label: 'Venezuela',
+//   },
+// ];
 
-const states = [
-  {
-    value: 'Buenos aires',
-    label: 'Buenos Aires',
-  },
-  {
-    value: 'Cordoba',
-    label: 'Cordoba',
-  },
-  {
-    value: 'Mendoza',
-    label: 'Mendoza',
-  },
-  {
-    value: 'San Luis',
-    label: 'San Luis',
-  },
-];
+// const states = [
+//   {
+//     value: 'Buenos aires',
+//     label: 'Buenos Aires',
+//   },
+//   {
+//     value: 'Cordoba',
+//     label: 'Cordoba',
+//   },
+//   {
+//     value: 'Mendoza',
+//     label: 'Mendoza',
+//   },
+//   {
+//     value: 'San Luis',
+//     label: 'San Luis',
+//   },
+// ];
 
-const categories = [
-  {
-    value: 'Economía social/Desarrollo local/ Inclusión financiera',
-    label: 'Economía social/Desarrollo local/ Inclusión financiera',
-  },
-  {
-    value: 'Agroecología/Orgánicos/Alimentación saludable',
-    label: 'Agroecología/Orgánicos/Alimentación saludable',
-  },
-  {
-    value: 'Conservación/Regeneración/Servicios ecosistémicos',
-    label: 'Conservación/Regeneración/Servicios ecosistémicos',
-  },
-  {
-    value: 'Empresas/Organismos de impacto/ Economía circular',
-    label: 'Empresas/Organismos de impacto/ Economía circular',
-  },
-];
+// const categories = [
+//   {
+//     value: 'Economía social/Desarrollo local/ Inclusión financiera',
+//     label: 'Economía social/Desarrollo local/ Inclusión financiera',
+//   },
+//   {
+//     value: 'Agroecología/Orgánicos/Alimentación saludable',
+//     label: 'Agroecología/Orgánicos/Alimentación saludable',
+//   },
+//   {
+//     value: 'Conservación/Regeneración/Servicios ecosistémicos',
+//     label: 'Conservación/Regeneración/Servicios ecosistémicos',
+//   },
+//   {
+//     value: 'Empresas/Organismos de impacto/ Economía circular',
+//     label: 'Empresas/Organismos de impacto/ Economía circular',
+//   },
+// ];
 
 export default function LoadForm({
   initialValues = {
@@ -82,6 +87,23 @@ export default function LoadForm({
   },
   onSubmit,
 }) {
+  const instance = new CategoryService();
+  let { countries, provinces, changeCountry } = useGeo();
+
+  let { data: categories } = useFetch({
+    queryFn: ({ abortController }) => instance.find({ abortController }),
+  });
+
+  countries = countries && countries.map((item) => ({ value: item.name, label: item.name }));
+  provinces = provinces && provinces.map((item) => ({ value: item.name, label: item.name }));
+  categories = categories && categories.map((item) => ({ value: item.id, label: item.name }));
+
+  useEffect(() => {
+    if (initialValues.country) {
+      changeCountry(initialValues.country);
+    }
+  }, [initialValues.country]);
+
   return (
     <Box mt='1.5rem'>
       <Formik
@@ -107,7 +129,7 @@ export default function LoadForm({
               name='category'
               error={touched.category && Boolean(errors.category)}
               helperText={'Seleccioná la categoría del Microemprendimiento'}
-              options={categories}
+              options={categories ? categories : []}
             />
             <FormikController
               id='subcategory'
@@ -124,7 +146,10 @@ export default function LoadForm({
               name='country'
               error={touched.country && Boolean(errors.country)}
               helperText={'Seleccioná un País de la lista'}
-              options={countries}
+              options={countries ? countries : []}
+              onChange={({ target }) => (
+                changeCountry(target.value), setFieldValue('country', target.value)
+              )}
             />
             <FormikController
               id='state'
@@ -133,7 +158,7 @@ export default function LoadForm({
               name='state'
               error={touched.state && Boolean(errors.state)}
               helperText={'Seleccioná una Provincia/Estado de la lista'}
-              options={states}
+              options={provinces ? provinces : []}
             />
             <FormikController
               id='city'
