@@ -5,17 +5,20 @@ import CardContainer from '@/components/card/CardContainer';
 import CardContent from '@/components/card/CardContent';
 import CardImageSlider from '@/components/card/CardImageSlider';
 import CardToggle from '@/components/card/CardToggle';
+import { PublicationService } from '@/services/publication.service';
 
 export default function PostCard({ post }) {
+  const service = new PublicationService();
   const [isExpanded, setIsExpanded] = useState(false);
   const { mixins } = useTheme();
-  const headerText = post.description;
+  const headerText = post.description.split('\n\n')[0];
   // esto agregar al final de headerText
   // .split('\n\n')[0];
 
   const sx = isExpanded ? mixins.cardExpanded : mixins.cardCollapsed;
 
-  function handleClick() {
+  async function handleClick() {
+    if (!isExpanded) await service.findOne({ id: post.id, abortController: new AbortController() });
     setIsExpanded(!isExpanded);
   }
 
