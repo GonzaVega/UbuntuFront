@@ -78,58 +78,90 @@ export class HttpAdapter {
   async get({ path, searchParams, abortController, jwt }) {
     try {
       const signal = abortController.signal || new AbortController().signal;
+      const headers = jwt ? { Authorization: `Bearer ${jwt}` } : undefined;
 
       const { data } = await instance.get(path + '?' + new URLSearchParams(searchParams), {
         signal,
-        headers: { Authorization: `Bearer ${jwt}` },
+        headers,
       });
 
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
-        console.log('Solicitud cancelada');
+        return;
       }
-      throw new Error(error.response.data.Message || error.message);
+      throw new Error(error.response?.data?.Message || error.message);
     }
   }
 
   async post({ path, formData, payload, abortController, jwt }) {
     try {
+      const contentType = formData ? 'multipart/form-data' : 'application/json';
+      const headers = jwt
+        ? { Authorization: `Bearer ${jwt}`, 'Content-Type': contentType }
+        : { 'Content-Type': contentType };
       const signal = abortController.signal || new AbortController().signal;
       payload = formData || JSON.stringify(payload);
 
       const { data } = await instance.post(path, payload, {
         signal,
-        headers: { Authorization: `Bearer ${jwt}` },
+        headers,
       });
 
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
-        console.log('Solicitud cancelada');
+        return;
       }
 
-      throw new Error(error.response.data.Message || error.message);
+      throw new Error(error.response?.data?.Message || error.message);
     }
   }
 
-  async patch({ path, payload, abortController, jwt }) {
+  async put({ path, formData, payload, abortController, jwt }) {
     try {
+      const contentType = formData ? 'multipart/form-data' : 'application/json';
+      const headers = jwt
+        ? { Authorization: `Bearer ${jwt}`, 'Content-Type': contentType }
+        : { 'Content-Type': contentType };
       const signal = abortController.signal || new AbortController().signal;
-      payload = JSON.stringify(payload);
+      payload = formData || JSON.stringify(payload);
 
-      const { data } = await instance.patch(path, payload, {
+      const { data } = await instance.put(path, payload, {
         signal,
-        headers: { Authorization: `Bearer ${jwt}` },
+        headers,
       });
 
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
-        console.log('Solicitud cancelada');
+        return;
       }
 
-      throw new Error(error.response.data.Message || error.message);
+      throw new Error(error.response?.data?.Message || error.message);
+    }
+  }
+
+  async patch({ path, formData, payload, abortController, jwt }) {
+    try {
+      const contentType = formData ? 'multipart/form-data' : 'application/json';
+      const headers = jwt
+        ? { Authorization: `Bearer ${jwt}`, 'Content-Type': contentType }
+        : { 'Content-Type': contentType };
+      const signal = abortController.signal || new AbortController().signal;
+      payload = formData || JSON.stringify(payload);
+
+      const { data } = await instance.patch(path, payload, {
+        signal,
+        headers,
+      });
+
+      return data;
+    } catch (error) {
+      if (error.code === 'ERR_CANCELED') {
+        return;
+      }
+      throw new Error(error.response?.data?.Message || error.message);
     }
   }
 
@@ -145,10 +177,10 @@ export class HttpAdapter {
       return data;
     } catch (error) {
       if (error.code === 'ERR_CANCELED') {
-        console.log('Solicitud cancelada');
+        return;
       }
 
-      throw new Error(error.response.data.Message || error.message);
+      throw new Error(error.response?.data?.Message || error.message);
     }
   }
 }

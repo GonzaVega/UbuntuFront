@@ -4,16 +4,16 @@ export class MessageService {
   collection = '/message';
 
   // no 'all messages' endpoint created so far.
-  // async find({ searchParams = {}, abortController }) {
-  //   const path = '/all';
+  async find({ searchParams = {}, abortController, jwt }) {
+    const path = this.collection + '/all';
 
-  //   return await repository.find({ path, searchParams, abortController });
-  // }
+    return await repository.find({ path, searchParams, abortController, jwt });
+  }
 
   async findOne({ id, abortController, jwt }) {
-    const path = this.collection + `/getMessage/${id}`;
+    id = this.collection + `/getMessage/${id}`;
 
-    return await repository.findOne({ path, abortController, jwt });
+    return await repository.findOne({ id, abortController, jwt });
   }
 
   //get messages by microentrepreneurships.
@@ -23,6 +23,7 @@ export class MessageService {
 
     return await repository.find({ path, abortController, jwt });
   }
+
   //creates messages assigned to a microentrepreneurship
   async create({ payload, microentrepreneurshipId, abortController, jwt }) {
     const path = this.collection + `/save/${microentrepreneurshipId}`;
@@ -31,11 +32,10 @@ export class MessageService {
   }
 
   async update({ id, payload, token, abortController, jwt }) {
-    const path = this.collection + `/${id}/change/`;
-
+    id = this.collection + `/${id}/change`;
     const authenticatedPayload = { ...payload, token };
 
-    return repository.update({ path, authenticatedPayload, abortController, jwt });
+    return repository.update({ id, authenticatedPayload, abortController, jwt });
   }
 
   //no 'delete messages' endpoint created so far.
